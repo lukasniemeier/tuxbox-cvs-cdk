@@ -5,7 +5,7 @@ $(appsdir)/tuxbox/plugins/config.status: bootstrap libfreetype libcurl libz libs
 
 plugins: neutrino-plugins enigma-plugins @FX2PLUGINS@
 
-neutrino-plugins: $(targetprefix)/include/tuxbox/plugin.h tuxmail tuxtxt tuxcom tuxcal vncviewer dvbsub shellexec tuxwetter sysinfo
+neutrino-plugins: $(targetprefix)/include/tuxbox/plugin.h tuxmail tuxtxt tuxcom tuxcal vncviewer dvbsub shellexec tuxwetter sysinfo clock
 
 fx2-plugins: $(appsdir)/tuxbox/plugins/config.status @DEPENDS_tuxfrodo@
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2 all install
@@ -128,6 +128,15 @@ sysinfo: $(appsdir)/tuxbox/plugins/config.status
 if TARGETRULESET_FLASH
 flash-sysinfo: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo all install prefix=$(flashprefix)/root
+	@FLASHROOTDIR_MODIFIED@
+endif
+
+clock: $(appsdir)/tuxbox/plugins/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all install
+
+if TARGETRULESET_FLASH
+flash-clock: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 endif
 
