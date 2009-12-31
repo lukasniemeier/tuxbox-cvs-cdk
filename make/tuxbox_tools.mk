@@ -38,6 +38,12 @@ aformat: $(appsdir)/tuxbox/tools/config.status
 msgbox: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/msgbox install
 
+getrc: $(appsdir)/tuxbox/tools/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/tools/getrc install
+
+input: $(appsdir)/tuxbox/tools/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/tools/input install
+
 if TARGETRULESET_FLASH
 
 flash-tuxinfo: $(appsdir)/tuxbox/tools/config.status
@@ -66,6 +72,14 @@ flash-aformat: $(appsdir)/tuxbox/tools/config.status
 
 flash-msgbox: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/msgbox install prefix=$(flashprefix)/root
+	@FLASHROOTDIR_MODIFIED@
+
+flash-getrc: $(appsdir)/tuxbox/tools/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/tools/getrc install prefix=$(flashprefix)/root
+	@FLASHROOTDIR_MODIFIED@
+
+flash-input: $(appsdir)/tuxbox/tools/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/tools/input install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 endif
