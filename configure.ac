@@ -5,7 +5,7 @@ AC_CANONICAL_BUILD
 AC_SUBST(build)
 
 AC_ARG_WITH(toolchain,
-	[  --with-toolchain=PATH,	do not build a toolchain but use the one at PATH],
+	[  --with-toolchain=PATH   do not build a toolchain but use the one at PATH],
 	[TOOLCHAIN_PATH="$withval"],[TOOLCHAIN_PATH="notset"])
 AM_CONDITIONAL(USE_FOREIGN_TOOLCHAIN,test "$TOOLCHAIN_PATH" != "notset")
 AC_SUBST(TOOLCHAIN_PATH)
@@ -63,7 +63,8 @@ AM_CONDITIONAL(ENABLE_SQLITE,test "$enable_sqlite" = "yes")
 AC_SUBST(SQLITE)
 
 AC_ARG_WITH(targetruleset,
-	[  --with-targetruleset=NAME	OBSOLETE, use --[[enable|disable]]-flashrules instead],
+	[  --with-targetruleset=NAME	
+                          OBSOLETE, use --[[enable|disable]]-flashrules instead],
 	[TARGETRULESET="$withval"],[TARGETRULESET="notset"])
 
 if test "$TARGETRULESET" != "notset"; then
@@ -71,7 +72,8 @@ if test "$TARGETRULESET" != "notset"; then
 fi
 
 AC_ARG_WITH(assume-kernelsources-old,
-	[  --with-assume-kernelsources-old	Do not recompile due to new kernel sources],
+	[  --with-assume-kernelsources-old
+                          Do not recompile due to new kernel sources],
 	[assume_kernelsources_old="yes"],[assume_kernelsources_old="no"])
 AM_CONDITIONAL(ASSUME_KERNELSOURCES_OLD,test "$assume_kernelsources_old" = "yes")
 
@@ -212,7 +214,7 @@ enable_fs_lufs=yes
 enable_vfat=no
 enable_reiserfs=no
 
-AC_ARG_WITH(filesystems,[  --with-filesystems      comma seperated list of filesystems to be used,
+AC_ARG_WITH(filesystems,[  --with-filesystems=LIST comma seperated list of filesystems to be used,
                           first disk filesystem will be used as default for /hdd entry in /etc/fstab
                           allowed values: nfs (always enabled in yadd), cifs, smbfs,
                                           lufs (ftpfs), xfs (not kernel2.4/uClibc),
@@ -331,7 +333,8 @@ if test "$enable_vfat" = "yes"; then
 	enable_fs_dosfstools=yes
 fi
 
-AC_ARG_WITH(filesystem-tools,[  --with-filesystem-tools  comma seperated list of filesystem tools to be used,
+AC_ARG_WITH(filesystem-tools,[  --with-filesystem-tools=LIST 
+                          comma seperated list of filesystem tools to be used,
                           allowed values: e2fsprogs, reiserfsprogs, dosfstools, xfsprogs, fdisk (standalone)],[
 if test x"${withval+set}" = xset; then
     enable_filesystem_tools=`echo "${withval}" | sed -e 's/[[ 	,]][[ 	,]]*/,/g' -e 's/,$//' -e 's/,/ /g'`
@@ -531,17 +534,20 @@ AC_SUBST(FX2PLUGINS)
 AM_CONDITIONAL(ENABLE_FX2PLUGINS,test "$enable_fx2plugins" = "yes")
 
 AC_ARG_WITH(rootpartitionsize,
-	[  --with-rootpartitionsize=SIZE	size of the root partition],
+	[  --with-rootpartitionsize=SIZE
+                          size of the root partition],
 	[ROOT_PARTITION_SIZE="$withval"],[ROOT_PARTITION_SIZE="0x660000"])
 AC_SUBST(ROOT_PARTITION_SIZE)
 
 AC_ARG_WITH(flashfstype,
-	[  --with-flashfstype=FS_TYPE	type of flash root filesystem partition for the yadd kernel (squashfs+lzma/squashfs)],
+	[  --with-flashfstype=FS_TYPE
+                          type of flash root filesystem partition for the yadd kernel (squashfs+lzma/squashfs)],
 	[FLASH_FS_TYPE="$withval"],[FLASH_FS_TYPE="squashfs+lzma"])
 AC_SUBST(FLASH_FS_TYPE)
 
 AC_ARG_WITH(defaultlocale,
-	[  --with-defaultlocale=LOCALE	default locale],
+	[  --with-defaultlocale=LOCALE
+                          default locale],
 	[DEFAULTLOCALE="$withval"],[DEFAULTLOCALE="deutsch"])
 AC_SUBST(DEFAULTLOCALE)
 
@@ -573,11 +579,12 @@ AC_ARG_WITH(flashprefix,
 	[flashprefix="$with_flashprefix"],[flashprefix="${prefix}/cdkflash"])
 
 AC_ARG_WITH(serversupport,
-	[  --with-serversupport=DIR  prefix for server file templates [[PREFIX/serversupport]]],
+	[  --with-serversupport=DIR  
+                          prefix for server file templates [[PREFIX/serversupport]]],
 	[serversupport="$with_serversupport"],[serversupport="${prefix}/serversupport"])
 
 AC_ARG_WITH(ucodesdir,
-	[  --with-ucodesdir=DIR  optional directory containing ucodes (dbox2 only) [[NONE]]],
+	[  --with-ucodesdir=DIR    optional directory containing ucodes (dbox2 only) [[NONE]]],
 	[ucodesdir="$with_ucodesdir"],[ucodesdir="NONE"])
 
 if test "$BOXTYPE" != "dbox2"; then
@@ -585,20 +592,23 @@ if test "$BOXTYPE" != "dbox2"; then
 fi
 
 AC_ARG_WITH(logosdir,
-	[  --with-logosdir=DIR  optional directory containing logos [[[CVS/]logos]]],
+	[  --with-logosdir=DIR     optional directory containing logos [[[CVS/]logos]]],
 	[logosdir="$with_logosdir"],[logosdir="`pwd`/logos"])
 
 AC_ARG_WITH(customizationsdir,
-	[  --with-customizationsdir=DIR  optional directory containing customization scripts [[[CVS]]]],
+	[  --with-customizationsdir=DIR  
+                          optional directory containing customization scripts [[[CVS]]]],
 	[customizationsdir="$with_customizationsdir"],[customizationsdir="`pwd`"])
 
 AC_ARG_WITH(updatehttpprefix,
-	[  --with-updatehttpprefix=URL  optional URL containing the URL of a directory with update images
-                               "disable" completely disables internet update code [[NONE]]],
+	[  --with-updatehttpprefix=URL  
+                          optional URL containing the URL of a directory with update images
+                          "disable" completely disables internet update code [[NONE]]],
 	[updatehttpprefix="$with_updatehttpprefix"],[updatehttpprefix=])
 
 AC_ARG_WITH(busybox_conf,
-	[  --with-busybox-conf=M4_FILE personalized optional m4 busybox configuration file [[config/busybox.config.m4]]],
+	[  --with-busybox-conf=M4_FILE 
+                          personalized optional m4 busybox configuration file [[config/busybox.config.m4]]],
 	[busybox_conf="$with_busybox_conf"],[busybox_conf="config/busybox.config.m4"])
 AC_SUBST(busybox_conf)
 
@@ -625,7 +635,8 @@ flashprefix_rw=${flashprefix}/rw
 AC_SUBST(flashprefix_rw)
 
 AC_ARG_WITH(checkImage,
-	[  --with-checkImage=[[none,rename,warn]]	How/if to invoke checkImage [[none]]],
+	[  --with-checkImage=[[none,rename,warn]]
+                          How/if to invoke checkImage [[none]]],
 	[CHECKIMAGE_BEHAVIOR="$withval"],[CHECKIMAGE_BEHAVIOR="true"])
 if [[ "$withval" = "rename" ]] ; then
 	TUXBOX_CHECKIMAGE='$(hostprefix)/bin/checkImage $@ || mv $@ $@_bad'
@@ -661,11 +672,13 @@ AC_ARG_WITH(hostappsdir,
 	[hostappsdir="$with_hostappsdir"],[hostappsdir="NONE"])
 
 AC_ARG_WITH(gnuserver,
-        [  --with-gnuserver=ADDRESS   the gnu server for gnu-stuff (without ftp://)],
+        [  --with-gnuserver=ADDRESS
+                          the gnu server for gnu-stuff (without ftp://)],
         [gnuserver="$with_gnuserver"],[gnuserver=ftp.gwdg.de/pub/misc/gnu/ftp/gnu])
 
 AC_ARG_WITH(defaultserver,
-        [  --with-defaultserver=ADDRESS   the server that is taken if no server is given/works (without http://)],
+        [  --with-defaultserver=ADDRESS
+                          the server that is taken if no server is given/works (without http://)],
         [defaultserver="$with_defaultserver"],[defaultserver=www.dbox2-tuning.net/cvsdata/files])
 
 if test "$cvsdir" = "NONE"; then
@@ -832,12 +845,14 @@ AC_SUBST(ccachedir)
 
 # optional ccache settings
 AC_ARG_WITH(maxcachesize,
-	[  --with-maxcachesize=SIZE maximal ccachesize for ccache ],
+	[  --with-maxcachesize=SIZE 
+                          maximal ccachesize for ccache ],
 	[maxcachesize="$with_maxcachesize"],[maxcachesize="-1"])
 AC_SUBST(maxcachesize)
 
 AC_ARG_WITH(maxcachefiles,
-	[  --with-maxcachefiles=COUNT maximal count of cachefiles for ccache ],
+	[  --with-maxcachefiles=COUNT 
+                          maximal count of cachefiles for ccache ],
 	[maxcachefiles="$with_maxcachefiles"],[maxcachefiles="-1"])
 AC_SUBST(maxcachefiles)
 
@@ -880,7 +895,7 @@ AM_CONDITIONAL(ENABLE_MOVIEPLAYER2,test "$enable_movieplayer2" = "yes")
 
 # enigma specific stuff #########################
 AC_ARG_WITH(webif,
-	[  --with-webif=NAME dreambox webif [[standard,expert]]],
+	[  --with-webif=NAME       dreambox webif [[standard,expert]]],
 	[WEBIF="$withval"],[WEBIF="standard"])
 
 AC_SUBST(WEBIF)
@@ -888,7 +903,7 @@ AM_CONDITIONAL(WEBIF_STANDARD,test "$WEBIF" = "standard")
 AM_CONDITIONAL(WEBIF_EXPERT,test "$WEBIF" = "expert")
 
 AC_ARG_WITH(epg,
-	[  --with-epg=NAME dreambox epg [[standard,private]]],
+	[  --with-epg=NAME         dreambox epg [[standard,private]]],
 	[EPG="$withval"],[EPG="standard"])
 
 AC_SUBST(EPG)
@@ -904,7 +919,7 @@ AM_CONDITIONAL(MHW_EPG_NO,test "$MHW_EPG" = "no")
 AM_CONDITIONAL(MHW_EPG_YES,test "$MHW_EPG" = "yes")
 
 AC_ARG_WITH(flashtool,
-	[  --with-flashtool=NAME dreambox flashtool [[standard,expert]]],
+	[  --with-flashtool=NAME   dreambox flashtool [[standard,expert]]],
 	[FLASHTOOL="$withval"],[FLASHTOOL="standard"])
 
 AC_SUBST(FLASHTOOL)
@@ -912,11 +927,13 @@ AM_CONDITIONAL(FLASHTOOL_STANDARD,test "$FLASHTOOL" = "standard")
 AM_CONDITIONAL(FLASHTOOL_EXPERT,test "$FLASHTOOL" = "expert")
 
 AC_ARG_WITH(ext-flashtool,
-	[  --with-ext-flashtool=NAME dreambox ext-flashtool [[yes,no]]],
+	[  --with-ext-flashtool=NAME 
+                          dreambox ext-flashtool [[yes,no]]],
 	[EXTFLASHTOOL="$withval"],[EXTFLASHTOOL="yes"])
 
 AC_ARG_WITH(enigma-debug,
-	[  --with-enigma-debug=NAME dreambox enigma-debug [[yes,no]]],
+	[  --with-enigma-debug=NAME 
+                          dreambox enigma-debug [[yes,no]]],
 	[ENIGMA_DEBUG="$withval"],[ENIGMA_DEBUG="no"])
 
 AC_SUBST(ENIGMA_DEBUG)
