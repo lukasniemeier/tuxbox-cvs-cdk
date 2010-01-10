@@ -1,6 +1,6 @@
 $(DEPDIR)/smbmount: bootstrap @DEPENDS_samba@
 	@PREPARE_samba@
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
 	sed -i  -e "s/-DNETGROUP//g" \
 		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \
@@ -26,7 +26,7 @@ flash-smbmount: $(flashprefix)/root/bin/smbmount
 
 $(flashprefix)/root/bin/smbmount: bootstrap @DEPENDS_samba@ | $(flashprefix)/root
 	@PREPARE_samba@
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
 	sed -i  -e "s/-DNETGROUP//g" \
 		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \
@@ -53,7 +53,7 @@ if ENABLE_SAMBASERVER
 
 $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 	@PREPARE_samba@
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
 	sed -i  -e "s/-DNETGROUP//g" \
 		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \
@@ -79,7 +79,7 @@ flash-sambaserver: $(flashprefix)/root/bin/smbd
 
 $(flashprefix)/root/bin/smbd: bootstrap @DEPENDS_samba@ | $(flashprefix)/root
 	@PREPARE_samba@
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
 	sed -i  -e "s/-DNETGROUP//g" \
 		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \

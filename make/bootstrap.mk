@@ -248,7 +248,7 @@ endif
 UCLIBC_M4 =
 
 if !BOXTYPE_COOL
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 
 if !TARGETRULESET_FLASH
 UCLIBC_M4 += -Ddebug
@@ -351,7 +351,7 @@ $(DEPDIR)/gcc: @DEPENDS_gcc@ libc
 		rm -f $(hostprefix)/$(target)/lib/nof; \
 	fi
 	@PREPARE_gcc@
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 	cd @SOURCEDIR_gcc@ && patch -p1 -E -i $(buildprefix)/Patches/gcc-uclibc.diff
 endif
 if CPUMODEL_405

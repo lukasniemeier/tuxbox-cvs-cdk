@@ -70,7 +70,7 @@ $(flashprefix)/root/sbin/fdisk: utillinux | $(flashprefix)/root
 
 endif
 
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 E2FSPROGSOPT=--disable-tls
 XFSPROGSOPT=ac_cv_header_aio_h=yes ac_cv_lib_rt_lio_listio=yes
 endif

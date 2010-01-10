@@ -73,7 +73,7 @@ else
 	done;
 endif
 	rm -f $@/share/zoneinfo/*tab
-if !TARGETRULESET_UCLIBC
+if !ENABLE_UCLIBC
 	ln -sf /var/etc/localtime $@/etc
 endif
 	@for i in ar_AE cs_CZ da_DK el_GR es_ES et_EE fi_FI hr_HR \
@@ -91,7 +91,7 @@ else
 	cp -pa $(appsdir)/tuxbox/enigma/po/locale.alias.image $@/share/locale/locale.alias
 	mkdir $@/lib
 	tar -C $@/lib -xjvf $(appsdir)/tuxbox/enigma/po/locale.image.tar.bz2
-if !TARGETRULESET_UCLIBC
+if !ENABLE_UCLIBC
 	cp -rd $(targetprefix)/share/zoneinfo $@/share
 	cp -rd $(targetprefix)/share/locale/de/LC_MESSAGES/libc.mo $@/share/locale/de/LC_MESSAGES
 	cp -rd $(targetprefix)/share/locale/fr/LC_MESSAGES/libc.mo $@/share/locale/fr/LC_MESSAGES

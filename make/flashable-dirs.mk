@@ -389,7 +389,7 @@ endif
 	cp -vR $(buildprefix)/@DIR_dreamfiles@/dreamfiles/share/* $(dreamfilesrootdir)/share
 	cp -vR $(buildprefix)/@DIR_dreamfiles@/mkcramfs-e $(hostprefix)/bin
 	cp -vR $(buildprefix)/@DIR_dreamfiles@/mksquashfs $(hostprefix)/bin/mksquashfs-dream
-if !TARGETRULESET_UCLIBC
+if !ENABLE_UCLIBC
 	$(INSTALL) -d $(dreamfilesrootdir)/lib/gconv
 	cp -vR $(buildprefix)/@DIR_dreamfiles@/dreamfiles/lib/gconv/* $(dreamfilesrootdir)/lib/gconv
 endif
@@ -418,7 +418,7 @@ endif
 	@ln -sf /tmp $(dreamfilesrootdir)/var_init/tmp
 	@ln -sf /proc/mounts $(dreamfilesrootdir)/var_init/etc/mtab
 # lib
-if !TARGETRULESET_UCLIBC
+if !ENABLE_UCLIBC
 	@for i in ISO8859-1.so ISO8859-2.so ISO8859-7.so UNICODE.so; do \
 		cp $(targetprefix)/lib/gconv/$$i $(dreamfilesrootdir)/lib/gconv; \
 	done;

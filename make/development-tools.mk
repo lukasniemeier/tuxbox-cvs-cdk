@@ -83,7 +83,7 @@ $(DEPDIR)/insight: @DEPENDS_insight@
 
 $(DEPDIR)/ltrace: bootstrap @DEPENDS_ltrace@
 	@PREPARE_ltrace@
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 	ln -s linux-gnu @DIR_ltrace@/sysdeps/linux-uclibc
 endif
 	cd @DIR_ltrace@ && \

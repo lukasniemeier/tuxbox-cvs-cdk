@@ -13,7 +13,7 @@ AC_SUBST(TOOLCHAIN_PATH)
 AC_ARG_ENABLE(uclibc,
 	AS_HELP_STRING(--enable-uclibc,	enable rules for creating uclibc linked targets),
 	,[enable_uclibc=no])
-AM_CONDITIONAL(TARGETRULESET_UCLIBC,test "$enable_uclibc" = "yes")
+AM_CONDITIONAL(ENABLE_UCLIBC,test "$enable_uclibc" = "yes")
 
 TUXBOX_BOXTYPE
 

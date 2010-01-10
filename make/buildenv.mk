@@ -62,7 +62,7 @@ CONFIGURE_OPTS += \
 	--enable-maintainer-mode
 endif
 
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 CONFIGURE_OPTS += \
 	--enable-uclibc
 endif

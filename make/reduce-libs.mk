@@ -43,7 +43,7 @@ $(flashprefix)/root-null-jffs2/lib/ld.so.1: \
 		`find $</lib/ -name "libsqlite3*" -type f` \
 		`find $</lib/ -name "*.so" -type f` \
 		`find $</sbin/ -path "*sbin/?*" -type f`
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 	UCLIBC_FILES="libcrypt-@VERSION_uclibc@.so libdl-@VERSION_uclibc@.so libm-@VERSION_uclibc@.so libnsl-@VERSION_uclibc@.so libpthread-@VERSION_uclibc@.so libresolv-@VERSION_uclibc@.so librt-@VERSION_uclibc@.so libuClibc-@VERSION_uclibc@.so libutil-@VERSION_uclibc@.so"; \
 	for i in $$UCLIBC_FILES; do cp $(targetprefix)/lib/$$i $</lib/; done; \
 	for i in $$UCLIBC_FILES; do ln -sf $$i $</lib/`echo $$i | cut -d - -f 1`.so.0; done

@@ -58,7 +58,7 @@ $(DEPDIR)/libcrypto: bootstrap @DEPENDS_libcrypto@
 	@CLEANUP_libcrypto@
 	touch $@
 
-if TARGETRULESET_UCLIBC
+if ENABLE_UCLIBC
 CURL_UCLIBC=ac_cv_func_inet_ntoa_r=no
 endif
 if CURL_CURRENT
