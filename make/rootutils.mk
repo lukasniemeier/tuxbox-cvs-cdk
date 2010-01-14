@@ -69,6 +69,14 @@ $(DEPDIR)/procps: bootstrap libncurses @DEPENDS_procps@
 	@CLEANUP_procps@
 	touch $@
 
+if TARGETRULESET_FLASH
+flash-procps: $(flashprefix)/root/bin/ps
+$(flashprefix)/root/bin/ps: procps
+	$(INSTALL) $(targetprefix)/bin/ps $(flashprefix)/root/bin
+	$(INSTALL) $(targetprefix)/bin/top $(flashprefix)/root/bin
+	@FLASHROOTDIR_MODIFIED@
+endif
+
 $(DEPDIR)/udev: bootstrap @DEPENDS_udev@
 	@PREPARE_udev@
 	cd @DIR_udev@ && \

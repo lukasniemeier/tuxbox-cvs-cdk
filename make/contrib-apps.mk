@@ -3,9 +3,9 @@
 #   contrib apps
 #
 
-contrib_apps: bzip2 console_data kbd fbset lirc lsof dropbear ssh tcpdump bonnie @LUFS@ kermit wget ncftp screen lzma lzma_host ntpd ntpclient links links_g esound python ser2net @OPENVPN@
+contrib_apps: bzip2 console_data kbd fbset lirc lsof dropbear ssh tcpdump bonnie @LUFS@ kermit wget ncftp screen lzma lzma_host ntpd ntpclient links links_g esound python ser2net ipkg openvpn
 
-CONTRIB_DEPSCLEANUP = rm -f .deps/bzip2 .deps/console_data .deps/kbd .deps/directfb_examples .deps/fbset .deps/lirc .deps/lsof .deps/ssh .deps/tcpdump .deps/bonnie .deps/vdr .deps/lufs .deps/dropbear .deps/kermit .deps/wget .deps/ncftp .deps/screen .deps/lzma .deps/lzma_host .deps/ntpd .deps/ntpclient .deps/links .deps/links_g .deps/esound .deps/openntpd .deps/python .deps/ser2net .deps/openvpn
+CONTRIB_DEPSCLEANUP = rm -f .deps/bzip2 .deps/console_data .deps/kbd .deps/directfb_examples .deps/fbset .deps/lirc .deps/lsof .deps/ssh .deps/tcpdump .deps/bonnie .deps/vdr .deps/lufs .deps/dropbear .deps/kermit .deps/wget .deps/ncftp .deps/screen .deps/lzma .deps/lzma_host .deps/ntpd .deps/ntpclient .deps/links .deps/links_g .deps/esound .deps/openntpd .deps/python .deps/ser2net .deps/ipkg .deps/openvpn
 
 #bzip2
 $(DEPDIR)/bzip2: bootstrap @DEPENDS_bzip2@
@@ -728,7 +728,6 @@ $(DEPDIR)/upx_host: directories ucl @DEPENDS_upx_host@
 	@CLEANUP_upx_host@
 	touch $@
 
-if ENABLE_OPENVPN
 $(DEPDIR)/openvpn: bootstrap libcrypto @DEPENDS_openvpn@
 	@PREPARE_openvpn@
 	cd @DIR_openvpn@ && \
@@ -743,6 +742,7 @@ $(DEPDIR)/openvpn: bootstrap libcrypto @DEPENDS_openvpn@
 	@CLEANUP_openvpn@
 	touch $@
 
+if ENABLE_OPENVPN
 if TARGETRULESET_FLASH
 flash-openvpn: $(flashprefix)/root/sbin/openvpn
 
@@ -755,7 +755,6 @@ $(flashprefix)/root/sbin/openvpn: libcrypto openvpn | $(flashprefix)/root
 endif
 endif
 
-if ENABLE_IPKG
 $(DEPDIR)/ipkg: bootstrap @DEPENDS_ipkg@
 	@PREPARE_ipkg@
 	cd @DIR_ipkg@ && \
@@ -774,6 +773,7 @@ $(DEPDIR)/ipkg: bootstrap @DEPENDS_ipkg@
 	@CLEANUP_ipkg@
 	touch $@
 
+if ENABLE_IPKG
 if TARGETRULESET_FLASH
 flash-ipkg: ipkg $(flashprefix)/root/bin/ipkg
 

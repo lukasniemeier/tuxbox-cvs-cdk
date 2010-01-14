@@ -232,12 +232,18 @@ if ENABLE_MMC
 DRIVER_MMC=yes
 endif
 
+if ENABLE_RTC
+DRIVER_RTC=yes
+endif
+
 driver: $(KERNEL_BUILD_FILENAME)
 	$(MAKE) -C $(driverdir) \
+		DRIVER_RTC=$(DRIVER_RTC) \
 		DRIVER_MMC=$(DRIVER_MMC) \
 		KERNEL_LOCATION=$(buildprefix)/linux \
 		CROSS_COMPILE=$(target)-
 	$(MAKE) -C $(driverdir) \
+		DRIVER_RTC=$(DRIVER_RTC) \
 		DRIVER_MMC=$(DRIVER_MMC) \
 		KERNEL_LOCATION=$(buildprefix)/linux \
 		CROSS_COMPILE=$(target)- \

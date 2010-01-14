@@ -110,6 +110,13 @@ $(DEPDIR)/strace: bootstrap @DEPENDS_strace@
 	@CLEANUP_strace@
 	touch $@
 
+if TARGETRULESET_FLASH
+flash-strace: $(flashprefix)/root/bin/strace
+$(flashprefix)/root/bin/strace: strace
+	$(INSTALL) $(targetprefix)/bin/strace $(flashprefix)/root/bin
+	@FLASHROOTDIR_MODIFIED@
+endif
+
 $(DEPDIR)/nano: bootstrap libncurses @DEPENDS_nano@
 	@PREPARE_nano@
 	cd @DIR_nano@ && \

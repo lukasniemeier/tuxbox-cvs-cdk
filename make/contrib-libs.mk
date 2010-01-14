@@ -12,7 +12,7 @@ libs_optional: \
 	libcommoncplusplus libffi \
 	libboost libgmp \
 	libpcap libxml2 libungif \
-	libexpat libcrypto @SQLITE@
+	libexpat libcrypto sqlite
 
 libs_host : \
 	libgmp_host libmpfr_host

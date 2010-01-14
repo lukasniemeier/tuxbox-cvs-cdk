@@ -26,6 +26,11 @@ if ENABLE_OPENVPN
 BUSYBOX_M4 += -Dopenvpn
 endif
 
+# if standalone procps is not enabled, use the busybox applets instead
+if !ENABLE_PROCPS
+BUSYBOX_M4 += -Dprocps
+endif
+
 # this variable is needed because cdk/rules.pl assumes *.patch can be found in cdk/Patches
 #BUSYBOX_PATCHES =
 

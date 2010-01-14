@@ -805,14 +805,19 @@ option(`CONFIG_PIDOF', `y', `y')
 option(`CONFIG_FEATURE_PIDOF_SINGLE', `n', `n')
 option(`CONFIG_FEATURE_PIDOF_OMIT', `n', `n')
 # CONFIG_PKILL is not set
-option(`CONFIG_PS', `y', `y')
-option(`CONFIG_FEATURE_PS_WIDE', `n', `n')
+ifdef(`procps',
+`option(`CONFIG_PS', `y', `y')
+option(`CONFIG_FEATURE_PS_WIDE', `n', `n')',
+`# CONFIG_PS is not set
+# CONFIG_FEATURE_PS_WIDE is not set')
 # CONFIG_FEATURE_PS_TIME is not set
 # CONFIG_FEATURE_PS_UNUSUAL_SYSTEMS is not set
 option(`CONFIG_RENICE', `y', `y')
 option(`CONFIG_BB_SYSCTL', `n', `n')
-option(`CONFIG_TOP', `y', `y')
-option(`CONFIG_FEATURE_TOP_CPU_USAGE_PERCENTAGE', `n', `n')
+ifdef(`procps',
+`option(`CONFIG_TOP', `y', `y')',
+`# CONFIG_TOP is not set')
+# CONFIG_FEATURE_TOP_CPU_USAGE_PERCENTAGE is not set
 # CONFIG_FEATURE_TOP_CPU_GLOBAL_PERCENTS is not set
 # CONFIG_FEATURE_TOP_SMP_CPU is not set
 # CONFIG_FEATURE_TOP_DECIMALS is not set

@@ -6,7 +6,13 @@ else
 ENIGMA_REISERFS=no
 endif
 
-$(appsdir)/tuxbox/enigma/config.status: bootstrap libfreetype libfribidi libmad libid3tag libvorbisidec libpng libsigc libjpeg libungif @LIBGETTEXT@ @SQLITE@ $(targetprefix)/lib/pkgconfig/tuxbox.pc $(targetprefix)/lib/pkgconfig/tuxbox-xmltree.pc $(targetprefix)/include/tuxbox/plugin.h
+if ENABLE_SQLITE
+ENIGMA_DEPENDS=sqlite
+else
+ENIGMA_DEPENDS=
+endif
+
+$(appsdir)/tuxbox/enigma/config.status: bootstrap libfreetype libfribidi libmad libid3tag libvorbisidec libpng libsigc libjpeg libungif @LIBGETTEXT@ $(ENIGMA_DEPENDS) $(targetprefix)/lib/pkgconfig/tuxbox.pc $(targetprefix)/lib/pkgconfig/tuxbox-xmltree.pc $(targetprefix)/include/tuxbox/plugin.h
 	cd $(appsdir)/tuxbox/enigma && $(CONFIGURE) \
 		  --with-webif=$(WEBIF) \
 		  --with-epg=$(EPG) \

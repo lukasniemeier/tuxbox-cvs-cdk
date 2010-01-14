@@ -54,14 +54,6 @@ else
 fi
 AC_SUBST(GLIBC_PTHREADS)
 
-AC_ARG_ENABLE(sqlite,
-	AS_HELP_STRING(--enable-sqlite,enable sql storage),
-	[case "${enableval}" in
-		yes) SQLITE=sqlite ;;
-	esac],[enable_sqlite=no])
-AM_CONDITIONAL(ENABLE_SQLITE,test "$enable_sqlite" = "yes")
-AC_SUBST(SQLITE)
-
 AC_ARG_WITH(targetruleset,
 	[  --with-targetruleset=NAME	
                           OBSOLETE, use --[[enable|disable]]-flashrules instead],
@@ -123,43 +115,6 @@ if test "$enable_uclibc" = "yes"; then
 	LIBGETTEXT=libgettext
 fi
 AC_SUBST(LIBGETTEXT)
-
-AC_ARG_ENABLE(lirc,
-	AS_HELP_STRING(--enable-lirc,	include lirc in yadds and images),
-	[case "${enableval}" in
-		yes) LIRC=lirc ;;
-	esac], [enable_lirc=no])
-# only the dbox2 has IR send, AFAIK
-if test "$BOXTYPE" != "dbox2"; then
-	enable_lirc=no
-fi
-
-AM_CONDITIONAL(ENABLE_LIRC,test "$enable_lirc" = "yes")
-AC_SUBST(LIRC)
-
-AC_ARG_ENABLE(cdkVcInfo,
-	AS_HELP_STRING(--enable-cdkVcInfo,	include cdkVcInfo in yadds and images),
-	[case "${enableval}" in
-		yes) CDKVCINFO=cdkVcInfo ;;
-	esac],[enable_cdkVcInfo=no])
-AM_CONDITIONAL(ENABLE_CDKVCINFO,test "$enable_cdkVcInfo" = "yes")
-AC_SUBST(CDKVCINFO)
-
-AC_ARG_ENABLE(openvpn,
-	AS_HELP_STRING(--enable-openvpn,		include OpenVPN in yadds and images and build tun kernel module),
-	[case "${enableval}" in
-		yes) OPENVPN=openvpn ;;
-	esac],[enable_openvpn=no])
-AM_CONDITIONAL(ENABLE_OPENVPN,test "$enable_openvpn" = "yes")
-AC_SUBST(OPENVPN)
-
-AC_ARG_ENABLE(ipkg,
-	AS_HELP_STRING(--enable-ipkg,		include ipkg in yadds and images ),
-	[case "${enableval}" in
-		yes) IPKG=ipkg ;;
-	esac],[enable_ipkg=no])
-AM_CONDITIONAL(ENABLE_IPKG,test "$enable_ipkg" = "yes")
-AC_SUBST(IPKG)
 
 AC_ARG_ENABLE(german_keymaps,
 	AS_HELP_STRING(--enable-german-keymaps,	include loadkey and German keymaps in yadds and images),
@@ -497,23 +452,10 @@ AC_ARG_ENABLE(movieplayer,
 	,[enable_movieplayer=yes])
 AM_CONDITIONAL(ENABLE_MOVIEPLAYER,test "$enable_movieplayer" = "yes")
 
-AC_ARG_ENABLE(esd,
-	AS_HELP_STRING(--enable-esd,include esd sound daemon),
-	[case "${enableval}" in
-		yes) ESOUND=esound ;;
-	esac],[enable_esd=no])
-AM_CONDITIONAL(ENABLE_ESD,test "$enable_esd" = "yes")
-AC_SUBST(ESOUND)
-
 AC_ARG_ENABLE(radiotext,
 	AS_HELP_STRING(--disable-radiotext,include Neutrino Radiotext support),
 	,[enable_radiotext=yes])
 AM_CONDITIONAL(ENABLE_RADIOTEXT,test "$enable_radiotext" = "yes")
-
-AC_ARG_ENABLE(internal-tuxtxt,
-	AS_HELP_STRING(--disable-internal-tuxtxt,[include internal Tuxtxt, use only external Tuxtxt plugin when disabled]),
-	,[enable_internal_tuxtxt=yes])
-AM_CONDITIONAL(ENABLE_INTERNAL_TUXTXT,test "$enable_internal_tuxtxt" = "yes")
 
 if test "$enable_uclibc" = "yes" && test "$enable_flac" = "yes" && test "$enable_flashrules" = "yes"; then
 	echo
@@ -532,6 +474,192 @@ if test "$enable_fx2plugins" = "yes"; then
 fi
 AC_SUBST(FX2PLUGINS)
 AM_CONDITIONAL(ENABLE_FX2PLUGINS,test "$enable_fx2plugins" = "yes")
+
+# choose set of tools/plugins to be part of flash images
+AC_ARG_ENABLE(aformat,
+	AS_HELP_STRING(--enable-aformat,enable aformat - dbox2-only),
+	[case "${enableval}" in
+		yes) 	if ! test "$BOXTYPE" = "dbox2"; then
+				enable_aformat="boxtype not supported"
+			fi ;;
+	esac],[enable_aformat=no])
+AM_CONDITIONAL(ENABLE_AFORMAT,test "$enable_aformat" = "yes")
+
+AC_ARG_ENABLE(cdkVcInfo,
+	AS_HELP_STRING(--enable-cdkVcInfo,include cdkVcInfo in yadds and images),
+	,[enable_cdkVcInfo=no])
+AM_CONDITIONAL(ENABLE_CDKVCINFO,test "$enable_cdkVcInfo" = "yes")
+
+AC_ARG_ENABLE(clock,
+	AS_HELP_STRING(--enable-clock,enable clock),
+	,[enable_clock=no])
+AM_CONDITIONAL(ENABLE_CLOCK,test "$enable_clock" = "yes")
+
+AC_ARG_ENABLE(dboxshot,
+	AS_HELP_STRING(--enable-dboxshot,enable dboxshot),
+	,[enable_dboxshot=no])
+AM_CONDITIONAL(ENABLE_DBOXSHOT,test "$enable_dboxshot" = "yes")
+
+AC_ARG_ENABLE(dropbear,
+	AS_HELP_STRING(--enable-dropbear,enable dropbear),
+	,[enable_dropbear=no])
+AM_CONDITIONAL(ENABLE_DROPBEAR,test "$enable_dropbear" = "yes")
+
+AC_ARG_ENABLE(dvbsnoop,
+	AS_HELP_STRING(--enable-dvbsnoop,enable dvbsnoop),
+	,[enable_dvbsnoop=no])
+AM_CONDITIONAL(ENABLE_DVBSNOOP,test "$enable_dvbsnoop" = "yes")
+
+AC_ARG_ENABLE(dvbsub,
+	AS_HELP_STRING(--disable-dvbsub,disable dvbsub),
+	,[enable_dvbsub=yes])
+AM_CONDITIONAL(ENABLE_DVBSUB,test "$enable_dvbsub" = "yes")
+
+AC_ARG_ENABLE(esd,
+	AS_HELP_STRING(--enable-esd,enable esound),
+	[case "${enableval}" in
+		yes) ESOUND=esound ;;
+	esac],[enable_esd=no])
+AM_CONDITIONAL(ENABLE_ESD,test "$enable_esd" = "yes")
+AC_SUBST(ESOUND)
+
+AC_ARG_ENABLE(fbshot,
+	AS_HELP_STRING(--enable-fbshot,enable fbshot),
+	,[enable_fbshot=no])
+AM_CONDITIONAL(ENABLE_FBSHOT,test "$enable_fbshot" = "yes")
+
+AC_ARG_ENABLE(gdbserver,
+	AS_HELP_STRING(--enable-gdbserver,enable gdbserver),
+	,[enable_gdbserver=no])
+AM_CONDITIONAL(ENABLE_GDBSERVER,test "$enable_gdbserver" = "yes")
+
+AC_ARG_ENABLE(getrc,
+	AS_HELP_STRING(--enable-getrc,enable getrc),
+	,[enable_getrc=no])
+AM_CONDITIONAL(ENABLE_GETRC,test "$enable_getrc" = "yes")
+
+AC_ARG_ENABLE(hddtemp,
+	AS_HELP_STRING(--enable-hddtemp,include hddtemp in yadds and images - depends on IDE support),
+	[case "${enableval}" in
+		yes) 	if ! test "$enable_ide" = "yes"; then
+				enable_hddtemp="disabled due to missing IDE support"
+			fi ;;
+	esac],[enable_hddtemp=no])
+AM_CONDITIONAL(ENABLE_HDDTEMP,test "$enable_hddtemp" = "yes")
+
+AC_ARG_ENABLE(input,
+	AS_HELP_STRING(--enable-input,enable the tool named input),
+	,[enable_input=no])
+AM_CONDITIONAL(ENABLE_INPUT,test "$enable_input" = "yes")
+
+AC_ARG_ENABLE(ipkg,
+	AS_HELP_STRING(--enable-ipkg,include ipkg in yadds and images),
+	,[enable_ipkg=no])
+AM_CONDITIONAL(ENABLE_IPKG,test "$enable_ipkg" = "yes")
+
+AC_ARG_ENABLE(lcshot,
+	AS_HELP_STRING(--enable-lcshot,enable lcshot - dbox2-only),
+	[case "${enableval}" in
+		yes) 	if ! test "$BOXTYPE" = "dbox2"; then
+				enable_lcshot="boxtype not supported"
+			fi ;;
+	esac],[enable_lcshot=no])
+AM_CONDITIONAL(ENABLE_LCSHOT,test "$enable_lcshot" = "yes")
+
+AC_ARG_ENABLE(lirc,
+	AS_HELP_STRING(--enable-lirc,include lirc in yadds and images - dbox2-only),
+	[case "${enableval}" in
+		yes) 	if ! test "$BOXTYPE" = "dbox2"; then
+				enable_lirc="boxtype not supported"
+			fi ;;
+	esac],[enable_lirc=no])
+AM_CONDITIONAL(ENABLE_LIRC,test "$enable_lirc" = "yes")
+
+AC_ARG_ENABLE(msgbox,
+	AS_HELP_STRING(--enable-msgbox,enable msgbox),
+	,[enable_msgbox=no])
+AM_CONDITIONAL(ENABLE_MSGBOX,test "$enable_msgbox" = "yes")
+
+AC_ARG_ENABLE(openvpn,
+	AS_HELP_STRING(--enable-openvpn,include OpenVPN in yadds and images and build tun kernel module),
+	,[enable_openvpn=no])
+AM_CONDITIONAL(ENABLE_OPENVPN,test "$enable_openvpn" = "yes")
+
+AC_ARG_WITH(procps,
+	AS_HELP_STRING(--with-procps,replace Busybox applets ps and top with procps versions),
+	[enable_procps="$withval"],[enable_procps=no])
+AM_CONDITIONAL(ENABLE_PROCPS,test "$enable_procps" = "yes")
+
+AC_ARG_ENABLE(rtc,
+	AS_HELP_STRING(--disable-rtc,disable rtc hardware support - dbox2-only),
+	[case "${enableval}" in
+		yes) 	if ! test "$BOXTYPE" = "dbox2"; then
+				enable_rtc="boxtype not supported"
+			fi ;;
+	esac],[	if test "$BOXTYPE" = "dbox2"; then
+			enable_rtc=yes
+		else
+			enable_rtc="boxtype not supported"
+		fi])
+AM_CONDITIONAL(ENABLE_RTC,test "$enable_rtc" = "yes")
+
+AC_ARG_ENABLE(satfind,
+	AS_HELP_STRING(--enable-satfind,enable satfind),
+	,[enable_satfind=no])
+AM_CONDITIONAL(ENABLE_SATFIND,test "$enable_satfind" = "yes")
+
+AC_ARG_ENABLE(shellexec,
+	AS_HELP_STRING(--enable-shellexec,enable shellexec),
+	,[enable_shellexec=no])
+AM_CONDITIONAL(ENABLE_SHELLEXEC,test "$enable_shellexec" = "yes")
+
+AC_ARG_ENABLE(sqlite,
+	AS_HELP_STRING(--enable-sqlite,enable sqlite),
+	,[enable_sqlite=no])
+AM_CONDITIONAL(ENABLE_SQLITE,test "$enable_sqlite" = "yes")
+
+AC_ARG_ENABLE(strace,
+	AS_HELP_STRING(--enable-strace,enable strace),
+	,[enable_strace=no])
+AM_CONDITIONAL(ENABLE_STRACE,test "$enable_strace" = "yes")
+
+AC_ARG_ENABLE(sysinfo,
+	AS_HELP_STRING(--enable-sysinfo,enable sysinfo),
+	,[enable_sysinfo=no])
+AM_CONDITIONAL(ENABLE_SYSINFO,test "$enable_sysinfo" = "yes")
+
+AC_ARG_ENABLE(tuxcal,
+	AS_HELP_STRING(--enable-tuxcal,enable tuxcal),
+	,[enable_tuxcal=no])
+AM_CONDITIONAL(ENABLE_TUXCAL,test "$enable_tuxcal" = "yes")
+
+AC_ARG_ENABLE(tuxcom,
+	AS_HELP_STRING(--disable-tuxcom,disable tuxcom),
+	,[enable_tuxcom=yes])
+AM_CONDITIONAL(ENABLE_TUXCOM,test "$enable_tuxcom" = "yes")
+
+AC_ARG_ENABLE(tuxmail,
+	AS_HELP_STRING(--disable-tuxmail,disable tuxmail),
+	,[enable_tuxmail=yes])
+AM_CONDITIONAL(ENABLE_TUXMAIL,test "$enable_tuxmail" = "yes")
+
+AC_ARG_ENABLE(tuxtxt,
+	AS_HELP_STRING(--disable-tuxtxt,disable tuxtxt completely),
+	,[enable_tuxtxt=yes])
+AM_CONDITIONAL(ENABLE_TUXTXT,test "$enable_tuxtxt" = "yes")
+
+AC_ARG_ENABLE(internal-tuxtxt,
+	AS_HELP_STRING(--disable-internal-tuxtxt,[disable internal Tuxtxt cache, use only external Tuxtxt plugin instead]),
+	,[enable_internal_tuxtxt=yes])
+if ! test "$enable_tuxtxt" = "yes"; then
+	enable_internal_tuxtxt=no
+fi
+AM_CONDITIONAL(ENABLE_INTERNAL_TUXTXT,test "$enable_internal_tuxtxt" = "yes")
+
+AC_ARG_ENABLE(tuxwetter,
+	AS_HELP_STRING(--enable-tuxwetter,enable tuxwetter),
+	,[enable_tuxwetter=no])
+AM_CONDITIONAL(ENABLE_TUXWETTER,test "$enable_tuxwetter" = "yes")
 
 AC_ARG_WITH(rootpartitionsize,
 	[  --with-rootpartitionsize=SIZE
@@ -1293,25 +1421,52 @@ SMBFS kernel module:		$enable_fs_smbfs
 LUFS kernel module:		$enable_fs_lufs
 NFS kernel module:		$enable_fs_nfs
 NFS server:			$enable_nfsserver
-OpenVPN:			$enable_openvpn
 Samba server:			$enable_sambaserver
 Automount:			$enable_automount
-LIRC				$enable_lirc
 Neutrino UPnP-support:		$enable_upnp
 Neutrino Audioplayer:		$enable_audioplayer
 Neutrino Movieplayer:		$enable_movieplayer
 Neutrino Pictureviewer:		$enable_pictureviewer
 Neutrino Mount:			$enable_gui_mount
 Neutrino Drive-Setup:		$enable_drive_gui
-Esound support:			$enable_esd
 Radiotext support:		$enable_radiotext
-Internal Tuxtxt support:	$enable_internal_tuxtxt
 FLAC support:			$enable_flac
 CURL version:			$with_curlversion
 Freetype version:		$with_freetypeversion
 FX2 plugins (games):		$enable_fx2plugins
 German keymaps:			$enable_german_keymaps
+
+aformat				$enable_aformat
+cdkVcInfo			$enable_cdkVcInfo
+clock				$enable_clock
+dboxshot			$enable_dboxshot
+dropbear			$enable_dropbear
+dvbsnoop			$enable_dvbsnoop
+dvbsub				$enable_dvbsub
+Esound support:			$enable_esd
+fbshot				$enable_fbshot
+gdbserver			$enable_gdbserver
+getrc				$enable_getrc
+hddtemp				$enable_hddtemp
+input				$enable_input
+ipkg				$enable_ipkg
+LIRC				$enable_lirc
+lcshot				$enable_lcshot
+msgbox				$enable_msgbox
+OpenVPN:			$enable_openvpn
+procps				$enable_procps
+rtc				$enable_rtc
+satfind				$enable_satfind
+shellexec			$enable_shellexec
 sqlite3 storage:		$enable_sqlite
+strace				$enable_strace
+sysinfo				$enable_sysinfo
+tuxcal				$enable_tuxcal
+tuxcom				$enable_tuxcom
+tuxmail				$enable_tuxmail
+tuxtxt (internal)		$enable_tuxtxt ($enable_internal_tuxtxt)
+tuxwetter			$enable_tuxwetter
+
 ccache support:			$enable_ccache
 $ccacheinfo
 ])

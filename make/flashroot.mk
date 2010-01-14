@@ -32,7 +32,6 @@ if BOXTYPE_DBOX2
 	$(MAKE) flash-tuxinfo
 	$(MAKE) flash-camd2
 	$(MAKE) flash-ucodes
-	$(MAKE) flash-rtc
 endif
 	$(MAKE) flash-tools_misc
 	$(MAKE) flash-fcp
@@ -44,12 +43,6 @@ if ENABLE_FS_LUFS
 	$(MAKE) flash-lufsd
 endif
 	$(MAKE) flash-etherwake
-	$(MAKE) flash-tuxmail
-	$(MAKE) flash-tuxtxt
-	$(MAKE) flash-tuxcom
-	$(MAKE) flash-dvbsub
-	$(MAKE) flash-tuxwetter
-	$(MAKE) flash-sysinfo
 if ENABLE_FX2PLUGINS
 	$(MAKE) flash-fx2-plugins
 endif
@@ -57,7 +50,6 @@ if BOXTYPE_DREAMBOX
 # TODO: pip and mosaic only work with neutrino...
 	$(MAKE) flash-pip
 	$(MAKE) flash-mosaic
-	$(MAKE) flash-dvbsnoop
 if ENABLE_IDEMMC
 	$(MAKE) flash-sfdisk
 endif
@@ -71,15 +63,6 @@ if KERNEL26
 	$(MAKE) flash-makedevices
 	$(MAKE) flash-hotplug
 endif
-endif
-if ENABLE_LIRC
-	$(MAKE) flash-lircd
-endif
-if ENABLE_CDKVCINFO
-	$(MAKE) flash-cdkVcInfo
-endif
-if ENABLE_OPENVPN
-	$(MAKE) flash-openvpn
 endif
 if ENABLE_E2FSPROGS
 	$(MAKE) flash-e2fsprogs
@@ -105,14 +88,94 @@ endif
 if ENABLE_GERMAN_KEYMAPS
 	$(MAKE) flash-german-keymaps
 endif
-if ENABLE_SQLITE
-	$(MAKE) flash-sqlite
+if ENABLE_AFORMAT
+	$(MAKE) flash-aformat
+endif
+if ENABLE_CDKVCINFO
+	$(MAKE) flash-cdkVcInfo
+endif
+if ENABLE_CLOCK
+	$(MAKE) flash-clock
+endif
+if ENABLE_DBOXSHOT
+	$(MAKE) flash-dboxshot
+endif
+if ENABLE_DROPBEAR
+	$(MAKE) flash-dropbear
+endif
+if ENABLE_DVBSNOOP
+	$(MAKE) flash-dvbsnoop
+endif
+if ENABLE_DVBSUB
+	$(MAKE) flash-dvbsub
+endif
+if ENABLE_FBSHOT
+	$(MAKE) flash-fbshot
+endif
+if ENABLE_GDBSERVER
+	$(MAKE) flash-gdbserver
+endif
+if ENABLE_GETRC
+	$(MAKE) flash-getrc
+endif
+if ENABLE_HDDTEMP
+	$(MAKE) flash-hddtemp
+endif
+if ENABLE_INPUT
+	$(MAKE) flash-input
 endif
 if ENABLE_IPKG
 	$(MAKE) flash-ipkg
+endif
+if ENABLE_LCSHOT
+	$(MAKE) flash-lcshot
+endif
+if ENABLE_LIRC
+	$(MAKE) flash-lircd
+endif
+if ENABLE_MSGBOX
+	$(MAKE) flash-msgbox
+endif
+if ENABLE_OPENVPN
+	$(MAKE) flash-openvpn
+endif
+if ENABLE_PROCPS
+	$(MAKE) flash-procps
+endif
+if ENABLE_RTC
+	$(MAKE) flash-rtc
+endif
+if ENABLE_SATFIND
+	$(MAKE) flash-satfind
+endif
+if ENABLE_SHELLEXEC
+	$(MAKE) flash-shellexec
+endif
+if ENABLE_SQLITE
+	$(MAKE) flash-sqlite
+endif
+if ENABLE_STRACE
+	$(MAKE) flash-strace
+endif
+if ENABLE_SYSINFO
+	$(MAKE) flash-sysinfo
+endif
+if ENABLE_TUXCAL
+	$(MAKE) flash-tuxcal
+endif
+if ENABLE_TUXCOM
+	$(MAKE) flash-tuxcom
+endif
+if ENABLE_TUXMAIL
+	$(MAKE) flash-tuxmail
+endif
+if ENABLE_TUXTXT
+	$(MAKE) flash-tuxtxt
+endif
+if ENABLE_TUXWETTER
+	$(MAKE) flash-tuxwetter
 endif
 	$(MAKE) flash-defaultlocale
 	$(MAKE) flash-version
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
-

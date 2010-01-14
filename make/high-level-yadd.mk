@@ -36,7 +36,30 @@ if ENABLE_DOSFSTOOLS
 FILESYSTEM_DEBS += dosfstools
 endif
 
-yadd-none: bare-os config tuxbox_tools procps lcd ftpd yadd-ucodes yadd-bootlogos @AUTOMOUNT@ @LIRC@ @CDKVCINFO@ @NFSSERVER@ @SAMBASERVER@ @LUFS@ @SMBMOUNT@ @CONSOLE_TOOLS@ @OPENVPN@ $(FILESYSTEM_DEBS) version defaultlocale
+ADDITIONAL_DEBS =
+if ENABLE_CDKVCINFO
+ADDITIONAL_DEBS += cdkVcInfo
+endif
+if ENABLE_GDBSERVER
+ADDITIONAL_DEBS += gdbserver
+endif
+if ENABLE_HDDTEMP
+ADDITIONAL_DEBS += hddtemp
+endif
+if ENABLE_LIRC
+ADDITIONAL_DEBS += lirc
+endif
+if ENABLE_OPENVPN
+ADDITIONAL_DEBS += openvpn
+endif
+if ENABLE_PROCPS
+ADDITIONAL_DEBS += procps
+endif
+if ENABLE_STRACE
+ADDITIONAL_DEBS += strace
+endif
+
+yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTOMOUNT@ @NFSSERVER@ @SAMBASERVER@ @LUFS@ @SMBMOUNT@ @CONSOLE_TOOLS@ $(ADDITIONAL_DEBS) $(FILESYSTEM_DEBS) version defaultlocale
 	@TUXBOX_YADD_CUSTOMIZE@
 
 yadd-none-etc: yadd-none yadd-etc

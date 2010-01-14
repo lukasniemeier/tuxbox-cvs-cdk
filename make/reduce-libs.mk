@@ -28,10 +28,12 @@ $(flashprefix)/root-null-jffs2/lib/ld.so.1: \
 	find $</lib -maxdepth 1 -type f -o -type l | xargs rm -f
 	cp -d $(targetprefix)/lib/libnss_dns-?.*.so $</lib || true
 	cp -d $(targetprefix)/lib/libnss_files-?.*.so $</lib || true
+if ENABLE_PROCPS
 	if [ -e $(targetprefix)/lib/libproc-*.so ]; then \
 		cp -d $(targetprefix)/lib/libproc-*.so $</lib; \
 		chmod +w $</lib/libproc-*.so; \
 	fi
+endif
 	$(MKLIBS) --target $(target) --libc-extras-dir \
 		$(targetprefix)/lib/libc_pic \
 		-d $</lib \
