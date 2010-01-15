@@ -279,6 +279,7 @@ $(DEPDIR)/xfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_xfsprogs@
 			--prefix=$(targetprefix) &&\
 		$(MAKE) && \
 		$(MAKE) install DESTDIR=$(targetprefix)
+		@ln -sf xfs_repair $(targetprefix)/sbin/fsck.xfs
 	@CLEANUP_xfsprogs@
 	touch $@
 
@@ -337,6 +338,7 @@ $(flashprefix)/root/sbin/mkfs.xfs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPEND
 		$(MAKE) && \
 		for i in mkfs/mkfs.xfs repair/xfs_repair; do \
 			$(INSTALL) $$i $(flashprefix)/root/sbin; done;
+		@ln -sf xfs_repair $(flashprefix)/root/sbin/fsck.xfs
 	@CLEANUP_xfsprogs@
 	@FLASHROOTDIR_MODIFIED@
 
