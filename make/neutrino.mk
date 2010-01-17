@@ -28,6 +28,9 @@ endif
 if ENABLE_FDISK_STANDALONE
 	$(MAKE) flash-fdisk
 endif
+if ENABLE_DVBSUB
+	$(MAKE) flash-dvbsub
+endif
 	touch $@
 	@TUXBOX_CUSTOMIZE@
 

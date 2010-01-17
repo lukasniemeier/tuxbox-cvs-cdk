@@ -511,7 +511,7 @@ AC_ARG_ENABLE(dvbsnoop,
 AM_CONDITIONAL(ENABLE_DVBSNOOP,test "$enable_dvbsnoop" = "yes")
 
 AC_ARG_ENABLE(dvbsub,
-	AS_HELP_STRING(--disable-dvbsub,disable dvbsub),
+	AS_HELP_STRING(--disable-dvbsub,disable dvbsub - Neutrino only),
 	,[enable_dvbsub=yes])
 AM_CONDITIONAL(ENABLE_DVBSUB,test "$enable_dvbsub" = "yes")
 
@@ -1429,6 +1429,7 @@ Neutrino Movieplayer:		$enable_movieplayer
 Neutrino Pictureviewer:		$enable_pictureviewer
 Neutrino Mount:			$enable_gui_mount
 Neutrino Drive-Setup:		$enable_drive_gui
+Neutrino dvbsub			$enable_dvbsub
 Radiotext support:		$enable_radiotext
 FLAC support:			$enable_flac
 CURL version:			$with_curlversion
@@ -1442,7 +1443,6 @@ clock				$enable_clock
 dboxshot			$enable_dboxshot
 dropbear			$enable_dropbear
 dvbsnoop			$enable_dvbsnoop
-dvbsub				$enable_dvbsub
 Esound support:			$enable_esd
 fbshot				$enable_fbshot
 gdbserver			$enable_gdbserver

@@ -106,9 +106,6 @@ endif
 if ENABLE_DVBSNOOP
 	$(MAKE) flash-dvbsnoop
 endif
-if ENABLE_DVBSUB
-	$(MAKE) flash-dvbsub
-endif
 if ENABLE_FBSHOT
 	$(MAKE) flash-fbshot
 endif
