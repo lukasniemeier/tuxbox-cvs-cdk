@@ -172,6 +172,9 @@ endif
 if ENABLE_TUXWETTER
 	$(MAKE) flash-tuxwetter
 endif
+if ENABLE_VNCVIEWER
+	$(MAKE) flash-vncviewer
+endif
 	$(MAKE) flash-defaultlocale
 	$(MAKE) flash-version
 	@FLASHROOTDIR_MODIFIED@

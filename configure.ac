@@ -661,6 +661,11 @@ AC_ARG_ENABLE(tuxwetter,
 	,[enable_tuxwetter=no])
 AM_CONDITIONAL(ENABLE_TUXWETTER,test "$enable_tuxwetter" = "yes")
 
+AC_ARG_ENABLE(vncviewer,
+	AS_HELP_STRING(--enable-vncviewer,enable vncviewer),
+	,[enable_vncviewer=no])
+AM_CONDITIONAL(ENABLE_VNCVIEWER,test "$enable_vncviewer" = "yes")
+
 AC_ARG_WITH(rootpartitionsize,
 	[  --with-rootpartitionsize=SIZE
                           size of the root partition],
@@ -1466,6 +1471,7 @@ tuxcom				$enable_tuxcom
 tuxmail				$enable_tuxmail
 tuxtxt (internal)		$enable_tuxtxt ($enable_internal_tuxtxt)
 tuxwetter			$enable_tuxwetter
+vncviewer			$enable_vncviewer
 
 ccache support:			$enable_ccache
 $ccacheinfo
