@@ -1,6 +1,6 @@
 # tuxbox/plugins
 
-$(appsdir)/tuxbox/plugins/config.status: bootstrap libfreetype libcurl libz libsigc libpng libjpeg libungif $(targetprefix)/lib/pkgconfig/tuxbox.pc $(targetprefix)/lib/pkgconfig/tuxbox-xmltree.pc $(targetprefix)/lib/pkgconfig/tuxbox-tuxtxt.pc
+$(appsdir)/tuxbox/plugins/config.status: bootstrap libfreetype libcurl libz libsigc libpng libjpeg $(targetprefix)/lib/pkgconfig/tuxbox.pc $(targetprefix)/lib/pkgconfig/tuxbox-xmltree.pc $(targetprefix)/lib/pkgconfig/tuxbox-tuxtxt.pc
 	cd $(appsdir)/tuxbox/plugins && $(CONFIGURE)
 
 plugins: neutrino-plugins enigma-plugins @FX2PLUGINS@
@@ -23,11 +23,11 @@ $(targetprefix)/lib/pkgconfig/tuxbox-plugins.pc: $(appsdir)/tuxbox/plugins/confi
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/include all install
 	cp $(appsdir)/tuxbox/plugins/tuxbox-plugins.pc $(targetprefix)/lib/pkgconfig/tuxbox-plugins.pc
 
-tuxmail: libfreetype $(appsdir)/tuxbox/plugins/config.status
+tuxmail: $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxmail all install
 
 if TARGETRULESET_FLASH
-flash-tuxmail: libfreetype $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+flash-tuxmail: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxmail all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 endif
@@ -113,11 +113,11 @@ flash-shellexec: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 endif
 
-tuxwetter: $(appsdir)/tuxbox/plugins/config.status
+tuxwetter: libungif $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all install
 
 if TARGETRULESET_FLASH
-flash-tuxwetter: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+flash-tuxwetter: libungif $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 endif
