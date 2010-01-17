@@ -146,7 +146,7 @@ msttf;0.0;msttf;arial32.exe:arialb32.exe;dircreate;dirextract:arial32.exe;dirext
 #
 # development tools
 #
-gdb;7.0;gdb-7.0;gdb-7.0.tar.bz2;extract:gdb-7.0.tar.bz2
+gdb;7.0.1;gdb-7.0.1;gdb-7.0.1.tar.bz2;extract:gdb-7.0.1.tar.bz2
 valgrind;3.3.1;valgrind-3.3.1;valgrind-3.3.1.tar.bz2;extract:valgrind-3.3.1.tar.bz2
 insight;6.8-1;insight-6.8-1;insight-6.8-1.tar.bz2;extract:insight-6.8-1.tar.bz2
 ltrace;0.3.26;ltrace-0.3.26;ltrace_0.3.26.tar.gz:ltrace.diff;extract:ltrace_0.3.26.tar.gz;patch:ltrace.diff
