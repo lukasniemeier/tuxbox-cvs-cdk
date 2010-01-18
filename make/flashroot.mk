@@ -106,6 +106,9 @@ endif
 if ENABLE_DVBSNOOP
 	$(MAKE) flash-dvbsnoop
 endif
+if ENABLE_ERASEALL
+	$(MAKE) flash-eraseall
+endif
 if ENABLE_FBSHOT
 	$(MAKE) flash-fbshot
 endif
@@ -124,14 +127,26 @@ endif
 if ENABLE_IPKG
 	$(MAKE) flash-ipkg
 endif
+if ENABLE_KB2RCD
+	$(MAKE) flash-kb2rcd
+endif
 if ENABLE_LCSHOT
 	$(MAKE) flash-lcshot
+endif
+if ENABLE_LINKS
+	$(MAKE) flash-links
+endif
+if ENABLE_LINKS_G
+	$(MAKE) flash-links_g
 endif
 if ENABLE_LIRC
 	$(MAKE) flash-lircd
 endif
 if ENABLE_MSGBOX
 	$(MAKE) flash-msgbox
+endif
+if ENABLE_OPENNTPD
+	$(MAKE) flash-openntpd
 endif
 if ENABLE_OPENVPN
 	$(MAKE) flash-openvpn

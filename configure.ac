@@ -515,6 +515,11 @@ AC_ARG_ENABLE(dvbsub,
 	,[enable_dvbsub=yes])
 AM_CONDITIONAL(ENABLE_DVBSUB,test "$enable_dvbsub" = "yes")
 
+AC_ARG_ENABLE(eraseall,
+	AS_HELP_STRING(--enable-eraseall,include eraseall in yadds and images),
+	,[enable_eraseall=no])
+AM_CONDITIONAL(ENABLE_ERASEALL,test "$enable_eraseall" = "yes")
+
 AC_ARG_ENABLE(esd,
 	AS_HELP_STRING(--enable-esd,enable esound),
 	[case "${enableval}" in
@@ -557,6 +562,11 @@ AC_ARG_ENABLE(ipkg,
 	,[enable_ipkg=no])
 AM_CONDITIONAL(ENABLE_IPKG,test "$enable_ipkg" = "yes")
 
+AC_ARG_ENABLE(kb2rcd,
+	AS_HELP_STRING(--enable-kb2rcd,include kb2rcd in yadds and images),
+	,[enable_kb2rcd=no])
+AM_CONDITIONAL(ENABLE_KB2RCD,test "$enable_kb2rcd" = "yes")
+
 AC_ARG_ENABLE(lcshot,
 	AS_HELP_STRING(--enable-lcshot,enable lcshot - dbox2-only),
 	[case "${enableval}" in
@@ -565,6 +575,16 @@ AC_ARG_ENABLE(lcshot,
 			fi ;;
 	esac],[enable_lcshot=no])
 AM_CONDITIONAL(ENABLE_LCSHOT,test "$enable_lcshot" = "yes")
+
+AC_ARG_ENABLE(links,
+	AS_HELP_STRING(--enable-links,include text mode links browser in yadds and images),
+	,[enable_links=no])
+AM_CONDITIONAL(ENABLE_LINKS,test "$enable_links" = "yes")
+
+AC_ARG_ENABLE(links-g,
+	AS_HELP_STRING(--enable-links-g,include graphic mode links browser in yadds and images),
+	,[enable_links_g=no])
+AM_CONDITIONAL(ENABLE_LINKS_G,test "$enable_links_g" = "yes")
 
 AC_ARG_ENABLE(lirc,
 	AS_HELP_STRING(--enable-lirc,include lirc in yadds and images - dbox2-only),
@@ -579,6 +599,11 @@ AC_ARG_ENABLE(msgbox,
 	AS_HELP_STRING(--enable-msgbox,enable msgbox),
 	,[enable_msgbox=no])
 AM_CONDITIONAL(ENABLE_MSGBOX,test "$enable_msgbox" = "yes")
+
+AC_ARG_ENABLE(openntpd,
+	AS_HELP_STRING(--enable-openntpd,include OpenVPN in yadds and images),
+	,[enable_openntpd=no])
+AM_CONDITIONAL(ENABLE_OPENNTPD,test "$enable_openntpd" = "yes")
 
 AC_ARG_ENABLE(openvpn,
 	AS_HELP_STRING(--enable-openvpn,include OpenVPN in yadds and images and build tun kernel module),
@@ -1448,6 +1473,7 @@ clock				$enable_clock
 dboxshot			$enable_dboxshot
 dropbear			$enable_dropbear
 dvbsnoop			$enable_dvbsnoop
+eraseall			$enable_eraseall
 Esound support:			$enable_esd
 fbshot				$enable_fbshot
 gdbserver			$enable_gdbserver
@@ -1455,9 +1481,13 @@ getrc				$enable_getrc
 hddtemp				$enable_hddtemp
 input				$enable_input
 ipkg				$enable_ipkg
+kb2rcd				$enable_kb2rcd
 LIRC				$enable_lirc
 lcshot				$enable_lcshot
+links text mode browser		$enable_links
+links graphics mode browser	$enable_links_g
 msgbox				$enable_msgbox
+openntpd			$enable_openntpd
 OpenVPN:			$enable_openvpn
 procps				$enable_procps
 rtc				$enable_rtc
