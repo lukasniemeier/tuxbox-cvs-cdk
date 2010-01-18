@@ -627,7 +627,6 @@ $(DEPDIR)/sqlite: bootstrap @DEPENDS_sqlite@
 	@CLEANUP_sqlite@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-sqlite: $(flashprefix)/root/bin/sqlite3
 
 $(flashprefix)/root/bin/sqlite3: @DEPENDS_sqlite@ | $(flashprefix)/root
@@ -642,8 +641,6 @@ $(flashprefix)/root/bin/sqlite3: @DEPENDS_sqlite@ | $(flashprefix)/root
 		$(MAKE) install PREFIX=$(flashprefix)/root
 	@CLEANUP_sqlite@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 $(DEPDIR)/libfaad2: bootstrap @DEPENDS_libfaad2@
 	@PREPARE_libfaad2@

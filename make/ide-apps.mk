@@ -18,7 +18,6 @@ $(DEPDIR)/hdparm: bootstrap @DEPENDS_hdparm@
 		@CLEANUP_hdparm@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-hdparm: $(flashprefix)/root/sbin/hdparm
 
 $(flashprefix)/root/sbin/hdparm: bootstrap @DEPENDS_hdparm@ | $(flashprefix)/root
@@ -31,9 +30,6 @@ $(flashprefix)/root/sbin/hdparm: bootstrap @DEPENDS_hdparm@ | $(flashprefix)/roo
 	@CLEANUP_hdparm@
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
-
-endif
-
 
 # contains [cs]fdisk etc
 $(DEPDIR)/utillinux: bootstrap @DEPENDS_utillinux@
@@ -48,7 +44,6 @@ $(DEPDIR)/utillinux: bootstrap @DEPENDS_utillinux@
 	@CLEANUP_utillinux@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-sfdisk: $(flashprefix)/root/sbin/sfdisk
 
 $(flashprefix)/root/sbin/sfdisk: utillinux | $(flashprefix)/root
@@ -67,8 +62,6 @@ flash-fdisk: $(flashprefix)/root/sbin/fdisk
 $(flashprefix)/root/sbin/fdisk: utillinux | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/sbin/fdisk $@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 if ENABLE_UCLIBC
 E2FSPROGSOPT=--disable-tls
@@ -110,8 +103,6 @@ $(DEPDIR)/e2fsprogs: bootstrap @DEPENDS_e2fsprogs@
 		@INSTALL_e2fsprogs@
 	@CLEANUP_e2fsprogs@
 	touch $@
-
-if TARGETRULESET_FLASH
 
 flash-e2fsprogs: $(flashprefix)/root/sbin/e2fsck
 
@@ -166,7 +157,6 @@ if ENABLE_EXT3
 endif
 		@CLEANUP_e2fsprogs@
 	@FLASHROOTDIR_MODIFIED@
-endif
 
 #parted
 $(DEPDIR)/parted: bootstrap libreadline libncurses e2fsprogs @DEPENDS_parted@
@@ -204,7 +194,6 @@ $(DEPDIR)/hddtemp: bootstrap @DEPENDS_hddtemp@
 	@CLEANUP_hddtemp@
 	touch $@ 
 
-if TARGETRULESET_FLASH
 flash-hddtemp: $(flashprefix)/root/sbin/hddtemp
 
 $(flashprefix)/root/sbin/hddtemp: bootstrap @DEPENDS_hddtemp@ | $(flashprefix)/root
@@ -223,8 +212,6 @@ $(flashprefix)/root/sbin/hddtemp: bootstrap @DEPENDS_hddtemp@ | $(flashprefix)/r
 	@CLEANUP_hddtemp@
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
-
-endif
 
 #xfsprogs
 # xfsprogs needs "special" built libtool and uuid header/lib of e2fsprogs
@@ -283,7 +270,6 @@ $(DEPDIR)/xfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_xfsprogs@
 	@CLEANUP_xfsprogs@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-xfsprogs: $(flashprefix)/root/sbin/mkfs.xfs
 
 $(flashprefix)/root/sbin/mkfs.xfs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_xfsprogs@ | $(flashprefix)/root
@@ -342,8 +328,6 @@ $(flashprefix)/root/sbin/mkfs.xfs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPEND
 	@CLEANUP_xfsprogs@
 	@FLASHROOTDIR_MODIFIED@
 
-endif
-
 #reiserfsprogs
 # reiserfsprogs needs "special" built libtool and uuid header/lib of e2fsprogs
 $(DEPDIR)/reiserfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_reiserfsprogs@
@@ -399,8 +383,6 @@ $(DEPDIR)/reiserfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_reiserfs
 	@CLEANUP_reiserfsprogs@
 	touch $@
 
-if TARGETRULESET_FLASH
-
 flash-reiserfsprogs: $(flashprefix)/root/sbin/mkreiserfs $(flashprefix)/root/sbin/reiserfsck
 
 $(flashprefix)/root/sbin/mkreiserfs: bootstrap libtool reiserfsprogs | $(flashprefix)/root
@@ -412,8 +394,6 @@ $(flashprefix)/root/sbin/reiserfsck: bootstrap libtool reiserfsprogs | $(flashpr
 	$(INSTALL) $(targetprefix)/sbin/reiserfsck $(flashprefix)/root/sbin
 	@ln -sf reiserfsck $(flashprefix)/root/sbin/fsck.reiserfs
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 #smartmontools
 $(DEPDIR)/smartmontools: bootstrap @DEPENDS_smartmontools@
@@ -431,7 +411,6 @@ $(DEPDIR)/smartmontools: bootstrap @DEPENDS_smartmontools@
 	@CLEANUP_smartmontools@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-smartmontools: $(flashprefix)/root/sbin/smartctl
 
 $(flashprefix)/root/sbin/smartctl: bootstrap @DEPENDS_smartmontools@ | $(flashprefix)/root
@@ -450,8 +429,6 @@ $(flashprefix)/root/sbin/smartctl: bootstrap @DEPENDS_smartmontools@ | $(flashpr
 	@CLEANUP_smartmontools@
 	@FLASHROOTDIR_MODIFIED@
 
-endif
-
 $(DEPDIR)/dosfstools: bootstrap @DEPENDS_dosfstools@
 	@PREPARE_dosfstools@
 	cd @DIR_dosfstools@ && \
@@ -461,8 +438,6 @@ $(DEPDIR)/dosfstools: bootstrap @DEPENDS_dosfstools@
 		@INSTALL_dosfstools@		
 		@CLEANUP_dosfstools@
 	touch $@
-
-if TARGETRULESET_FLASH
 
 flash-dosfstools: $(flashprefix)/root/sbin/mkfs.msdos
 
@@ -475,5 +450,3 @@ $(flashprefix)/root/sbin/mkfs.msdos: dosfstools | $(flashprefix)/root
 		@ln -sf dosfsck $(flashprefix)/root/sbin/fsck.msdos
 		@ln -sf dosfsck $(flashprefix)/root/sbin/fsck.vfat
 	@FLASHROOTDIR_MODIFIED@
-
-endif

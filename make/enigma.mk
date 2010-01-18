@@ -25,8 +25,6 @@ $(appsdir)/tuxbox/enigma/config.status: bootstrap libfreetype libfribidi libmad 
 enigma: $(appsdir)/tuxbox/enigma/config.status | tuxbox_tools
 	$(MAKE) -C $(appsdir)/tuxbox/enigma all install
 
-if TARGETRULESET_FLASH
-
 # $(targetprefix)/share/locale/*/LC_MESSAGES/libc.mo and
 # $(targetprefix)/share/zoneinfo are from the glibc installation
 
@@ -123,5 +121,3 @@ endif
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/script all install prefix=$@
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/weather all install prefix=$@
 	@TUXBOX_CUSTOMIZE@
-
-endif

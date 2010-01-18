@@ -7,7 +7,6 @@ misc_tools: $(appsdir)/misc/tools/config.status
 	$(MAKE) -C $(appsdir)/misc/tools all install
 
 
-if TARGETRULESET_FLASH
 flash-misc_tools: $(appsdir)/misc/tools/config.status
 	$(MAKE) -C $(appsdir)/misc/tools all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
@@ -53,5 +52,3 @@ flash-makedevices: $(flashprefix)/root/bin/makedevices
 $(flashprefix)/root/bin/makedevices:  $(appsdir)/misc/tools/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/misc/tools/makedevices all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
-
-endif

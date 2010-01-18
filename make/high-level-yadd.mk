@@ -3,12 +3,7 @@ all:
 	@echo "Sensible targets are, e.g. yadd-enigma or flash-neutrino-jffs2-2x."
 	@echo "If you REALLY want to build everything, then \"make everything\""
 
-if TARGETRULESET_FLASH
 everything: yadd-all flash-all-all-all serversupport extra 
-else
-everything: yadd-all extra serversupport
-endif
-
 
 if KERNEL26
 bare-os: yadd-u-boot kernel-cdk driver busybox module_init_tools \

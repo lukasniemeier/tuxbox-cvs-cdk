@@ -21,7 +21,6 @@ $(DEPDIR)/nfs-utils: bootstrap @DEPENDS_nfs_utils@
 	rm -rf @DIR_nfs_utils@
 	@touch $@
 
-if TARGETRULESET_FLASH
 flash-nfsserver: flash-portmap flash-nfs-utils
 
 # nfs-utils
@@ -47,7 +46,5 @@ $(flashprefix)/root/sbin/rpc.nfsd: bootstrap @DEPENDS_nfs_utils@ | $(flashprefix
 		$(MAKE) -C utils/nfsd DESTDIR=$(flashprefix)/root install
 	rm -rf @DIR_nfs_utils@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 endif

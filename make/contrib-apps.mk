@@ -18,7 +18,6 @@ $(DEPDIR)/bzip2: bootstrap @DEPENDS_bzip2@
 	@CLEANUP_bzip2@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-bzip2: $(flashprefix)/root/bin/bzip2
 
 $(flashprefix)/root/bin/bzip2: @DEPENDS_bzip2@ | $(flashprefix)/root
@@ -30,8 +29,6 @@ $(flashprefix)/root/bin/bzip2: @DEPENDS_bzip2@ | $(flashprefix)/root
 		$(MAKE) install PREFIX=$(flashprefix)/root
 	@CLEANUP_bzip2@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 #console_data console_tools
 $(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
@@ -80,8 +77,6 @@ $(DEPDIR)/kbd: bootstrap console_data @DEPENDS_kbd@
 	@CLEANUP_kbd@
 	touch $@
 
-if TARGETRULESET_FLASH 
-
 # This is ugly, very ugly. But I do not know of a completely clean way
 # of installing just the minimum.
 
@@ -96,8 +91,6 @@ flash-german-keymaps: $(DEPDIR)/kbd
 	$(INSTALL) -m 444 $(targetprefix)/share/keymaps/i386/include/qwertz-layout.inc.gz $(flashprefix)/root/share/keymaps/i386/include
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
-
-endif
 
 $(DEPDIR)/directfb_examples: bootstrap libdirectfb @DEPENDS_directfb_examples@
 	@PREPARE_directfb_examples@
@@ -142,16 +135,12 @@ $(DEPDIR)/lirc: bootstrap @DEPENDS_lirc@
 	@CLEANUP_lirc@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-lircd: $(flashprefix)/root/sbin/lircd
 
 $(flashprefix)/root/sbin/lircd: lirc
 	$(INSTALL) $(targetprefix)/sbin/lircd $@
 	$(INSTALL) -d $(targetprefix)/var/tuxbox/config/lirc
 	@FLASHROOTDIR_MODIFIED@
-
-endif
-
 
 #lsof
 $(DEPDIR)/lsof: bootstrap @DEPENDS_lsof@
@@ -196,8 +185,6 @@ $(DEPDIR)/dropbear: bootstrap libz @DEPENDS_dropbear@
 	@CLEANUP_dropbear@
 	touch $@
 
-if TARGETRULESET_FLASH
-
 flash-dropbear: $(flashprefix)/root/sbin/dropbearmulti
 
 $(flashprefix)/root/sbin/dropbearmulti: $(DEPDIR)/dropbear | $(flashprefix)/root
@@ -208,8 +195,6 @@ $(flashprefix)/root/sbin/dropbearmulti: $(DEPDIR)/dropbear | $(flashprefix)/root
 	mkdir -p $(flashprefix)/root/var/etc/dropbear
 	ln -sf /var/.ssh $(flashprefix)/root/.ssh
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 #ssh
 $(DEPDIR)/ssh: bootstrap libcrypto libz @DEPENDS_ssh@
@@ -233,7 +218,6 @@ $(DEPDIR)/ssh: bootstrap libcrypto libz @DEPENDS_ssh@
 	@CLEANUP_ssh@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-ssh: $(flashprefix)/root/bin/ssh
 
 $(flashprefix)/root/bin/ssh: $(flashprefix)/root $(DEPDIR)/ssh
@@ -255,7 +239,6 @@ $(flashprefix)/root/sbin/sshd: $(DEPDIR)/ssh | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/libexec/sftp-server $(flashprefix)/root/libexec
 	$(INSTALL) $(targetprefix)/sbin/sshd $(flashprefix)/root/sbin
 	@FLASHROOTDIR_MODIFIED@
-endif
 
 #tcpdump
 $(DEPDIR)/tcpdump: bootstrap libpcap @DEPENDS_tcpdump@
@@ -289,14 +272,11 @@ $(DEPDIR)/bonnie: bootstrap @DEPENDS_bonnie@
 	@CLEANUP_bonnie@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-bonnie: $(flashprefix)/root/sbin/bonnie
 
 $(flashprefix)/root/sbin/bonnie: bonnie | $(flashprefix)/root
 	cp $(targetprefix)/sbin/bonnie $@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 #vdr
 $(DEPDIR)/vdr: bootstrap @DEPENDS_vdr@
@@ -335,7 +315,6 @@ $(DEPDIR)/lufs: bootstrap @DEPENDS_lufs@
 	@CLEANUP_lufs@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-lufsd: $(flashprefix)/root/bin/lufsd
 
 $(flashprefix)/root/bin/lufsd: bootstrap @DEPENDS_lufs@ | $(flashprefix)/root
@@ -368,7 +347,6 @@ $(flashprefix)/root/bin/lufsd: bootstrap @DEPENDS_lufs@ | $(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
 endif
-endif
 
 #kermit
 $(DEPDIR)/kermit: bootstrap @DEPENDS_kermit@ libcrypto Patches/kermit.diff
@@ -398,7 +376,6 @@ $(DEPDIR)/wget: bootstrap @DEPENDS_wget@
 	@CLEANUP_wget@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-wget: $(flashprefix)/root/bin/wget
 
 $(flashprefix)/root/bin/wget: wget | $(flashprefix)/root
@@ -406,8 +383,6 @@ $(flashprefix)/root/bin/wget: wget | $(flashprefix)/root
 	@$(INSTALL) -d $(flashprefix)/root/bin
 	$(INSTALL) $(targetprefix)/bin/wget $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 #ncftp
 $(DEPDIR)/ncftp: bootstrap @DEPENDS_ncftp@
@@ -423,9 +398,6 @@ $(DEPDIR)/ncftp: bootstrap @DEPENDS_ncftp@
 	@CLEANUP_ncftp@
 	touch $@
 
-
-if TARGETRULESET_FLASH
-
 flash-ncftp: $(flashprefix)/root/bin/ncftp
 
 $(flashprefix)/root/bin/ncftp: ncftp | $(flashprefix)/root
@@ -433,8 +405,6 @@ $(flashprefix)/root/bin/ncftp: ncftp | $(flashprefix)/root
 	@for i in ncftp ncftpbatch ncftpget ncftpls ncftpput ncftpspooler; do \
 	$(INSTALL) $(targetprefix)/bin/$$i $(flashprefix)/root/bin; done;
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 #screen
 $(DEPDIR)/screen: bootstrap @DEPENDS_screen@
@@ -450,7 +420,6 @@ $(DEPDIR)/screen: bootstrap @DEPENDS_screen@
 	@CLEANUP_screen@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-screen: $(flashprefix)/root/bin/screen
 
 $(flashprefix)/root/bin/screen: screen | $(flashprefix)/root
@@ -458,8 +427,6 @@ $(flashprefix)/root/bin/screen: screen | $(flashprefix)/root
 	@$(INSTALL) -d $(flashprefix)/root/bin
 	$(INSTALL) $(targetprefix)/bin/screen $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 #lzma
 $(DEPDIR)/lzma: bootstrap @DEPENDS_lzma@
@@ -471,7 +438,6 @@ $(DEPDIR)/lzma: bootstrap @DEPENDS_lzma@
 	@CLEANUP_lzma@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-lzma: $(flashprefix)/root/bin/lzma
 flash-lzma_alone: $(flashprefix)/root/bin/lzma_alone
 
@@ -486,8 +452,6 @@ $(flashprefix)/root/bin/lzma_alone: lzma | $(flashprefix)/root
 	@$(INSTALL) -d $(flashprefix)/root/bin
 	$(INSTALL) $(targetprefix)/bin/lzma_alone $(flashprefix)/root/bin; done
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 $(DEPDIR)/lzma_host: directories @DEPENDS_lzma_host@
 	@PREPARE_lzma_host@
@@ -510,15 +474,11 @@ $(DEPDIR)/links: bootstrap @DEPENDS_links@
 	@CLEANUP_links@
 	touch $@
 
-if TARGETRULESET_FLASH
-
 flash-links: $(flashprefix)/root/bin/links
 
 $(flashprefix)/root/bin/links: $(DEPDIR)/links | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/links $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 $(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd @DEPENDS_links_g@
 	@PREPARE_links_g@
@@ -554,8 +514,6 @@ $(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd @DEPENDS_links_g@
 	chmod 755 $(targetprefix)/var/tuxbox/plugins/links.sh
 	touch $@
 
-if TARGETRULESET_FLASH
-
 flash-links_g: flash-kb2rcd $(flashprefix)/root/bin/links_g
 
 $(flashprefix)/root/bin/links_g: $(DEPDIR)/links_g | $(flashprefix)/root
@@ -566,8 +524,6 @@ $(flashprefix)/root/bin/links_g: $(DEPDIR)/links_g | $(flashprefix)/root
 	$(INSTALL) $(appsdir)/tuxbox/tools/kb2rcd/kb2rcd_links.conf $(flashprefix)/root/var/tuxbox/config
 	cp -va $(targetprefix)/lib/directfb-1.0-0 $(flashprefix)/root/lib/
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 # ntpd
 $(DEPDIR)/ntpd: bootstrap @DEPENDS_ntpd@
@@ -583,7 +539,6 @@ $(DEPDIR)/ntpd: bootstrap @DEPENDS_ntpd@
 	@CLEANUP_ntpd@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-ntpd: $(flashprefix)/root/bin/ntpd
 
 $(flashprefix)/root/bin/ntpd: ntpd | $(flashprefix)/root
@@ -591,8 +546,6 @@ $(flashprefix)/root/bin/ntpd: ntpd | $(flashprefix)/root
 		@for i in ntpd ntpdate ntpdc ntp-keygen ntptime ntptrace ntp-wait; do \
 		$(INSTALL) $(targetprefix)/bin/$$i $(flashprefix)/root/bin; done;
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 $(DEPDIR)/ntpclient: bootstrap @DEPENDS_ntpclient@
 	@PREPARE_ntpclient@
@@ -603,16 +556,12 @@ $(DEPDIR)/ntpclient: bootstrap @DEPENDS_ntpclient@
 	@CLEANUP_ntpclient@
 	touch $@
 
-if TARGETRULESET_FLASH
-
 flash-ntpclient: $(flashprefix)/root/bin/ntpclient
 
 $(flashprefix)/root/bin/ntpclient: ntpclient | $(flashprefix)/root
 	@$(INSTALL) -d $(flashprefix)/root/bin
 	$(INSTALL) $(targetprefix)/bin/ntpclient $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 $(DEPDIR)/openntpd: bootstrap @DEPENDS_openntpd@
 	@PREPARE_openntpd@
@@ -629,13 +578,11 @@ $(DEPDIR)/openntpd: bootstrap @DEPENDS_openntpd@
 	@CLEANUP_openntpd@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-openntpd: $(flashprefix)/root/sbin/ntpd
 $(flashprefix)/root/sbin/ntpd: openntpd | $(flashprefix)/root
 	@$(INSTALL) -d $(flashprefix)/root/sbin
 	$(INSTALL) $(targetprefix)/sbin/ntpd $(flashprefix)/root/sbin
 	@FLASHROOTDIR_MODIFIED@
-endif
 
 $(DEPDIR)/esound: bootstrap @DEPENDS_esound@
 	@PREPARE_esound@
@@ -654,15 +601,11 @@ $(DEPDIR)/esound: bootstrap @DEPENDS_esound@
 	@CLEANUP_esound@
 	touch $@
 
-if TARGETRULESET_FLASH
-
 flash-esound: $(flashprefix)/root/bin/esd
 
 $(flashprefix)/root/bin/esd: $(DEPDIR)/esound | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/esd $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 $(DEPDIR)/python: bootstrap libz @DEPENDS_python@
 	@PREPARE_python@
@@ -743,7 +686,7 @@ $(DEPDIR)/openvpn: bootstrap libcrypto @DEPENDS_openvpn@
 	touch $@
 
 if ENABLE_OPENVPN
-if TARGETRULESET_FLASH
+# enable target only when OpenVPN kernel support is enabled
 flash-openvpn: $(flashprefix)/root/sbin/openvpn
 
 $(flashprefix)/root/sbin/openvpn: libcrypto openvpn | $(flashprefix)/root
@@ -751,8 +694,6 @@ $(flashprefix)/root/sbin/openvpn: libcrypto openvpn | $(flashprefix)/root
 	@$(INSTALL) -d $(flashprefix)/root/sbin
 	$(INSTALL) $(targetprefix)/sbin/openvpn $(flashprefix)/root/sbin
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 endif
 
 $(DEPDIR)/ipkg: bootstrap @DEPENDS_ipkg@
@@ -773,8 +714,6 @@ $(DEPDIR)/ipkg: bootstrap @DEPENDS_ipkg@
 	@CLEANUP_ipkg@
 	touch $@
 
-if ENABLE_IPKG
-if TARGETRULESET_FLASH
 flash-ipkg: ipkg $(flashprefix)/root/bin/ipkg
 
 $(flashprefix)/root/bin/ipkg: | $(flashprefix)/root
@@ -784,5 +723,3 @@ $(flashprefix)/root/bin/ipkg: | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/lib/libipkg.so.0 $(flashprefix)/root/lib 
 	ln -sf  /var/etc/ipkg.conf $(flashprefix)/root/etc/ipkg.conf
 	@FLASHROOTDIR_MODIFIED@
-endif
-endif

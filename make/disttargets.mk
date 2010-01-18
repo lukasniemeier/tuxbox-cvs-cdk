@@ -7,7 +7,7 @@ endif
 EXTRA_DIST = \
 	rules.pl rules-archive.pl rules-downcheck.pl.in \
 	rules-archive \
-	rules-install rules-install-flash \
+	rules-install \
 	rules-make
 
 

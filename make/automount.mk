@@ -18,8 +18,6 @@ endif
 	ln -sf /proc/mounts $(targetprefix)/etc/mtab
 	@touch $@
 
-if TARGETRULESET_FLASH
-
 flash-automount: @DEPENDS_automount@ Patches/autofs.diff | $(flashprefix)/root
 	@PREPARE_automount@
 if CPUMODEL_405
@@ -39,7 +37,6 @@ endif
 	rm -f $(flashprefix)/root/lib/autofs/mount_autofs.so
 	rm -f $(flashprefix)/root/lib/autofs/mount_changer.so
 	@FLASHROOTDIR_MODIFIED@
-endif
 
 endif
 

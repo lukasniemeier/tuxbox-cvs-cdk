@@ -127,7 +127,6 @@ include make/ucodes.mk
 # Generate a /.version file in the image
 include make/version.mk
 
-if TARGETRULESET_FLASH
 # High-level flash targets are:
 
 # flash-[neutrino,enigma,all]-[cramfs,squashfs,jffs2,all]-[1x,2x,all]
@@ -167,8 +166,6 @@ include make/update.urls.mk
 if BOXTYPE_IPBOX
 # build IPBox images
 include make/ipbox.mk
-endif
-
 endif
 
 # Files not to be deleted, even though they are intermediate products

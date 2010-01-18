@@ -7,7 +7,6 @@ yadd-ucodes ucodes:
 		cp -dp $(ucodesdir)/* $(targetprefix)/var/tuxbox/ucodes; \
 	fi || true
 
-if TARGETRULESET_FLASH
 flash-ucodes:
 	$(INSTALL) -d $(flashprefix)/root/var/tuxbox/ucodes
 	if [ -d $(ucodesdir) ] ; then \
@@ -15,8 +14,6 @@ flash-ucodes:
 		cp -dp $(ucodesdir)/* $(flashprefix)/root/var/tuxbox/ucodes; \
 	fi || true
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 endif
 

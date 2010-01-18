@@ -16,8 +16,6 @@ endif
 	@CLEANUP_ftpd@
 	touch $@
 
-if TARGETRULESET_FLASH
-
 # Remark: the install target in the Makefile in in.ftpd is not GNU-conformant,
 # therefor the silly install command.
 flash-ftpd: | $(flashprefix)/root @DEPENDS_ftpd@
@@ -40,7 +38,5 @@ endif
 	@CLEANUP_ftpd@
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
-
-endif
 
 .PHONY: flash-ftpd

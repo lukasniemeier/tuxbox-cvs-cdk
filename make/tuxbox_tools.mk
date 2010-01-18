@@ -44,8 +44,6 @@ getrc: $(appsdir)/tuxbox/tools/config.status
 input: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/input install
 
-if TARGETRULESET_FLASH
-
 flash-tuxinfo: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/tuxinfo install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
@@ -82,16 +80,11 @@ flash-input: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/input install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
-endif
-
-
 ################################################################
 # tools_misc is not misc_tools misspelled ... 
 switch \
 tools_misc: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/misc install
-
-if TARGETRULESET_FLASH
 
 # The directory $(appsdir)/tuxbox/tools/misc contains several tools;
 # we should probaly not install all in an 8MiB image.
@@ -103,7 +96,6 @@ flash-tools_misc: $(appsdir)/tuxbox/tools/config.status
 flash-tools_misc-all: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/misc install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
-endif 
 
 ################################################################
 # $(appsdir)/tuxbox/tools/test
@@ -138,11 +130,9 @@ $(DEPDIR)/tuxbox_hotplug: $(appsdir)/tuxbox/tools/hotplug/config.status
 $(targetprefix)/sbin/hotplug: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug install
 
-if TARGETRULESET_FLASH
 flash-hotplug:  $(appsdir)/tuxbox/tools/hotplug/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug all install prefix="$(flashprefix)/root"
 	@FLASHROOTDIR_MODIFIED@
-endif
 endif
 
 .PHONY: tuxbox_tools tuxinfo camd2 satfind flash-tuxinfo flash-camd2 \

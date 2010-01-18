@@ -7,8 +7,6 @@ hostapps: $(hostappsdir)/config.status
 	$(MAKE) -C $(hostappsdir)
 #	touch $@
 
-if TARGETRULESET_FLASH
-
 $(hostprefix)/bin/mkflfs: $(hostappsdir)/config.status
 	$(MAKE) -C $(hostappsdir)/mkflfs install
 
@@ -67,8 +65,6 @@ $(hostprefix)/bin/mksquashfs-nolzma: directories @DEPENDS_squashfs@
 	$(MAKE) -C @DIR_squashfs@/squashfs3.0/squashfs-tools
 	$(INSTALL) -m755 @DIR_squashfs@/squashfs3.0/squashfs-tools/mksquashfs $@
 	rm -rf @DIR_squashfs@
-
-endif
 
 # if we cannot use the host's depmod for whatever reason, use this one.
 $(DEPDIR)/host_module_init_tools: $(hostprefix)/bin/depmod

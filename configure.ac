@@ -54,31 +54,16 @@ else
 fi
 AC_SUBST(GLIBC_PTHREADS)
 
-AC_ARG_WITH(targetruleset,
-	[  --with-targetruleset=NAME	
-                          OBSOLETE, use --[[enable|disable]]-flashrules instead],
-	[TARGETRULESET="$withval"],[TARGETRULESET="notset"])
-
-if test "$TARGETRULESET" != "notset"; then
-	AC_MSG_WARN([--with-targetruleset is obsolete; use --[[enable|disable]]-flashrules instead]);
-fi
-
 AC_ARG_WITH(assume-kernelsources-old,
 	[  --with-assume-kernelsources-old
                           Do not recompile due to new kernel sources],
 	[assume_kernelsources_old="yes"],[assume_kernelsources_old="no"])
 AM_CONDITIONAL(ASSUME_KERNELSOURCES_OLD,test "$assume_kernelsources_old" = "yes")
 
-AC_ARG_ENABLE(flashrules,
-	AS_HELP_STRING(--disable-flashrules,	disable rules for creating flash targets - build cdk instead),
-	,[enable_flashrules=yes])
-AM_CONDITIONAL(TARGETRULESET_FLASH,test "$enable_flashrules" = "yes")
-
-if test "$enable_flashrules" = "yes"; then
-        INSTALLRULESETFILE="-flash"
-else
-        INSTALLRULESETFILE=""
-fi
+AC_ARG_ENABLE(debug,
+	AS_HELP_STRING(--enable-debug,	enable debug code to be used with gdb),
+	,[enable_debug=no])
+AM_CONDITIONAL(ENABLE_DEBUG,test "$enable_debug" = "yes")
 
 if test -z "$CFLAGS" ; then
 	CFLAGS="-O2"
@@ -86,7 +71,7 @@ fi
 
 if test -z "$TARGET_CFLAGS" -o -z "$TARGET_CXXFLAGS"; then
 	TARGET_CFLAGS="-pipe"
-	if test "$enable_flashrules" != "yes"; then
+	if test "$enable_debug" = "yes"; then
 		TARGET_CFLAGS="$TARGET_CFLAGS -O2 -g3 -gdwarf-2"
 		TARGET_LDFLAGS=""
 	else
@@ -457,7 +442,7 @@ AC_ARG_ENABLE(radiotext,
 	,[enable_radiotext=yes])
 AM_CONDITIONAL(ENABLE_RADIOTEXT,test "$enable_radiotext" = "yes")
 
-if test "$enable_uclibc" = "yes" && test "$enable_flac" = "yes" && test "$enable_flashrules" = "yes"; then
+if test "$enable_uclibc" = "yes" && test "$enable_flac" = "yes"; then
 	echo
 	echo "*********************************************************************"
 	echo "***** FLAC does not work with uClibc yet - use \"--disable-flac\" *****"
@@ -944,22 +929,19 @@ if test "$YACC" != "bison -y"; then
 	AC_MSG_ERROR(No bison found)
 fi
 
-if test "$enable_flashrules" = "yes"; then
-	if test "$enable_uclibc" = "yes"; then
-		MKLIBS="$hostappsdir/mklibs/mklibs_uclibc.py"
-	else
-		MKLIBS="$hostappsdir/mklibs/mklibs.py"
-	fi
-	[[ -x "$MKLIBS" ] && true || chmod +x "$MKLIBS" ]
-	AC_SUBST(MKLIBS)
-
-	AC_PATH_PROG(MKCRAMFS,mkcramfs,no)
-	if test "$MKCRAMFS" = "no"; then
-		AC_MSG_WARN(using tuxbox cramfs)
-		MKCRAMFS=$hostprefix/bin/mkcramfs
-	fi
+if test "$enable_uclibc" = "yes"; then
+	MKLIBS="$hostappsdir/mklibs/mklibs_uclibc.py"
+else
+	MKLIBS="$hostappsdir/mklibs/mklibs.py"
 fi
+[[ -x "$MKLIBS" ] && true || chmod +x "$MKLIBS" ]
+AC_SUBST(MKLIBS)
 
+AC_PATH_PROG(MKCRAMFS,mkcramfs,no)
+if test "$MKCRAMFS" = "no"; then
+	AC_MSG_WARN(using tuxbox cramfs)
+	MKCRAMFS=$hostprefix/bin/mkcramfs
+fi
 
 ################################################################
 # ccache
@@ -1415,7 +1397,7 @@ libc:				$used_libc
 threads:			$GLIBC_PTHREADS
 target:				$target
 host:				$host
-flash rules:			$enable_flashrules
+debug code:			$enable_debug
 target prefix:			$targetprefix
 host prefix:			$hostprefix
 boot prefix:			$bootprefix

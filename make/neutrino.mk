@@ -13,9 +13,6 @@ neutrino: $(appsdir)/tuxbox/neutrino/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/neutrino install
 	$(MAKE) neutrino-additional-fonts
 
-
-if TARGETRULESET_FLASH
-
 flash-neutrino: $(flashprefix)/root-neutrino
 
 $(flashprefix)/root-neutrino: $(appsdir)/tuxbox/neutrino/config.status
@@ -33,8 +30,6 @@ if ENABLE_DVBSUB
 endif
 	touch $@
 	@TUXBOX_CUSTOMIZE@
-
-endif
 
 # This is really an ugly kludge. Neutrino and the plugins should
 # install the fonts they need in their own Makefiles.

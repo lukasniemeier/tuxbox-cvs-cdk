@@ -9,7 +9,6 @@ lcd: $(appsdir)/tuxbox/lcd/config.status
 lcdip: $(appsdir)/tuxbox/lcd/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/lcd/lcdip all install
 
-if TARGETRULESET_FLASH
 flash-lcdmenu: lcd $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/lcdmenu $(flashprefix)/root/bin
 	cp -rd $(targetprefix)/var/tuxbox/config/lcdmenu.conf $(flashprefix)/root/var/tuxbox/config
@@ -27,6 +26,4 @@ if BOXTYPE_DBOX2
 flash-lcshot: lcd $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/lcd/lcshot install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
-endif
-
 endif

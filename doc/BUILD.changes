@@ -1,17 +1,5 @@
 Configuration options:
 
---[enable|disable]-flashrules (replaces
-  --with-targetruleset=[standard|flash]). As opposed to previous versions,
-  building yadds and building flash images do not exclude
-  one another. Using --enable-flashrules targets for creating flash
-  images are included in the generated Makefile, otherwise not. By
-  default they are enabled. If enabled, all compilation is done using
-  the flash-optimized compilation flags (no debugging info, stripped,
-  compiled with -Os (optimize for size). Other than that,
-  --enable-flashrules has no disadvantages, and can normally be left
-  on. Using --with-targetrulset now gives a warning error; in the future it
-  should be completely eliminated.
-
 --with-rootpartitionsize=SIZE gives the possibility to build (cramfs-,
   squashfs-) images with non-default root partition size. The size of
   the var-partition is automatically computed to use all remaining

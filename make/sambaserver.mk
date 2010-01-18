@@ -21,7 +21,6 @@ endif
 	@CLEANUP_samba@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-smbmount: $(flashprefix)/root/bin/smbmount
 
 $(flashprefix)/root/bin/smbmount: bootstrap @DEPENDS_samba@ | $(flashprefix)/root
@@ -46,8 +45,6 @@ endif
 		done
 	@CLEANUP_samba@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 if ENABLE_SAMBASERVER
 
@@ -74,7 +71,6 @@ endif
 	@CLEANUP_samba@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-sambaserver: $(flashprefix)/root/bin/smbd
 
 $(flashprefix)/root/bin/smbd: bootstrap @DEPENDS_samba@ | $(flashprefix)/root
@@ -99,7 +95,5 @@ endif
 		done
 	@CLEANUP_samba@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 endif

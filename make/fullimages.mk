@@ -407,8 +407,4 @@ $(flashprefix)/enigma+neutrino-jffs2_lzma_klzma.img%: \
 # instead
 enigma+neutrino: neutrino enigma
 
-if TARGETRULESET_FLASH
-
 flash-enigma+neutrino: $(flashprefix)/root-neutrino $(flashprefix)/root-enigma
-
-endif

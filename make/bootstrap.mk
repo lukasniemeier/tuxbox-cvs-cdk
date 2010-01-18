@@ -48,9 +48,7 @@ if !KERNEL26
 	-ln -sf $(buildprefix)/linux/include/mtd $(hostprefix)/$(target)/include
 endif
 endif
-if TARGETRULESET_FLASH
 	$(INSTALL) -d $(flashprefix)
-endif
 	touch $@
 
 if BOXTYPE_DREAMBOX
@@ -250,7 +248,7 @@ UCLIBC_M4 =
 if !BOXTYPE_COOL
 if ENABLE_UCLIBC
 
-if !TARGETRULESET_FLASH
+if ENABLE_DEBUG
 UCLIBC_M4 += -Ddebug
 endif
 

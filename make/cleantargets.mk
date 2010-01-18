@@ -17,12 +17,7 @@ ide-apps-depsclean:
 contrib-apps-depsclean:
 	$(CONTRIB_DEPSCLEANUP)
 
-
-if TARGETRULESET_FLASH
 mostlyclean-local: flash-clean cdk-clean
-else
-mostlyclean-local: cdk-clean
-endif
 
 # Clean tuxbox source directories
 cdk-clean:
@@ -113,13 +108,9 @@ distclean-local:
 	-rm -f $(bootprefix)/u-boot-yadd
 	-rm -f $(bootprefix)/kernel-cdk
 	-rm -rf $(serversupport)
-if TARGETRULESET_FLASH
 	-rm -rf $(flashprefix)
-endif
 	-@CLEANUP@
 
-
-if TARGETRULESET_FLASH
 ################################################################
 # flash-clean deletes everything created with the flash-* commands
 # flash-semiclean leaves the flfs-images and the root-$filesystem dirs.
@@ -146,7 +137,6 @@ flash-mostlyclean: flash-semiclean
 
 flash-clean: flash-mostlyclean
 	rm -f $(flashprefix)/*.img*
-endif ## TARGETRULESET_FLASH
 
 .PHONY: depsclean mostlyclean-local cdk-clean distclean-local flash-semiclean \
 flash-mostlyclean flash-clean

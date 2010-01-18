@@ -7,8 +7,6 @@ $(DEPDIR)/funstuff: $(appsdir)/tuxbox/funstuff/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/funstuff all install
 	touch $@
 
-if TARGETRULESET_FLASH
-
 lcdsaversfiles = $(basename $(notdir $(wildcard $(appsdir)/tuxbox/funstuff/lcd-savers/*.c)))
 
 $(patsubst %,flash-%,$(lcdsaversfiles)):
@@ -16,5 +14,3 @@ $(patsubst %,flash-%,$(lcdsaversfiles)):
 
 $(patsubst %,$(flashprefix)/root/bin/%,$(lcdsaversfiles)): funstuff | $(flashprefix)/root
 	$(INSTALL) -m 755 $(targetprefix)/bin/$(notdir $@) $@
-
-endif

@@ -13,14 +13,12 @@ $(DEPDIR)/module_init_tools: bootstrap       @DEPENDS_module_init_tools@
 	@CLEANUP_module_init_tools@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-module-init-tools: $(flashprefix)/root/sbin/modprobe
 $(flashprefix)/root/sbin/modprobe: module_init_tools
 	$(INSTALL) $(targetprefix)/sbin/insmod $(flashprefix)/root/sbin
 	$(INSTALL) $(targetprefix)/sbin/modprobe $(flashprefix)/root/sbin
 	$(INSTALL) $(targetprefix)/sbin/depmod $(flashprefix)/root/sbin
 	@FLASHROOTDIR_MODIFIED@
-endif
 
 $(DEPDIR)/modutils: bootstrap @DEPENDS_modutils@
 	@PREPARE_modutils@
@@ -47,7 +45,6 @@ $(DEPDIR)/portmap: bootstrap @DEPENDS_portmap@
 	@CLEANUP_portmap@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-portmap: $(flashprefix)/root/sbin/portmap
 
 $(flashprefix)/root/sbin/portmap: bootstrap @DEPENDS_portmap@ | $(flashprefix)/root
@@ -58,7 +55,6 @@ $(flashprefix)/root/sbin/portmap: bootstrap @DEPENDS_portmap@ | $(flashprefix)/r
 		$(INSTALL) -m 755 portmap $(flashprefix)/root/sbin
 	@CLEANUP_portmap@
 	@FLASHROOTDIR_MODIFIED@
-endif
 
 $(DEPDIR)/procps: bootstrap libncurses @DEPENDS_procps@
 	@PREPARE_procps@
@@ -69,13 +65,11 @@ $(DEPDIR)/procps: bootstrap libncurses @DEPENDS_procps@
 	@CLEANUP_procps@
 	touch $@
 
-if TARGETRULESET_FLASH
 flash-procps: $(flashprefix)/root/bin/ps
 $(flashprefix)/root/bin/ps: procps
 	$(INSTALL) $(targetprefix)/bin/ps $(flashprefix)/root/bin
 	$(INSTALL) $(targetprefix)/bin/top $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
-endif
 
 $(DEPDIR)/udev: bootstrap @DEPENDS_udev@
 	@PREPARE_udev@
@@ -112,7 +106,6 @@ $(DEPDIR)/mrouted: bootstrap @DEPENDS_mrouted@
 	@CLEANUP_mrouted@
 	touch $@
 
-if TARGETRULESET_FLASH
 
 flash-mrouted: $(flashprefix)/root/bin/mrouted
 
@@ -124,4 +117,3 @@ $(flashprefix)/root/bin/mrouted: $(flashprefix)/root plugins mrouted | $(flashpr
 	$(INSTALL) $(targetprefix)/var/tuxbox/config/dreamdata.xml $(flashprefix)/root/var/tuxbox/config/
 	$(INSTALL) $(targetprefix)/bin/mrouted $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
-endif

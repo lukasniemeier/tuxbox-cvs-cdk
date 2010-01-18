@@ -52,8 +52,12 @@ CONFIG_EXTRA_CFLAGS=""
 #
 # Debugging Options
 #
-option(`CONFIG_DEBUG', `n', `n')
-# CONFIG_DEBUG_PESSIMIZE is not set
+ifdef(`debug',
+`option(`CONFIG_DEBUG', `y', `y')
+option(`CONFIG_DEBUG_PESSIMIZE', `y', `y')',
+`option(`CONFIG_DEBUG', `n', `n')
+# CONFIG_DEBUG_PESSIMIZE is not set'
+)
 option(`CONFIG_WERROR', `n', `n')
 option(`CONFIG_NO_DEBUG_LIB', `n', `n')
 option(`CONFIG_DMALLOC', `n', `n')

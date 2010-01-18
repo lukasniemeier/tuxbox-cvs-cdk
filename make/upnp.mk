@@ -64,8 +64,6 @@ $(DEPDIR)/djmount: bootstrap fuse @DEPENDS_djmount@
 	@CLEANUP_djmount@
 	touch $@
 
-if TARGETRULESET_FLASH
-
 flash-upnp: flash-fuse flash-djmount
 
 if KERNEL26
@@ -135,7 +133,5 @@ flash-djmount: bootstrap flash-fuse @DEPENDS_djmount@
 	$(MAKE) install DESTDIR=$(flashprefix)/root
 	@CLEANUP_djmount@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 .PHONY: flash-upnp flash-fuse flash-djmount

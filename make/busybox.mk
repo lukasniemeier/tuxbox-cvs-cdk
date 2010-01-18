@@ -31,6 +31,10 @@ if !ENABLE_PROCPS
 BUSYBOX_M4 += -Dprocps
 endif
 
+if ENABLE_DEBUG
+BUSYBOX_M4 += -Ddebug
+endif
+
 # this variable is needed because cdk/rules.pl assumes *.patch can be found in cdk/Patches
 #BUSYBOX_PATCHES =
 
@@ -44,9 +48,6 @@ $(DEPDIR)/busybox: bootstrap @DEPENDS_busybox@ $(BUSYBOX_PATCHES) $(busybox_conf
 	@CLEANUP_busybox@
 	touch $@
 
-
-if TARGETRULESET_FLASH
-
 flash-busybox: bootstrap $(flashprefix)/root @DEPENDS_busybox@ $(BUSYBOX_PATCHES) $(busybox_conf)
 	@PREPARE_busybox@
 	m4 $(BUSYBOX_M4) -Dflash -DPREFIX=\`\"$(flashprefix)/root\"\' $(busybox_conf) > @DIR_busybox@/.config
@@ -56,7 +57,5 @@ flash-busybox: bootstrap $(flashprefix)/root @DEPENDS_busybox@ $(BUSYBOX_PATCHES
 			CFLAGS_EXTRA="$(TARGET_CFLAGS)"
 	@CLEANUP_busybox@
 	@FLASHROOTDIR_MODIFIED@
-
-endif
 
 .PHONY: flash-busybox

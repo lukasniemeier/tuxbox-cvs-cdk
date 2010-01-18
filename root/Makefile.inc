@@ -1,5 +1,4 @@
 install-data-local:
-#	@$(MAKE) install-$(TARGETRULESET)
 	@$(MAKE) install-standard
 
 install-standard: $(FILES) $(FILES_EXEC) $(FILES_EXEC_START)
