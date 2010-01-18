@@ -54,7 +54,7 @@ if ENABLE_STRACE
 ADDITIONAL_DEBS += strace
 endif
 
-yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTOMOUNT@ @NFSSERVER@ @SAMBASERVER@ @LUFS@ @SMBMOUNT@ @CONSOLE_TOOLS@ $(ADDITIONAL_DEBS) $(FILESYSTEM_DEBS) version defaultlocale
+yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTOMOUNT@ @NFSSERVER@ @SAMBASERVER@ @LUFS@ @SMBMOUNT@ @CONSOLE_TOOLS@ $(ADDITIONAL_DEBS) $(FX2_DEPS) $(FILESYSTEM_DEBS) version defaultlocale
 	@TUXBOX_YADD_CUSTOMIZE@
 
 yadd-none-etc: yadd-none yadd-etc
@@ -63,10 +63,10 @@ yadd-none-etc: yadd-none yadd-etc
 yadd-micro-neutrino: bare-os config yadd-ucodes camd2 switch neutrino
 	@TUXBOX_YADD_CUSTOMIZE@
 
-yadd-neutrino: neutrino-plugins yadd-none-etc @FX2PLUGINS@ @ESOUND@ neutrino
+yadd-neutrino: neutrino-plugins yadd-none-etc @ESOUND@ neutrino
 	@TUXBOX_YADD_CUSTOMIZE@
 
-yadd-enigma: yadd-none-etc enigma-plugins @FX2PLUGINS@ enigma
+yadd-enigma: yadd-none-etc enigma-plugins enigma
 	@TUXBOX_YADD_CUSTOMIZE@
 
 yadd-lcars: yadd-none-etc lcars

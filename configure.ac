@@ -451,15 +451,6 @@ if test "$enable_uclibc" = "yes" && test "$enable_flac" = "yes"; then
 	exit 1
 fi
 
-AC_ARG_ENABLE(fx2plugins,
-	AS_HELP_STRING(--disable-fx2plugins,   disable fx2-plugins (games) for gui's ),
-	,[enable_fx2plugins=yes])
-if test "$enable_fx2plugins" = "yes"; then
-	FX2PLUGINS=fx2-plugins
-fi
-AC_SUBST(FX2PLUGINS)
-AM_CONDITIONAL(ENABLE_FX2PLUGINS,test "$enable_fx2plugins" = "yes")
-
 # choose set of tools/plugins to be part of flash images
 AC_ARG_ENABLE(aformat,
 	AS_HELP_STRING(--enable-aformat,enable aformat - dbox2-only),
@@ -675,6 +666,134 @@ AC_ARG_ENABLE(vncviewer,
 	AS_HELP_STRING(--enable-vncviewer,enable vncviewer),
 	,[enable_vncviewer=no])
 AM_CONDITIONAL(ENABLE_VNCVIEWER,test "$enable_vncviewer" = "yes")
+
+# games and fx2 stuff
+FX2_DEPS=""
+
+AC_ARG_ENABLE(fx2-bouquet,
+	AS_HELP_STRING(--enable-fx2-bouquet,FX2: enable bouquet),
+	[ FX2_DEPS="$FX2_DEPS fx2-bouquet"]
+	,[enable_fx2_bouquet=no])
+AM_CONDITIONAL(ENABLE_FX2_BOUQUET,test "$enable_fx2_bouquet" = "yes")
+
+AC_ARG_ENABLE(fx2-c64emu,
+	AS_HELP_STRING(--enable-fx2-c64emu,FX2: enable c64emu - dbox2-only),
+	[case "${enableval}" in
+		yes) 	if ! test "$BOXTYPE" = "dbox2"; then
+				enable_fx2_c64emu="boxtype not supported"
+			else
+				[ FX2_DEPS="$FX2_DEPS fx2-c64emu"]
+			fi ;;
+	esac],[enable_fx2_c64emu=no])
+AM_CONDITIONAL(ENABLE_FX2_C64EMU,test "$enable_fx2_c64emu" = "yes")
+
+AC_ARG_ENABLE(fx2-lcdcirc,
+	AS_HELP_STRING(--enable-fx2-lcdcirc,FX2: enable lcdcirc),
+	[ FX2_DEPS="$FX2_DEPS fx2-lcdcirc"]
+	,[enable_fx2_lcdcirc=no])
+AM_CONDITIONAL(ENABLE_FX2_LCDCIRC,test "$enable_fx2_lcdcirc" = "yes")
+
+AC_ARG_ENABLE(fx2-lemm,
+	AS_HELP_STRING(--enable-fx2-lemm,FX2: enable lemmings),
+	[ FX2_DEPS="$FX2_DEPS fx2-lemm"]
+	,[enable_fx2_lemm=no])
+AM_CONDITIONAL(ENABLE_FX2_LEMM,test "$enable_fx2_lemm" = "yes")
+
+AC_ARG_ENABLE(fx2-master,
+	AS_HELP_STRING(--enable-fx2-master,FX2: enable master),
+	[ FX2_DEPS="$FX2_DEPS fx2-master"]
+	,[enable_fx2_master=no])
+AM_CONDITIONAL(ENABLE_FX2_MASTER,test "$enable_fx2_master" = "yes")
+
+AC_ARG_ENABLE(fx2-mines,
+	AS_HELP_STRING(--enable-fx2-mines,FX2: enable mines),
+	[ FX2_DEPS="$FX2_DEPS fx2-mines"]
+	,[enable_fx2_mines=no])
+AM_CONDITIONAL(ENABLE_FX2_MINES,test "$enable_fx2_mines" = "yes")
+
+AC_ARG_ENABLE(fx2-outdoor,
+	AS_HELP_STRING(--enable-fx2-outdoor,FX2: enable outdoor - dbox2-only),
+	[case "${enableval}" in
+		yes) 	if ! test "$BOXTYPE" = "dbox2"; then
+				enable_fx2_outdoor="boxtype not supported"
+			else
+				[ FX2_DEPS="$FX2_DEPS fx2-outdoor"]
+			fi ;;
+	esac],[enable_fx2_outdoor=no])
+AM_CONDITIONAL(ENABLE_FX2_OUTDOOR,test "$enable_fx2_outdoor" = "yes")
+
+AC_ARG_ENABLE(fx2-pac,
+	AS_HELP_STRING(--enable-fx2-pac,FX2: enable pac),
+	[ FX2_DEPS="$FX2_DEPS fx2-pac"]
+	,[enable_fx2_pac=no])
+AM_CONDITIONAL(ENABLE_FX2_PAC,test "$enable_fx2_pac" = "yes")
+
+AC_ARG_ENABLE(fx2-satfind,
+	AS_HELP_STRING(--enable-fx2-satfind,FX2: enable satfind),
+	[ FX2_DEPS="$FX2_DEPS fx2-satfind"]
+	,[enable_fx2_satfind=no])
+AM_CONDITIONAL(ENABLE_FX2_SATFIND,test "$enable_fx2_satfind" = "yes")
+
+AC_ARG_ENABLE(fx2-snake,
+	AS_HELP_STRING(--enable-fx2-snake,FX2: enable snake),
+	[ FX2_DEPS="$FX2_DEPS fx2-snake"]
+	,[enable_fx2_snake=no])
+AM_CONDITIONAL(ENABLE_FX2_SNAKE,test "$enable_fx2_snake" = "yes")
+
+AC_ARG_ENABLE(fx2-sokoban,
+	AS_HELP_STRING(--enable-fx2-sokoban,FX2: enable sokoban),
+	[ FX2_DEPS="$FX2_DEPS fx2-sokoban"]
+	,[enable_fx2_sokoban=no])
+AM_CONDITIONAL(ENABLE_FX2_SOKOBAN,test "$enable_fx2_sokoban" = "yes")
+
+AC_ARG_ENABLE(fx2-sol,
+	AS_HELP_STRING(--enable-fx2-sol,FX2: enable sol),
+	[ FX2_DEPS="$FX2_DEPS fx2-sol"]
+	,[enable_fx2_sol=no])
+AM_CONDITIONAL(ENABLE_FX2_SOL,test "$enable_fx2_sol" = "yes")
+
+AC_ARG_ENABLE(fx2-solitair,
+	AS_HELP_STRING(--enable-fx2-solitair,FX2: enable solitair),
+	[ FX2_DEPS="$FX2_DEPS fx2-solitair"]
+	,[enable_fx2_solitair=no])
+AM_CONDITIONAL(ENABLE_FX2_SOLITAIR,test "$enable_fx2_solitair" = "yes")
+
+AC_ARG_ENABLE(fx2-sudoku,
+	AS_HELP_STRING(--enable-fx2-sudoku,FX2: enable sudoku - dbox2-only),
+	[case "${enableval}" in
+		yes) 	if ! test "$BOXTYPE" = "dbox2"; then
+				enable_fx2_sudoku="boxtype not supported"
+			else
+				[ FX2_DEPS="$FX2_DEPS fx2-sudoku"]
+			fi ;;
+	esac],[enable_fx2_sudoku=no])
+AM_CONDITIONAL(ENABLE_FX2_SUDOKU,test "$enable_fx2_sudoku" = "yes")
+
+AC_ARG_ENABLE(fx2-tank,
+	AS_HELP_STRING(--enable-fx2-tank,FX2: enable tank),
+	[ FX2_DEPS="$FX2_DEPS fx2-tank"]
+	,[enable_fx2_tank=no])
+AM_CONDITIONAL(ENABLE_FX2_TANK,test "$enable_fx2_tank" = "yes")
+
+AC_ARG_ENABLE(fx2-tetris,
+	AS_HELP_STRING(--enable-fx2-tetris,FX2: enable tetris),
+	[ FX2_DEPS="$FX2_DEPS fx2-tetris"]
+	,[enable_fx2_tetris=no])
+AM_CONDITIONAL(ENABLE_FX2_TETRIS,test "$enable_fx2_tetris" = "yes")
+
+AC_ARG_ENABLE(fx2-vierg,
+	AS_HELP_STRING(--enable-fx2-vierg,FX2: enable vierg),
+	[ FX2_DEPS="$FX2_DEPS fx2-vierg"]
+	,[enable_fx2_vierg=no])
+AM_CONDITIONAL(ENABLE_FX2_VIERG,test "$enable_fx2_vierg" = "yes")
+
+AC_ARG_ENABLE(fx2-yahtzee,
+	AS_HELP_STRING(--enable-fx2-yahtzee,FX2: enable yahtzee),
+	[ FX2_DEPS="$FX2_DEPS fx2-yahtzee"]
+	,[enable_fx2_yahtzee=no])
+AM_CONDITIONAL(ENABLE_FX2_YAHTZEE,test "$enable_fx2_yahtzee" = "yes")
+
+AC_SUBST(FX2_DEPS)
 
 AC_ARG_WITH(rootpartitionsize,
 	[  --with-rootpartitionsize=SIZE
@@ -1446,7 +1565,6 @@ Radiotext support:		$enable_radiotext
 FLAC support:			$enable_flac
 CURL version:			$with_curlversion
 Freetype version:		$with_freetypeversion
-FX2 plugins (games):		$enable_fx2plugins
 German keymaps:			$enable_german_keymaps
 
 aformat				$enable_aformat
@@ -1484,6 +1602,24 @@ tuxmail				$enable_tuxmail
 tuxtxt (internal)		$enable_tuxtxt ($enable_internal_tuxtxt)
 tuxwetter			$enable_tuxwetter
 vncviewer			$enable_vncviewer
+
+FX2: C64 Emulator		$enable_fx2_c64emu
+FX2: lcdcirc			$enable_fx2_lcdcirc
+FX2: Lemmings			$enable_fx2_lemm
+FX2: Mastermind			$enable_fx2_master
+FX2: MineSweeper		$enable_fx2_mines
+FX2: Outdoor			$enable_fx2_outdoor
+FX2: PacMan			$enable_fx2_pac
+FX2: Satfind			$enable_fx2_satfind
+FX2: Snake			$enable_fx2_snake
+FX2: Sokoban			$enable_fx2_sokoban
+FX2: Sol			$enable_fx2_sol
+FX2: Solitair			$enable_fx2_solitair
+FX2: Sudoko			$enable_fx2_sudoku
+FX2: Tank			$enable_fx2_tank
+FX2: Tetris			$enable_fx2_tetris
+FX2: Vier gewinnt		$enable_fx2_vierg
+FX2: Yahtzee			$enable_fx2_yahtzee
 
 ccache support:			$enable_ccache
 $ccacheinfo

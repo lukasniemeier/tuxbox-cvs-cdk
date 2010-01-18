@@ -43,9 +43,6 @@ if ENABLE_FS_LUFS
 	$(MAKE) flash-lufsd
 endif
 	$(MAKE) flash-etherwake
-if ENABLE_FX2PLUGINS
-	$(MAKE) flash-fx2-plugins
-endif
 if BOXTYPE_DREAMBOX
 # TODO: pip and mosaic only work with neutrino...
 	$(MAKE) flash-pip
@@ -190,6 +187,62 @@ endif
 if ENABLE_VNCVIEWER
 	$(MAKE) flash-vncviewer
 endif
+
+if ENABLE_FX2_BOUQUET
+	$(MAKE) flash-bouquet-fx2
+endif
+if ENABLE_FX2_C64EMU
+	$(MAKE) flash-c64emu-fx2
+endif
+if ENABLE_FX2_LCDCIRC
+	$(MAKE) flash-lcdcirc-fx2
+endif
+if ENABLE_FX2_LEMM
+	$(MAKE) flash-lemm-fx2
+endif
+if ENABLE_FX2_MASTER
+	$(MAKE) flash-master-fx2
+endif
+if ENABLE_FX2_MINES
+	$(MAKE) flash-mines-fx2
+endif
+if ENABLE_FX2_OUTDOOR
+	$(MAKE) flash-outdoor-fx2
+endif
+if ENABLE_FX2_PAC
+	$(MAKE) flash-pac-fx2
+endif
+if ENABLE_FX2_SATFIND
+	$(MAKE) flash-satfind-fx2
+endif
+if ENABLE_FX2_SNAKE
+	$(MAKE) flash-snake-fx2
+endif
+if ENABLE_FX2_SOKOBAN
+	$(MAKE) flash-sokoban-fx2
+endif
+if ENABLE_FX2_SOL
+	$(MAKE) flash-sol-fx2
+endif
+if ENABLE_FX2_SOLITAIR
+	$(MAKE) flash-solitair-fx2
+endif
+if ENABLE_FX2_SUDOKU
+	$(MAKE) flash-sudoku-fx2
+endif
+if ENABLE_FX2_TANK
+	$(MAKE) flash-tank-fx2
+endif
+if ENABLE_FX2_TETRIS
+	$(MAKE) flash-tetris-fx2
+endif
+if ENABLE_FX2_VIERG
+	$(MAKE) flash-vierg-fx2
+endif
+if ENABLE_FX2_YAHTZEE
+	$(MAKE) flash-yahtzee-fx2
+endif
+
 	$(MAKE) flash-defaultlocale
 	$(MAKE) flash-version
 	@FLASHROOTDIR_MODIFIED@

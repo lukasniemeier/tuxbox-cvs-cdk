@@ -112,6 +112,9 @@ include make/radiobox.mk
 # Plugins
 include make/plugins.mk
 
+# fx2 stuff (games)
+include make/games_fx2.mk
+
 # Some small command line tools, several of which are essential
 include make/tuxbox_tools.mk
 
