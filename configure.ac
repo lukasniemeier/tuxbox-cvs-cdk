@@ -319,7 +319,11 @@ AC_ARG_ENABLE(drive-gui,
 	     enable_drive_gui=no
 	   fi ;;
       *) enable_drive_gui=no
-   esac],[enable_drive_gui=no])
+   esac],[if test "$enable_ide" = "yes" -o "$enable_mmc" = "yes"; then
+	     enable_drive_gui=yes
+	   else
+	     enable_drive_gui=no
+	   fi])
 AM_CONDITIONAL(ENABLE_DRIVE_GUI,test "$enable_drive_gui" = "yes")
 
 # force standalone fdisk when Neutrino drive GUI is enabled
