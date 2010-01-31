@@ -80,15 +80,27 @@ flash-mosaic: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 
 shellexec: $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all install
+if ENABLE_TUXWETTER
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install
+endif
+if ENABLE_CLOCK
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install
+endif
 
 flash-shellexec: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all install prefix=$(flashprefix)/root
+if ENABLE_TUXWETTER
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install prefix=$(flashprefix)/root
+endif
+if ENABLE_CLOCK
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install prefix=$(flashprefix)/root
+endif
 	@FLASHROOTDIR_MODIFIED@
 
-tuxwetter: libungif $(appsdir)/tuxbox/plugins/config.status
+tuxwetter: libungif input $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all install
 
-flash-tuxwetter: libungif $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+flash-tuxwetter: libungif flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
@@ -99,10 +111,10 @@ flash-sysinfo: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
-clock: $(appsdir)/tuxbox/plugins/config.status
+clock: input $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all install
 
-flash-clock: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+flash-clock: flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
