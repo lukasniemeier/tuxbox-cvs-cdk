@@ -32,6 +32,6 @@ fx2pluginsgeneric = $(fx2pluginsdbox2) bouquet lcdcirc lemm master mines pac sat
 $(patsubst %,%-fx2,$(fx2pluginsgeneric)): $(appsdir)/tuxbox/plugins/config.status fx2_lib
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/$(patsubst %-fx2,%,$@) all install
 
-$(patsubst %,flash-%-fx2,$(fx2pluginsgeneric)): $(appsdir)/tuxbox/plugins/config.status fx2_lib | $(flashprefix)/root
+$(patsubst %,flash-%-fx2,$(fx2pluginsgeneric)): $(appsdir)/tuxbox/plugins/config.status flash-fx2_lib | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/$(patsubst flash-%-fx2,%,$@) all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
