@@ -8,8 +8,8 @@ if BOXTYPE_DBOX2
 
 fx2pluginsdbox2 = outdoor sudoku
 
-c64emu-fx2: $(appsdir)/tuxbox/plugins/config.status fx2_lib @DEPENDS_tuxfrodo@
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/$(patsubst %-fx2,%,$@) all install
+fx2-c64emu: $(appsdir)/tuxbox/plugins/config.status fx2_lib @DEPENDS_tuxfrodo@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/$(patsubst fx2-%,%,$@) all install
 	@PREPARE_tuxfrodo@
 	tar -C $(targetprefix)/lib/tuxbox/plugins/c64emu/ -xjvf @DIR_tuxfrodo@/hdd/c64emu/roms.tar.bz2
 	@CLEANUP_tuxfrodo@
@@ -29,8 +29,8 @@ endif
 
 fx2pluginsgeneric = $(fx2pluginsdbox2) bouquet lcdcirc lemm master mines pac satfind snake sokoban sol solitair tank tetris vierg yahtzee
 
-$(patsubst %,%-fx2,$(fx2pluginsgeneric)): $(appsdir)/tuxbox/plugins/config.status fx2_lib
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/$(patsubst %-fx2,%,$@) all install
+$(patsubst %,fx2-%,$(fx2pluginsgeneric)): $(appsdir)/tuxbox/plugins/config.status fx2_lib
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/$(patsubst fx2-%,%,$@) all install
 
 $(patsubst %,flash-%-fx2,$(fx2pluginsgeneric)): $(appsdir)/tuxbox/plugins/config.status flash-fx2_lib | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/$(patsubst flash-%-fx2,%,$@) all install prefix=$(flashprefix)/root
