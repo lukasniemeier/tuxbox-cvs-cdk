@@ -97,6 +97,11 @@ CONFIGURE_OPTS +=  \
 	--enable-mmc
 endif
 
+if !ENABLE_RTC
+CONFIGURE_OPTS +=  \
+	--disable-rtc
+endif
+
 if ENABLE_DRIVE_GUI
 CONFIGURE_OPTS += \
 	--enable-drive-gui
