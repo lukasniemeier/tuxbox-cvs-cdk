@@ -110,8 +110,8 @@ endif
 if BOXTYPE_DREAMBOX
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamdata all install prefix=$@
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamflash all install prefix=$@
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/movieplayer all install prefix=$@
 endif
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/movieplayer all install prefix=$@
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dslconnect all install prefix=$@
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dsldisconnect all install prefix=$@
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/getset all install prefix=$@
