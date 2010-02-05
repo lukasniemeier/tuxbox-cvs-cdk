@@ -85,6 +85,9 @@ endif
 if ENABLE_LIRC
 CONFIGURE_OPTS += \
 	--enable-lirc
+else
+CONFIGURE_OPTS += \
+	--disable-lirc
 endif
 
 if ENABLE_IDE
