@@ -89,7 +89,7 @@ flac-1.2.0.tar.gz;http://prdownloads.sourceforge.net/sourceforge/flac
 gettext-0.17.tar.gz;http://ftp.gnu.org/pub/gnu/gettext
 faad2-2.7.tar.bz2;http://downloads.sourceforge.net/faac
 gmp-4.2.2.tar.bz2;ftp://ftp.informatik.rwth-aachen.de/pub/gnu/gmp
-mpfr-2.3.1.tar.bz2;http://www.mpfr.org/mpfr-2.3.1
+mpfr-2.3.1.tar.bz2;http://www.mpfr.org/mpfr-2.3.1;ftp://ftp.rz.tu-bs.de/pub/mirror/ALL_primary_servers/rsync/ftp.slackware.com/slackware/slackware-12.1/source/l/mpfr
 
 #
 # contrib apps
