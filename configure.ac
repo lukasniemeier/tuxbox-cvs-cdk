@@ -671,6 +671,36 @@ AC_ARG_ENABLE(vncviewer,
 	,[enable_vncviewer=no])
 AM_CONDITIONAL(ENABLE_VNCVIEWER,test "$enable_vncviewer" = "yes")
 
+AC_ARG_ENABLE(enigma-dbswitch,
+	AS_HELP_STRING(--disable-enigma-dbswitch,disable Enigma dbswitch),
+	,[enable_enigma_dbswitch=yes])
+AM_CONDITIONAL(ENABLE_ENIGMA_DBSWITCH,test "$enable_enigma_dbswitch" = "yes")
+
+AC_ARG_ENABLE(enigma-movieplayer,
+	AS_HELP_STRING(--disable-enigma-movieplayer,disable Enigma movieplayer - needs expert webif),
+	,[enable_enigma_movieplayer=yes])
+AM_CONDITIONAL(ENABLE_ENIGMA_MOVIEPLAYER,test "$enable_enigma_movieplayer" = "yes")
+
+AC_ARG_ENABLE(enigma-ngrab,
+	AS_HELP_STRING(--disable-enigma-ngrab,disable Enigma ngrab),
+	,[enable_enigma_ngrab=yes])
+AM_CONDITIONAL(ENABLE_ENIGMA_NGRAB,test "$enable_enigma_ngrab" = "yes")
+
+AC_ARG_ENABLE(enigma-rss,
+	AS_HELP_STRING(--disable-enigma-rss,disable Enigma rss),
+	,[enable_enigma_rss=yes])
+AM_CONDITIONAL(ENABLE_ENIGMA_RSS,test "$enable_enigma_rss" = "yes")
+
+AC_ARG_ENABLE(enigma-script,
+	AS_HELP_STRING(--disable-enigma-script,disable Enigma script),
+	,[enable_enigma_script=yes])
+AM_CONDITIONAL(ENABLE_ENIGMA_SCRIPT,test "$enable_enigma_script" = "yes")
+
+AC_ARG_ENABLE(enigma-weather,
+	AS_HELP_STRING(--enable-enigma-weather,enable Enigma weather),
+	,[enable_enigma_weather=no])
+AM_CONDITIONAL(ENABLE_ENIGMA_WEATHER,test "$enable_enigma_weather" = "yes")
+
 # games and fx2 stuff
 FX2_DEPS=""
 
@@ -1158,7 +1188,7 @@ AM_CONDITIONAL(ENABLE_MOVIEPLAYER2,test "$enable_movieplayer2" = "yes")
 
 # enigma specific stuff #########################
 AC_ARG_WITH(webif,
-	[  --with-webif=NAME       dreambox webif [[standard,expert]]],
+	[  --with-webif=NAME       Enigma webif [[standard,expert]]],
 	[WEBIF="$withval"],[WEBIF="standard"])
 
 AC_SUBST(WEBIF)
@@ -1606,6 +1636,13 @@ tuxmail				$enable_tuxmail
 tuxtxt (internal)		$enable_tuxtxt ($enable_internal_tuxtxt)
 tuxwetter			$enable_tuxwetter
 vncviewer			$enable_vncviewer
+
+Enigma: dbswitch		$enable_enigma_dbswitch
+Enigma: movieplayer		$enable_enigma_movieplayer
+Enigma: ngrab			$enable_enigma_ngrab
+Enigma: rss			$enable_enigma_rss
+Enigma: script			$enable_enigma_script
+Enigma: weather			$enable_enigma_weather
 
 FX2: C64 Emulator		$enable_fx2_c64emu
 FX2: lcdcirc			$enable_fx2_lcdcirc
