@@ -24,7 +24,10 @@ endif
 	ln -s /tmp $@/var/run
 	ln -s /tmp $@/var/tmp
 if ENABLE_IDE
-	$(INSTALL) -d $@/hdd
+	$(INSTALL) -d $@/mnt/hdd1
+	$(INSTALL) -d $@/mnt/hdd2
+	$(INSTALL) -d $@/mnt/mmc
+	ln -sf /mnt/hdd1 $@/hdd
 endif
 	$(MAKE) $@/etc/update.urls
 
