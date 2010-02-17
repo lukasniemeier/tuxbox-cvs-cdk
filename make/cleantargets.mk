@@ -110,6 +110,7 @@ distclean-local:
 	-rm -rf $(serversupport)
 	-rm -rf $(flashprefix)
 	-@CLEANUP@
+	make $(DEPDIR)
 
 ################################################################
 # flash-clean deletes everything created with the flash-* commands
