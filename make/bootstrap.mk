@@ -26,7 +26,10 @@ endif
 	$(INSTALL) -d $(targetprefix)/var/tuxbox/boot
 	$(INSTALL) -d $(targetprefix)$(UCODEDIR)
 if ENABLE_IDE
-	$(INSTALL) -d $(targetprefix)/hdd
+	$(INSTALL) -d $(targetprefix)/mnt/hdd1
+	$(INSTALL) -d $(targetprefix)/mnt/hdd2
+	$(INSTALL) -d $(targetprefix)/mnt/mmc
+	ln -sf /mnt/hdd1 $(targetprefix)/hdd
 endif
 	$(INSTALL) -d $(hostprefix)/$(target)
 	$(INSTALL) -d $(hostprefix)/bin
