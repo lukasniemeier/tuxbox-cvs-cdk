@@ -175,6 +175,11 @@ CONFIGURE_OPTS += \
 	--enable-nfsserver
 endif
 
+if ENABLE_SAMBASERVER
+CONFIGURE_OPTS += \
+	--enable-sambaserver
+endif
+
 CONFIGURE = \
 	./autogen.sh && \
 	CC=$(target)-gcc \
