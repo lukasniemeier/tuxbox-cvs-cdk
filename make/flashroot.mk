@@ -142,6 +142,9 @@ endif
 if ENABLE_LIRC
 	$(MAKE) flash-lircd
 endif
+if ENABLE_LOGOMASK
+	$(MAKE) flash-logomask
+endif
 if ENABLE_MSGBOX
 	$(MAKE) flash-msgbox
 endif

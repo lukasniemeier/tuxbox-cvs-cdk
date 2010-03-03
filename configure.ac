@@ -575,6 +575,11 @@ AC_ARG_ENABLE(lirc,
 	esac],[enable_lirc=no])
 AM_CONDITIONAL(ENABLE_LIRC,test "$enable_lirc" = "yes")
 
+AC_ARG_ENABLE(logomask,
+	AS_HELP_STRING(--enable-logomask,enable logomask),
+	,[enable_logomask=no])
+AM_CONDITIONAL(ENABLE_LOGOMASK,test "$enable_logomask" = "yes")
+
 AC_ARG_ENABLE(msgbox,
 	AS_HELP_STRING(--enable-msgbox,enable msgbox),
 	,[enable_msgbox=no])
@@ -1620,6 +1625,7 @@ LIRC				$enable_lirc
 lcshot				$enable_lcshot
 links text mode browser		$enable_links
 links graphics mode browser	$enable_links_g
+logomask			$enable_logomask
 msgbox				$enable_msgbox
 openntpd			$enable_openntpd
 OpenVPN:			$enable_openvpn

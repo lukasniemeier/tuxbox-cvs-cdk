@@ -5,7 +5,7 @@ $(appsdir)/tuxbox/plugins/config.status: bootstrap libfreetype libcurl libz libs
 
 plugins: neutrino-plugins enigma-plugins
 
-neutrino-plugins: $(targetprefix)/include/tuxbox/plugin.h tuxmail tuxtxt tuxcom tuxcal vncviewer dvbsub shellexec tuxwetter sysinfo clock
+neutrino-plugins: $(targetprefix)/include/tuxbox/plugin.h tuxmail tuxtxt tuxcom tuxcal vncviewer dvbsub shellexec tuxwetter sysinfo clock logomask
 
 enigma-plugins: @LIBGETTEXT@ $(appsdir)/tuxbox/plugins/config.status $(targetprefix)/include/tuxbox/plugin.h
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma all install
@@ -86,6 +86,9 @@ endif
 if ENABLE_CLOCK
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install
 endif
+if ENABLE_LOGOMASK
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all install
+endif
 
 flash-shellexec: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all install prefix=$(flashprefix)/root
@@ -94,6 +97,9 @@ if ENABLE_TUXWETTER
 endif
 if ENABLE_CLOCK
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install prefix=$(flashprefix)/root
+endif
+if ENABLE_LOGOMASK
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all install prefix=$(flashprefix)/root
 endif
 	@FLASHROOTDIR_MODIFIED@
 
@@ -116,6 +122,13 @@ clock: input $(appsdir)/tuxbox/plugins/config.status
 
 flash-clock: flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all install prefix=$(flashprefix)/root
+	@FLASHROOTDIR_MODIFIED@
+
+logomask: $(appsdir)/tuxbox/plugins/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask all install
+
+flash-logomask: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 dvbsub: $(appsdir)/tuxbox/plugins/config.status
