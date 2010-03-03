@@ -91,6 +91,9 @@ endif
 if ENABLE_AFORMAT
 	$(MAKE) flash-aformat
 endif
+if ENABLE_BLOCKADS
+	$(MAKE) flash-blockads
+endif
 if ENABLE_CDKVCINFO
 	$(MAKE) flash-cdkVcInfo
 endif

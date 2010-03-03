@@ -5,7 +5,7 @@ $(appsdir)/tuxbox/plugins/config.status: bootstrap libfreetype libcurl libz libs
 
 plugins: neutrino-plugins enigma-plugins
 
-neutrino-plugins: $(targetprefix)/include/tuxbox/plugin.h tuxmail tuxtxt tuxcom tuxcal vncviewer dvbsub shellexec tuxwetter sysinfo clock logomask
+neutrino-plugins: $(targetprefix)/include/tuxbox/plugin.h tuxmail tuxtxt tuxcom tuxcal vncviewer dvbsub shellexec tuxwetter sysinfo clock logomask blockads
 
 enigma-plugins: @LIBGETTEXT@ $(appsdir)/tuxbox/plugins/config.status $(targetprefix)/include/tuxbox/plugin.h
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma all install
@@ -80,8 +80,8 @@ flash-mosaic: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 
 shellexec: $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all install
-if ENABLE_TUXWETTER
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install
+if ENABLE_BLOCKADS
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec all install
 endif
 if ENABLE_CLOCK
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install
@@ -89,17 +89,23 @@ endif
 if ENABLE_LOGOMASK
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all install
 endif
+if ENABLE_TUXWETTER
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install
+endif
 
 flash-shellexec: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all install prefix=$(flashprefix)/root
-if ENABLE_TUXWETTER
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install prefix=$(flashprefix)/root
+if ENABLE_BLOCKADS
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec all install prefix=$(flashprefix)/root
 endif
 if ENABLE_CLOCK
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install prefix=$(flashprefix)/root
 endif
 if ENABLE_LOGOMASK
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all install prefix=$(flashprefix)/root
+endif
+if ENABLE_TUXWETTER
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install prefix=$(flashprefix)/root
 endif
 	@FLASHROOTDIR_MODIFIED@
 
@@ -115,6 +121,13 @@ sysinfo: $(appsdir)/tuxbox/plugins/config.status
 
 flash-sysinfo: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo all install prefix=$(flashprefix)/root
+	@FLASHROOTDIR_MODIFIED@
+
+blockads: input $(appsdir)/tuxbox/plugins/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads all install
+
+flash-blockads: flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads all install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 clock: input $(appsdir)/tuxbox/plugins/config.status

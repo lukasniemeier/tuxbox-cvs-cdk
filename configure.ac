@@ -470,6 +470,11 @@ AC_ARG_ENABLE(cdkVcInfo,
 	,[enable_cdkVcInfo=no])
 AM_CONDITIONAL(ENABLE_CDKVCINFO,test "$enable_cdkVcInfo" = "yes")
 
+AC_ARG_ENABLE(blockads,
+	AS_HELP_STRING(--enable-blockads,enable blockads),
+	,[enable_blockads=no])
+AM_CONDITIONAL(ENABLE_BLOCKADS,test "$enable_blockads" = "yes")
+
 AC_ARG_ENABLE(clock,
 	AS_HELP_STRING(--enable-clock,enable clock),
 	,[enable_clock=no])
@@ -1608,6 +1613,7 @@ German keymaps:			$enable_german_keymaps
 
 aformat				$enable_aformat
 cdkVcInfo			$enable_cdkVcInfo
+blockads			$enable_blockads
 clock				$enable_clock
 dboxshot			$enable_dboxshot
 dropbear			$enable_dropbear
