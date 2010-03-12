@@ -60,10 +60,6 @@ endif
 		ln -sf liblufs-ftpfs.so.2.0.0 $</lib/liblufs-ftpfs.so.2 ; \
 		ln -sf liblufs-ftpfs.so.2.0.0 $</lib/liblufs-ftpfs.so ; \
 	fi
-	if [ -e $</lib/libfx2.so -a -e $</lib/tuxbox/plugins/libfx2.so ]; then \
-		rm -f $</lib/libfx2.so ; \
-		ln -s /lib/tuxbox/plugins/libfx2.so $</lib/libfx2.so; \
-	fi
 	if [ -d $(flashprefix)/root/lib/directfb-1.0-0 ]; then \
 		cp -va $(flashprefix)/root/lib/directfb-1.0-0 $</lib/ ; \
 	fi

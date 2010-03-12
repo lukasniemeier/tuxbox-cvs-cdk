@@ -1,7 +1,7 @@
 fx2_lib: $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/lib all install
 
-flash-fx2_lib: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+flash-fx2_lib: $(appsdir)/tuxbox/plugins/config.status fx2_lib | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/fx2/lib all install prefix=$(flashprefix)/root
 
 if BOXTYPE_DBOX2

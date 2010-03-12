@@ -199,7 +199,6 @@ $(flashprefix)/root-% $(flashprefix)/root $(flashprefix)/root-radiobox
 	cp -rd $</* $@
 	cp -rd $(flashprefix)/root-radiobox/* $@
 	$(REMOVE_MANDIRS)
-	cp -rd $(flashprefix)/root/lib/tuxbox/plugins/libfx2.so $@/lib/tuxbox/plugins
 	$(MAKE) --assume-old=$@ $@/lib/ld.so.1 mklibs_librarypath=$(flashprefix)/root-radiobox/lib:$(flashprefix)/root-radiobox/lib/tuxbox/plugins:$(flashprefix)/root/lib:$(flashprefix)/root/lib/tuxbox/plugins:$</lib:$(targetprefix)/lib:$(targetprefix)/lib/tuxbox/plugins
 	cp $(targetprefix)/lib/libstdc++.so.6.0.3 $@/lib/
 	ln -sf libstdc++.so.6.0.3 $@/lib/libstdc++.so.6
