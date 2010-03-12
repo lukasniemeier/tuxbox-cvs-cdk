@@ -155,6 +155,11 @@ CONFIGURE_OPTS += \
 	--disable-movieplayer
 endif
 
+if !ENABLE_EPGPLUS
+CONFIGURE_OPTS += \
+	--disable-epgplus
+endif
+
 if !ENABLE_GUI_MOUNT
 CONFIGURE_OPTS += \
 	--disable-gui-mount

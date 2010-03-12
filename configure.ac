@@ -446,6 +446,11 @@ AC_ARG_ENABLE(radiotext,
 	,[enable_radiotext=yes])
 AM_CONDITIONAL(ENABLE_RADIOTEXT,test "$enable_radiotext" = "yes")
 
+AC_ARG_ENABLE(epgplus,
+	AS_HELP_STRING(--disable-epgplus,include Neutrino EPG plus),
+	,[enable_epgplus=yes])
+AM_CONDITIONAL(ENABLE_EPGPLUS,test "$enable_epgplus" = "yes")
+
 if test "$enable_uclibc" = "yes" && test "$enable_flac" = "yes"; then
 	echo
 	echo "*********************************************************************"
@@ -1605,6 +1610,7 @@ Neutrino Pictureviewer:		$enable_pictureviewer
 Neutrino Mount:			$enable_gui_mount
 Neutrino Drive-Setup:		$enable_drive_gui
 Neutrino dvbsub			$enable_dvbsub
+Neutrino EPG plus		$enable_epgplus
 Radiotext support:		$enable_radiotext
 FLAC support:			$enable_flac
 CURL version:			$with_curlversion
