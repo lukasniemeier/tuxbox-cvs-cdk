@@ -121,8 +121,52 @@ diff -uNr util-linux-2.12r.org/fdisk/fdiskbsdlabel.c util-linux-2.12r/fdisk/fdis
  #if defined (__alpha__) && BSD_LABELSECTOR == 0
 diff -uNr util-linux-2.12r.org/fdisk/sfdisk.c util-linux-2.12r/fdisk/sfdisk.c
 --- util-linux-2.12r.org/fdisk/sfdisk.c	2005-01-04 23:31:57.000000000 +0100
-+++ util-linux-2.12r/fdisk/sfdisk.c	2009-09-15 11:57:53.000000000 +0200
-@@ -1730,12 +1730,12 @@
++++ util-linux-2.12r/fdisk/sfdisk.c	2010-03-11 12:58:00.000000000 +0100
+@@ -48,7 +48,11 @@
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ #include <sys/utsname.h>
+-#include <linux/unistd.h>	/* _syscall */
++
++//#ifdef HAVE_LLSEEK
++#include <syscall.h>
++//#endif	/* HAVE_LLSEEK */
++
+ #include "nls.h"
+ #include "common.h"
+ 
+@@ -171,15 +175,17 @@
+  *
+  * Note: we use 512-byte sectors here, irrespective of the hardware ss.
+  */
+-#undef use_lseek
++
+ #if defined (__alpha__) || defined (__ia64__) || defined (__x86_64__) || defined (__s390x__)
+ #define use_lseek
++#else
++#undef use_lseek
+ #endif
+ 
+-#ifndef use_lseek
++#ifdef use_lseek
+ static __attribute__used
+-_syscall5(int,  _llseek,  unsigned int,  fd, ulong, hi, ulong, lo,
+-       loff_t *, res, unsigned int, wh);
++_syscall5(int _llseek,  unsigned int fd, ulong hi, ulong lo,
++       loff_t * res, unsigned int wh);
+ #endif
+ 
+ static int
+@@ -188,7 +194,7 @@
+     in = ((loff_t) s << 9);
+     out = 1;
+ 
+-#ifndef use_lseek
++#ifdef use_lseek
+     if (_llseek (fd, in>>32, in & 0xffffffff, &out, SEEK_SET) != 0) {
+ #else
+     if ((out = lseek(fd, in, SEEK_SET)) != in) {
+@@ -1730,12 +1736,12 @@
  	eof = 1;
  	return RD_EOF;
      }
@@ -137,7 +181,7 @@ diff -uNr util-linux-2.12r.org/fdisk/sfdisk.c util-linux-2.12r/fdisk/sfdisk.c
        *lp = 0;
  
      /* recognize a few commands - to be expanded */
-@@ -1745,7 +1745,7 @@
+@@ -1745,7 +1751,7 @@
      }
  
      /* dump style? - then bad input is fatal */
@@ -146,7 +190,7 @@ diff -uNr util-linux-2.12r.org/fdisk/sfdisk.c util-linux-2.12r/fdisk/sfdisk.c
  	struct dumpfld *d;
  
        nxtfld:
-@@ -2514,7 +2514,7 @@
+@@ -2514,7 +2520,7 @@
  
      if (argc < 1)
        fatal(_("no command?\n"));
@@ -155,3 +199,27 @@ diff -uNr util-linux-2.12r.org/fdisk/sfdisk.c util-linux-2.12r/fdisk/sfdisk.c
        progn = argv[0];
      else
        progn++;
+diff -uNr util-linux-2.12r.org/fdisk/llseek.c util-linux-2.12r/fdisk/llseek.c
+--- util-linux-2.12r.org/fdisk/llseek_original.c	2010-03-11 12:44:38.000000000 +0100
++++ util-linux-2.12r.org/fdisk/llseek.c	2010-03-11 12:44:44.000000000 +0100
+@@ -24,16 +24,16 @@
+ #define my_llseek lseek
+ 
+ #else
+-#include <linux/unistd.h>	/* for __NR__llseek */
++#include <unistd.h>	/* for __NR__llseek */
+ 
+ static int _llseek (unsigned int, unsigned long,
+ 		   unsigned long, long long *, unsigned int);
+ 
+ #ifdef __NR__llseek
+ 
+-static _syscall5(int,_llseek,unsigned int,fd,unsigned long,offset_high,
+-		 unsigned long, offset_low,long long *,result,
+-		 unsigned int, origin)
++static _syscall5(int _llseek, unsigned int fd, unsigned long offset_high,
++		 unsigned long offset_low, long long * result,
++		 unsigned int origin)
+ 
+ #else
+ 
