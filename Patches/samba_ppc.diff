@@ -1,160 +1,127 @@
-diff -Naur samba-1.9.18p8.orig/examples/dbox/smb.conf.dbox samba-1.9.18p8/examples/dbox/smb.conf.dbox
---- samba-1.9.18p8.orig/examples/dbox/smb.conf.dbox	1970-01-01 01:00:00.000000000 +0100
-+++ samba-1.9.18p8/examples/dbox/smb.conf.dbox	2006-11-05 12:45:11.744427639 +0000
-@@ -0,0 +1,39 @@
-+; Sample smb.conf configuration file for the dbox
-+[global]
-+;;;;;;;;;;;;;;;
-+; Edit the following two lines to reflect your network settings:
-+;;;;;;;;;;;;;;;
-+interfaces = 192.168.0.41/24
-+workgroup = MSHEIMNETZ
-+;;;;;;;;;;;;;;;
-+; The rest of the configuration is a security risk, but
-+; at least it should allow you to debug your setup. Once
-+; samba is running OK, feel free to be more restrictive.
-+;;;;;;;;;;;;;;;
-+server string = Samba Server
-+netbios name = dbox
-+security = share
-+load printers = no
-+guest ok = yes
-+guest account = root
-+encrypt passwords = yes
-+os level = 0
-+log level = 0
-+browseable = yes
-+preserve case = yes
-+short preserve case = yes
-+character set = iso8859-1
-+# socket options = IPTOS_LOWDELAY TCP_NODELAY SO_SNDBUF=4096 SO_RCVBUF=4096
-+;;;;;;;;;;;;;;;
-+; Some sample shares
-+;;;;;;;;;;;;;;;
-+[Configuration]
-+comment = Configuration files
-+path = /var
-+read only = no
-+public = yes
-+[Harddisk]
-+comment = The harddisk
-+path = /hdd
-+read only = no
-+public = yes
-diff -Naur samba-1.9.18p8.orig/source/includes.h samba-1.9.18p8/source/includes.h
---- samba-1.9.18p8.orig/source/includes.h	1998-06-13 02:44:19.000000000 +0100
-+++ samba-1.9.18p8/source/includes.h	2006-10-30 06:21:04.902353482 +0000
-@@ -154,7 +154,6 @@
- #include <bsd/sys/time.h>
- #include <bsd/netinet/in.h>
- #else
--#include <sys/time.h>
- #include <netinet/in.h>
- #endif 
- #include <netdb.h>
-@@ -1160,13 +1160,13 @@
- #include <sys/ipc.h>
- #include <sys/sem.h>
- #include <sys/shm.h>
--#ifdef NO_SEMUN
-+// #ifdef NO_SEMUN
- union semun {
- 	int val;
- 	struct semid_ds *buf;
- 	unsigned short *array;
- };
+diff -uNr samba-2.2.12.org//source/configure.in samba-2.2.12/source/configure.in
+--- samba-2.2.12.org//source/configure.in	2004-08-12 20:24:30.000000000 +0200
++++ samba-2.2.12/source/configure.in	2010-03-15 19:12:28.000000000 +0100
+@@ -371,41 +371,7 @@
+         AC_MSG_CHECKING([for LFS support])
+         old_CPPFLAGS="$CPPFLAGS"
+         CPPFLAGS="-D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE $CPPFLAGS"
+-       AC_TRY_RUN([
+-#include <unistd.h>
+-#include <sys/utsname.h>
+-main() {
+-#if _LFS64_LARGEFILE == 1
+-       struct utsname uts;
+-       char *release;
+-       int major, minor;
+-
+-       /* Ensure this is glibc 2.2 or higher */
+-#if defined(__GLIBC__) && defined(__GLIBC_MINOR__)
+-       int libc_major = __GLIBC__;
+-       int libc_minor = __GLIBC_MINOR__;
+-
+-       if (libc_major < 2)
+-              exit(1);
+-       if (libc_minor < 2)
+-              exit(1);
 -#endif
-+//#endif
- #if defined(HPUX) && defined(HPUX10)
- #ifdef SEMMSL
- #undef SEMMSL
-diff -Naur samba-1.9.18p8.orig/source/Makefile samba-1.9.18p8/source/Makefile
---- samba-1.9.18p8.orig/source/Makefile	1998-06-01 07:29:04.000000000 +0100
-+++ samba-1.9.18p8/source/Makefile	2006-10-30 06:32:31.653540874 +0000
-@@ -5,7 +5,7 @@
- ###########################################################################
+-
+-       /* Ensure this is kernel 2.4 or higher */
+-
+-       uname(&uts);
+-       release = uts.release;
+-       major = atoi(strsep(&release, "."));
+-       minor = atoi(strsep(&release, "."));
+-
+-       if (major > 2 || (major == 2 && minor > 3))
+-               exit(0);
+-       exit(1);
+-#else
+-       exit(1);
+-#endif
+-}
+-], [LINUX_LFS_SUPPORT=yes], [LINUX_LFS_SUPPORT=no], [LINUX_LFS_SUPPORT=cross])
++        LINUX_LFS_SUPPORT=yes
+         CPPFLAGS="$old_CPPFLAGS"
+         if test x$LINUX_LFS_SUPPORT = xyes ; then
+           CPPFLAGS="-D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE $CPPFLAGS"
+diff -uNr samba-2.2.12.org//source/Makefile.in samba-2.2.12/source/Makefile.in
+--- samba-2.2.12.org//source/Makefile.in	2004-08-12 20:24:19.000000000 +0200
++++ samba-2.2.12/source/Makefile.in	2010-03-15 19:12:23.000000000 +0100
+@@ -702,29 +702,29 @@
+ install: installbin installman installscripts installcp installswat
  
- # The base directory for all samba files
--BASEDIR = /usr/local/samba
-+BASEDIR = 
+ installdirs:
+-	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(BASEDIR)
+-	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(SBINDIR)
+-	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(BINDIR)
+-	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(LIBDIR)
+-	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(VARDIR)
+-	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(PIDDIR)
+-	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(CODEPAGEDIR)
++	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(DESTDIR)/$(BASEDIR)
++	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(DESTDIR)/$(SBINDIR)
++	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(DESTDIR)/$(BINDIR)
++	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(DESTDIR)/$(LIBDIR)
++	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(DESTDIR)/$(VARDIR)
++	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(DESTDIR)/$(PIDDIR)
++	$(SHELL) $(srcdir)/install-sh -d -m $(INSTALLPERMS) $(DESTDIR)/$(CODEPAGEDIR)
  
- # The base manpages directory to put the man pages in
- # Note: $(MANDIR)/man1, $(MANDIR)/man5 and $(MANDIR)/man8 must exist.
-@@ -20,19 +20,20 @@
- BINDIR = $(BASEDIR)/bin
- SBINDIR = $(BASEDIR)/bin
- LIBDIR = $(BASEDIR)/lib
--VARDIR = $(BASEDIR)/var
-+VARDIR = $(BASEDIR)/tmp
+ installservers: all installdirs
+-	@$(SHELL) $(srcdir)/script/installbin.sh $(INSTALLPERMS) $(BASEDIR) $(SBINDIR) $(LIBDIR) $(VARDIR) $(SPROGS)
++	@$(SHELL) $(srcdir)/script/installbin.sh $(INSTALLPERMS)  $(DESTDIR)/$(BASEDIR) $(DESTDIR)/$(SBINDIR) $(DESTDIR)/$(LIBDIR) $(DESTDIR)/$(VARDIR) $(SPROGS)
  
- # The permissions to give the executables
- INSTALLPERMS = 0755
+ installbin: all installdirs
+-	@$(SHELL) $(srcdir)/script/installbin.sh $(INSTALLPERMS) $(BASEDIR) $(SBINDIR) $(LIBDIR) $(VARDIR) $(SPROGS) $(WINBIND_SPROGS)
+-	@$(SHELL) $(srcdir)/script/installbin.sh $(INSTALLPERMS) $(BASEDIR) $(BINDIR) $(LIBDIR) $(VARDIR) $(PROGS) $(WINBIND_PROGS)
++	@$(SHELL) $(srcdir)/script/installbin.sh $(INSTALLPERMS) $(DESTDIR)/$(BASEDIR) $(DESTDIR)/$(SBINDIR) $(DESTDIR)/$(LIBDIR) $(DESTDIR)/$(VARDIR) $(SPROGS) $(WINBIND_SPROGS)
++	@$(SHELL) $(srcdir)/script/installbin.sh $(INSTALLPERMS) $(DESTDIR)/$(BASEDIR) $(DESTDIR)/$(BINDIR) $(DESTDIR)/$(LIBDIR) $(DESTDIR)/$(VARDIR) $(PROGS) $(WINBIND_PROGS)
  
- # Add any optimisation or debugging flags here
- # add -DSYSLOG for syslog support
--FLAGS1 = -O
-+FLAGS1 = -Os
- LIBS1 = 
+ installscripts: installdirs
+-	@$(SHELL) $(srcdir)/script/installscripts.sh $(INSTALLPERMS) $(BINDIR) $(SCRIPTS)
++	@$(SHELL) $(srcdir)/script/installscripts.sh $(INSTALLPERMS) $(DESTDIR)/$(BINDIR) $(SCRIPTS)
  
- # You will need to use a ANSI C compiler. This means under SunOS 4 you can't 
- # use cc, instead you will have to use gcc. 
- # CC = gcc
-+CC = powerpc-tuxbox-linux-gnu-gcc
+ installcp: installdirs installbin
+-	@$(SHELL) $(srcdir)/script/installcp.sh $(srcdir) $(LIBDIR) $(CODEPAGEDIR) $(BINDIR) $(CODEPAGELIST)
++	@$(SHELL) $(srcdir)/script/installcp.sh $(srcdir) $(DESTDIR)/$(LIBDIR) $(DESTDIR)/$(CODEPAGEDIR) ../../host/builds/samba2/bin $(CODEPAGELIST)
  
- # This may help with some versions of make
- SHELL = /bin/sh
-@@ -47,11 +48,11 @@
- # or in smb.conf (see smb.conf(5))
- SMBLOGFILE = $(VARDIR)/log.smb
- NMBLOGFILE = $(VARDIR)/log.nmb
--CONFIGFILE = $(LIBDIR)/smb.conf
-+CONFIGFILE = $(BASEDIR)/etc/smb.conf
- LMHOSTSFILE = $(LIBDIR)/lmhosts
- DRIVERFILE = $(LIBDIR)/printers.def
- SMB_PASSWD = $(BINDIR)/smbpasswd
--SMB_PASSWD_FILE = $(BASEDIR)/private/smbpasswd
-+SMB_PASSWD_FILE = $(BASEDIR)/etc/smbpasswd
- WEB_ROOT = $(BASEDIR)
+ installswat: installdirs
+-	@$(SHELL) $(srcdir)/script/installswat.sh $(SWATDIR) $(srcdir)
++	@$(SHELL) $(srcdir)/script/installswat.sh $(DESTDIR)/$(SWATDIR) $(srcdir)
  
- # the directory where lock files go
-@@ -237,8 +238,8 @@
+ installclientlib:
+ 	-$(INSTALLCLIENTCMD_SH) bin/libsmbclient.@SHLIBEXT@
+@@ -734,26 +734,26 @@
  
- # Use this for Linux with glibc2 (libc6)
- # contributed by Eloy Paris <peloy@ven.ra.rockwell.com>
--# FLAGSM = -DLINUX -DNETGROUP -DSHADOW_PWD -DALLOW_CHANGE_PASSWORD -DFAST_SHARE_MODES -DNO_ASMSIGNALH -DGLIBC2
--# LIBSM = -lnsl -lcrypt
-+FLAGSM = -DLINUX -DNETGROUP -DSHADOW_PWD -DALLOW_CHANGE_PASSWORD -DFAST_SHARE_MODES -DNO_ASMSIGNALH -DGLIBC2
-+LIBSM = -lnsl -lcrypt
+ # revert to the previously installed version
+ revert:
+-	@$(SHELL) $(srcdir)/script/revert.sh $(SBINDIR) $(SPROGS) ${WINBIND_SPROGS}
+-	@$(SHELL) $(srcdir)/script/revert.sh $(BINDIR) $(PROGS) $(SCRIPTS) ${WINBIND_PROGS}
++	@$(SHELL) $(srcdir)/script/revert.sh $(DESTDIR)/$(SBINDIR) $(DESTDIR)/$(SPROGS) ${WINBIND_SPROGS}
++	@$(SHELL) $(srcdir)/script/revert.sh $(DESTDIR)/$(BINDIR) $(DESTDIR)/$(PROGS) $(DESTDIR)/$(SCRIPTS) ${WINBIND_PROGS}
  
- # Use this for Linux with glibc2 (libc6) - RedHat Linux v5.0 with PAM
- # contributed by John H Terpstra <jht@aquasoft.com.au>
-diff -Naur samba-1.9.18p8.orig/source/smbmnt.c samba-1.9.18p8/source/smbmnt.c
---- samba-1.9.18p8.orig/source/smbmnt.c	1998-01-26 20:05:46.000000000 +0000
-+++ samba-1.9.18p8/source/smbmnt.c	2006-10-30 06:19:31.584094506 +0000
-@@ -33,6 +33,11 @@
+ installman:
+-	@$(SHELL) $(srcdir)/script/installman.sh $(MANDIR) $(srcdir) "@ROFF@"
++	@$(SHELL) $(srcdir)/script/installman.sh $(DESTDIR)/$(MANDIR) $(srcdir) "@ROFF@"
  
- #include <asm/unistd.h>
+ uninstall: uninstallman uninstallbin uninstallscripts uninstallcp
  
-+#ifdef MOUNTED
-+#undef MOUNTED
-+#define MOUNTED "/var/etc/mtab"
-+#endif
-+
- static char *progname;
+ uninstallman:
+-	@$(SHELL) $(srcdir)/script/uninstallman.sh $(MANDIR) $(srcdir)
++	@$(SHELL) $(srcdir)/script/uninstallman.sh $(DESTDIR)/$(MANDIR) $(srcdir)
  
+ uninstallbin:
+-	@$(SHELL) $(srcdir)/script/uninstallbin.sh $(INSTALLPERMS) $(BASEDIR) $(SBINDIR) $(LIBDIR) $(VARDIR) $(SPROGS) $(WINBIND_SPROGS)
+-	@$(SHELL) $(srcdir)/script/uninstallbin.sh $(INSTALLPERMS) $(BASEDIR) $(BINDIR) $(LIBDIR) $(VARDIR) $(PROGS) $(WINBIND_PROGS)
++	@$(SHELL) $(srcdir)/script/uninstallbin.sh $(INSTALLPERMS) $(DESTDIR)/$(BASEDIR) $(DESTDIR)/$(SBINDIR) $(DESTDIR)/$(LIBDIR) $(DESTDIR)/$(VARDIR) $(SPROGS) $(WINBIND_SPROGS)
++	@$(SHELL) $(srcdir)/script/uninstallbin.sh $(INSTALLPERMS) $(DESTDIR)/$(BASEDIR) $(DESTDIR)/$(BINDIR) $(DESTDIR)/$(LIBDIR) $(DESTDIR)/$(VARDIR) $(PROGS) $(WINBIND_PROGS)
  
-diff -Naur samba-1.9.18p8.orig/source/smbmount.c samba-1.9.18p8/source/smbmount.c
---- samba-1.9.18p8.orig/source/smbmount.c	1998-05-13 02:46:57.000000000 +0100
-+++ samba-1.9.18p8/source/smbmount.c	2006-10-30 06:47:13.641085771 +0000
-@@ -31,6 +31,11 @@
+ uninstallscripts:
+-	@$(SHELL) $(srcdir)/script/uninstallscripts.sh $(INSTALLPERMS) $(BINDIR) $(SCRIPTS)
++	@$(SHELL) $(srcdir)/script/uninstallscripts.sh $(INSTALLPERMS) $(DESTDIR)/$(BINDIR) $(SCRIPTS)
  
- #include "includes.h"
- #include <linux/smb_fs.h>
-+
-+#undef NR_OPEN
-+#define NR_OPEN (1024*1024)	/* Absolute upper limit on fd num */
-+#define INR_OPEN 1024		/* Initial setting for nfile rlimits */
-+
- static struct smb_conn_opt conn_options;
+ uninstallcp:
+-	@$(SHELL) $(srcdir)/script/uninstallcp.sh $(CODEPAGEDIR) $(CODEPAGELIST)
++	@$(SHELL) $(srcdir)/script/uninstallcp.sh $(DESTDIR)/$(CODEPAGEDIR) $(CODEPAGELIST)
  
- #ifndef REGISTER
+ clean: 
+ 	-rm -f core */*~ *~ */*.o */*.po */*.po32 */*.@SHLIBEXT@* */*.a

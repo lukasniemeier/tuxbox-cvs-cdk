@@ -1,99 +1,63 @@
-$(DEPDIR)/smbmount: bootstrap @DEPENDS_samba@
-	@PREPARE_samba@
-if ENABLE_UCLIBC
-	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
-	sed -i  -e "s/-DNETGROUP//g" \
-		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \
-	@DIR_samba@/source/Makefile
-endif
-	cd @DIR_samba@ && \
-		$(INSTALL) -m 644 examples/dbox/smb.conf.dbox $(targetprefix)/var/etc && \
-		cd source && \
-		$(MAKE) make_smbcodepage CC=$(CC) && \
-		$(INSTALL) -d $(targetprefix)/lib/codepages && \
-		./make_smbcodepage c 850 codepage_def.850 \
-			$(targetprefix)/lib/codepages/codepage.850 && \
-		$(MAKE) clean && \
-		for i in smbmount smbmnt; do \
-			$(MAKE) $$i; \
-			$(INSTALL) $$i $(targetprefix)/bin; \
-		done 
-	@CLEANUP_samba@
-	touch $@
-
-flash-smbmount: $(flashprefix)/root/bin/smbmount
-
-$(flashprefix)/root/bin/smbmount: bootstrap @DEPENDS_samba@ | $(flashprefix)/root
-	@PREPARE_samba@
-if ENABLE_UCLIBC
-	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
-	sed -i  -e "s/-DNETGROUP//g" \
-		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \
-	@DIR_samba@/source/Makefile
-endif
-	cd @DIR_samba@ && \
-		$(INSTALL) -m 644 examples/dbox/smb.conf.dbox $(flashprefix)/root/var/etc && \
-		cd source && \
-		$(MAKE) make_smbcodepage CC=$(CC) && \
-		$(INSTALL) -d $(flashprefix)/root/lib/codepages && \
-		./make_smbcodepage c 850 codepage_def.850 \
-			$(flashprefix)/root/lib/codepages/codepage.850 && \
-		$(MAKE) clean && \
-		for i in smbmount smbmnt; do \
-			$(MAKE) $$i; \
-			$(INSTALL) $$i $(flashprefix)/root/bin; \
-		done
-	@CLEANUP_samba@
-	@FLASHROOTDIR_MODIFIED@
-
-if ENABLE_SAMBASERVER
-
 $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 	@PREPARE_samba@
-if ENABLE_UCLIBC
-	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
-	sed -i  -e "s/-DNETGROUP//g" \
-		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \
-	@DIR_samba@/source/Makefile
-endif
 	cd @DIR_samba@ && \
-		$(INSTALL) -m 644 examples/dbox/smb.conf.dbox $(targetprefix)/var/etc && \
 		cd source && \
-		$(MAKE) make_smbcodepage CC=$(CC) && \
+		$(BUILDENV) \
+		autoconf configure.in > configure && \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix= \
+			samba_cv_struct_timespec=yes \
+			samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
+			--with-configdir=/etc \
+			--with-privatedir=/etc/samba/private \
+			--with-lockdir=/var/lock \
+			--with-piddir=/var/run \
+			--with-logfilebase=/var/log \
+			--disable-cups \
+			--with-swatdir=$(targetprefix)/swat && \
+		$(MAKE) bin/make_smbcodepage CC=$(CC) && \
 		$(INSTALL) -d $(targetprefix)/lib/codepages && \
-		./make_smbcodepage c 850 codepage_def.850 \
+		$(INSTALL) -d $(targetprefix)/var/etc/samba && \
+		$(INSTALL) -d $(targetprefix)/var/etc/samba/private && \
+		ln -sf /var/etc/samba/ $(targetprefix)/etc/samba && \
+		ln -sf /var/etc/smb.conf $(targetprefix)/etc/smb.conf && \
+		./bin/make_smbcodepage c 850 codepages/codepage_def.850 \
 			$(targetprefix)/lib/codepages/codepage.850 && \
 		$(MAKE) clean && \
 		for i in smbd nmbd smbclient smbmount smbmnt smbpasswd; do \
-			$(MAKE) $$i; \
-			$(INSTALL) $$i $(targetprefix)/bin; \
-		done 
+			$(MAKE) bin/$$i; \
+			$(INSTALL) bin/$$i $(targetprefix)/bin; \
+		done
 	@CLEANUP_samba@
 	touch $@
 
-flash-sambaserver: $(flashprefix)/root/bin/smbd
-
-$(flashprefix)/root/bin/smbd: bootstrap @DEPENDS_samba@ | $(flashprefix)/root
-	@PREPARE_samba@
-if ENABLE_UCLIBC
-	sed -i "/#include <rpcsvc\/ypclnt.h>/d" @DIR_samba@/source/includes.h
-	sed -i  -e "s/-DNETGROUP//g" \
-		-e "s/powerpc-tuxbox-linux-gnu-gcc/powerpc-tuxbox-linux-uclibc-gcc/g" \
-	@DIR_samba@/source/Makefile
-endif
-	cd @DIR_samba@ && \
-		$(INSTALL) -m 644 examples/dbox/smb.conf.dbox $(flashprefix)/root/var/etc && \
-		cd source && \
-		$(MAKE) make_smbcodepage CC=$(CC) && \
+#installing directories and symlinks for samba
+SMB_FLASH_INSTALL = \
 		$(INSTALL) -d $(flashprefix)/root/lib/codepages && \
-		./make_smbcodepage c 850 codepage_def.850 \
-			$(flashprefix)/root/lib/codepages/codepage.850 && \
-		$(MAKE) clean && \
-		for i in smbd nmbd smbpasswd; do \
-			$(MAKE) $$i; \
-			$(INSTALL) $$i $(flashprefix)/root/bin; \
-		done
-	@CLEANUP_samba@
+		$(INSTALL) -d $(flashprefix)/root/var/etc/samba && \
+		$(INSTALL) -d $(flashprefix)/root/var/etc/samba/private && \
+		ln -sf /var/etc/samba/ $(flashprefix)/root/etc/samba && \
+		ln -sf /var/etc/smb.conf $(flashprefix)/root/etc/smb.conf && \
+		$(INSTALL) $(targetprefix)/lib/codepages/codepage.850 \
+		$(flashprefix)/root/lib/codepages/codepage.850 
+
+flash-smbmount: $(flashprefix)/root/bin/smbmount
+
+$(flashprefix)/root/bin/smbmount: bootstrap sambaserver | $(flashprefix)/root
+	for i in smbmount smbmnt; do \
+		$(INSTALL) $(targetprefix)/bin/$$i $(flashprefix)/root/bin; \
+	done
+	$(SMB_FLASH_INSTALL) && \
 	@FLASHROOTDIR_MODIFIED@
 
-endif
+flash-sambaserver: $(flashprefix)/root/bin/smbd
+
+$(flashprefix)/root/bin/smbd: bootstrap sambaserver | $(flashprefix)/root
+	for i in smbd nmbd; do \
+		$(INSTALL) $(targetprefix)/bin/$$i $(flashprefix)/root/bin; \
+	done
+	$(SMB_FLASH_INSTALL) && \
+	@FLASHROOTDIR_MODIFIED@
+
