@@ -57,9 +57,7 @@ endif
 endif
 
 if ENABLE_NFSSERVER
-if !ENABLE_DRIVE_GUI
 FILES_FLASH_RO_EXEC_START += 31nfsserver
-endif
 endif
 
 FILES_EXEC_START = \
