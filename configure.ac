@@ -552,11 +552,6 @@ AC_ARG_ENABLE(ipkg,
 	,[enable_ipkg=no])
 AM_CONDITIONAL(ENABLE_IPKG,test "$enable_ipkg" = "yes")
 
-AC_ARG_ENABLE(kb2rcd,
-	AS_HELP_STRING(--enable-kb2rcd,include kb2rcd in yadds and images),
-	,[enable_kb2rcd=no])
-AM_CONDITIONAL(ENABLE_KB2RCD,test "$enable_kb2rcd" = "yes")
-
 AC_ARG_ENABLE(lcshot,
 	AS_HELP_STRING(--enable-lcshot,enable lcshot - dbox2-only),
 	[case "${enableval}" in
@@ -573,8 +568,15 @@ AM_CONDITIONAL(ENABLE_LINKS,test "$enable_links" = "yes")
 
 AC_ARG_ENABLE(links-g,
 	AS_HELP_STRING(--enable-links-g,include graphic mode links browser in yadds and images),
-	,[enable_links_g=no])
+	[case "${enableval}" in
+		yes) 	enable_kb2rcd="yes" ;;
+	esac],[enable_links_g=no])
 AM_CONDITIONAL(ENABLE_LINKS_G,test "$enable_links_g" = "yes")
+
+AC_ARG_ENABLE(kb2rcd,
+	AS_HELP_STRING(--enable-kb2rcd,include kb2rcd in yadds and images),
+	,[enable_kb2rcd=no])
+AM_CONDITIONAL(ENABLE_KB2RCD,test "$enable_kb2rcd" = "yes")
 
 AC_ARG_ENABLE(lirc,
 	AS_HELP_STRING(--enable-lirc,include lirc in yadds and images - dbox2-only),
