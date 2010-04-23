@@ -41,6 +41,12 @@ endif
 if ENABLE_HDDTEMP
 ADDITIONAL_DEBS += hddtemp
 endif
+if ENABLE_LINKS
+ADDITIONAL_DEBS += links
+endif
+if ENABLE_LINKS_G
+ADDITIONAL_DEBS += links_g
+endif
 if ENABLE_LIRC
 ADDITIONAL_DEBS += lirc
 endif

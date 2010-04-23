@@ -480,7 +480,7 @@ $(flashprefix)/root/bin/links: $(DEPDIR)/links | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/links $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
 
-$(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd @DEPENDS_links_g@
+$(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd links-plugin @DEPENDS_links_g@
 	@PREPARE_links_g@
 	cd @DIR_links_g@ && \
 		$(BUILDENV) \
@@ -494,33 +494,13 @@ $(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd @DEPENDS_links_g@
 		$(MAKE) all && \
 		@INSTALL_links_g@
 	@CLEANUP_links_g@
-	$(INSTALL) -d $(targetprefix)/var/tuxbox/config/
-	$(INSTALL) -d $(targetprefix)/var/tuxbox/plugins/
 	$(INSTALL) $(appsdir)/tuxbox/tools/kb2rcd/kb2rcd_links.conf $(targetprefix)/var/tuxbox/config
-	echo "type=3" > $(targetprefix)/var/tuxbox/plugins/links.cfg
-	echo "name=Web Browser" >> $(targetprefix)/var/tuxbox/plugins/links.cfg
-	echo "desc=Startet den links Webbrowser" >> $(targetprefix)/var/tuxbox/plugins/links.cfg
-	echo "needfb=1" >> $(targetprefix)/var/tuxbox/plugins/links.cfg
-	echo "needrc=1" >> $(targetprefix)/var/tuxbox/plugins/links.cfg
-	echo "needvtxtpid=0" >> $(targetprefix)/var/tuxbox/plugins/links.cfg
-	echo "needoffsets=0" >> $(targetprefix)/var/tuxbox/plugins/links.cfg
-	echo "#!/bin/sh" > $(targetprefix)/var/tuxbox/plugins/links.sh
-	echo "killall kb2rcd" >> $(targetprefix)/var/tuxbox/plugins/links.sh
-	echo "touch /tmp/keyboard.lck" >> $(targetprefix)/var/tuxbox/plugins/links.sh
-	echo "kb2rcd --config=/var/tuxbox/config/kb2rcd_links.conf" >> $(targetprefix)/var/tuxbox/plugins/links.sh
-	echo "HOME=/var/etc links_g -g http://www.mobi-list.de" >> $(targetprefix)/var/tuxbox/plugins/links.sh
-	echo "killall kb2rcd" >> $(targetprefix)/var/tuxbox/plugins/links.sh
-	echo "rm -f /tmp/keyboard.lck" >> $(targetprefix)/var/tuxbox/plugins/links.sh
-	chmod 755 $(targetprefix)/var/tuxbox/plugins/links.sh
 	touch $@
 
-flash-links_g: flash-kb2rcd $(flashprefix)/root/bin/links_g
+flash-links_g: flash-kb2rcd flash-links-plugin $(flashprefix)/root/bin/links_g
 
 $(flashprefix)/root/bin/links_g: $(DEPDIR)/links_g | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/links_g $(flashprefix)/root/bin
-	$(INSTALL) -d $(flashprefix)/root/var/tuxbox/plugins
-	$(INSTALL) -m755 $(targetprefix)/var/tuxbox/plugins/links.sh $(flashprefix)/root/var/tuxbox/plugins
-	$(INSTALL) $(targetprefix)/var/tuxbox/plugins/links.cfg $(flashprefix)/root/var/tuxbox/plugins
 	$(INSTALL) $(appsdir)/tuxbox/tools/kb2rcd/kb2rcd_links.conf $(flashprefix)/root/var/tuxbox/config
 	cp -va $(targetprefix)/lib/directfb-1.0-0 $(flashprefix)/root/lib/
 	@FLASHROOTDIR_MODIFIED@
