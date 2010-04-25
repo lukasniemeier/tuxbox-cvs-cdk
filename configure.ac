@@ -232,11 +232,6 @@ fi
 
 AM_CONDITIONAL(ENABLE_FS_CIFS,test "$enable_fs_cifs" = "yes")
 AM_CONDITIONAL(ENABLE_FS_SMBFS,test "$enable_fs_smbfs" = "yes")
-if test "$enable_fs_smbfs" = "yes"; then
-	SMBMOUNT=smbmount
-fi
-AC_SUBST(SMBMOUNT)
-
 AM_CONDITIONAL(ENABLE_FS_LUFS,test "$enable_fs_lufs" = "yes")
 if test "$enable_fs_lufs" = "yes"; then
 	LUFS=lufs

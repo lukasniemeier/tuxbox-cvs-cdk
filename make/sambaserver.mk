@@ -60,4 +60,3 @@ $(flashprefix)/root/bin/smbd: bootstrap sambaserver | $(flashprefix)/root
 	done
 	$(SMB_FLASH_INSTALL) && \
 	@FLASHROOTDIR_MODIFIED@
-

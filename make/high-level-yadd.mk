@@ -30,6 +30,9 @@ endif
 if ENABLE_DOSFSTOOLS
 FILESYSTEM_DEBS += dosfstools
 endif
+if ENABLE_FS_SMBFS
+FILESYSTEM_DEBS += sambaserver
+endif
 
 ADDITIONAL_DEBS =
 if ENABLE_CDKVCINFO
@@ -60,7 +63,7 @@ if ENABLE_STRACE
 ADDITIONAL_DEBS += strace
 endif
 
-yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTOMOUNT@ @NFSSERVER@ @SAMBASERVER@ @LUFS@ @SMBMOUNT@ @CONSOLE_TOOLS@ $(ADDITIONAL_DEBS) $(FX2_DEPS) $(FILESYSTEM_DEBS) version defaultlocale
+yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTOMOUNT@ @NFSSERVER@ @SAMBASERVER@ @LUFS@ @CONSOLE_TOOLS@ $(ADDITIONAL_DEBS) $(FX2_DEPS) $(FILESYSTEM_DEBS) version defaultlocale
 	@TUXBOX_YADD_CUSTOMIZE@
 
 yadd-none-etc: yadd-none yadd-etc
