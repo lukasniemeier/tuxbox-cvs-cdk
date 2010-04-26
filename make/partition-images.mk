@@ -21,9 +21,18 @@ $(flashprefix)/root-radiobox.squashfs \
 $(flashprefix)/root-neutrino.squashfs \
 $(flashprefix)/root-enigma+neutrino.squashfs \
 $(flashprefix)/root-enigma.squashfs: \
-$(flashprefix)/root-%.squashfs: $(flashprefix)/root-%-squashfs $(hostprefix)/bin/mksquashfs-lzma
+$(flashprefix)/root-%.squashfs: \
+$(flashprefix)/root-%-squashfs \
+$(hostprefix)/bin/mksquashfs-lzma \
+$(hostprefix)/bin/checkImage
 	rm -f $@
 	$(hostprefix)/bin/mksquashfs-lzma $< $@ -be
+	until $(hostprefix)/bin/checkImage $@ ; do \
+		if [ $$? = "3" ]; then exit; fi;\
+		dd if=/dev/urandom of=$</bad_magic_payload count=1 bs=256; \
+		rm -f $@; \
+		$(hostprefix)/bin/mksquashfs-lzma $< $@ -be; \
+	done
 	chmod 644 $@
 	@TUXBOX_CUSTOMIZE@
 
@@ -31,17 +40,37 @@ $(flashprefix)/root-radiobox.squashfs_nolzma \
 $(flashprefix)/root-neutrino.squashfs_nolzma \
 $(flashprefix)/root-enigma+neutrino.squashfs_nolzma \
 $(flashprefix)/root-enigma.squashfs_nolzma: \
-$(flashprefix)/root-%.squashfs_nolzma: $(flashprefix)/root-%-squashfs_nolzma $(hostprefix)/bin/mksquashfs-nolzma
+$(flashprefix)/root-%.squashfs_nolzma: \
+$(flashprefix)/root-%-squashfs_nolzma \
+$(hostprefix)/bin/mksquashfs-nolzma \
+$(hostprefix)/bin/checkImage
 	rm -f $@
 	$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be
+	until $(hostprefix)/bin/checkImage $@ ; do \
+		if [ $$? = "3" ]; then exit; fi;\
+		dd if=/dev/urandom of=$</bad_magic_payload count=1 bs=256; \
+		rm -f $@; \
+		$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be; \
+	done
 	chmod 644 $@
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/root-radiobox.jffs2 \
 $(flashprefix)/root-neutrino.jffs2 \
-$(flashprefix)/root-enigma.jffs2 $(flashprefix)/root-lcars.jffs2 $(flashprefix)/root-null.jffs2: \
-$(flashprefix)/root-%.jffs2: $(flashprefix)/root-%-jffs2 $(hostprefix)/bin/mkfs.jffs2
+$(flashprefix)/root-enigma.jffs2 \
+$(flashprefix)/root-lcars.jffs2 \
+$(flashprefix)/root-null.jffs2: \
+$(flashprefix)/root-%.jffs2: \
+$(flashprefix)/root-%-jffs2 \
+$(hostprefix)/bin/mkfs.jffs2 \
+$(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -e 0x20000 --pad=0x7c0000 -r $< -o $@
+	until $(hostprefix)/bin/checkImage $@ ; do \
+		if [ $$? = "3" ]; then exit; fi;\
+		dd if=/dev/urandom of=$</bad_magic_payload count=1 bs=256; \
+		rm -f $@; \
+		$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
+	done
 
 $(flashprefix)/root-radiobox.jffs2_lzma \
 $(flashprefix)/root-neutrino.jffs2_lzma \
@@ -49,8 +78,17 @@ $(flashprefix)/root-enigma+neutrino.jffs2_lzma \
 $(flashprefix)/root-enigma.jffs2_lzma \
 $(flashprefix)/root-lcars.jffs2_lzma \
 $(flashprefix)/root-null.jffs2_lzma: \
-$(flashprefix)/root-%.jffs2_lzma: $(flashprefix)/root-%-jffs2_lzma $(hostprefix)/bin/mkfs.jffs2
+$(flashprefix)/root-%.jffs2_lzma: \
+$(flashprefix)/root-%-jffs2_lzma \
+$(hostprefix)/bin/mkfs.jffs2 \
+$(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@
+	until $(hostprefix)/bin/checkImage $@ ; do \
+		if [ $$? = "3" ]; then exit; fi;\
+		dd if=/dev/urandom of=$</bad_magic_payload count=1 bs=256; \
+		rm -f $@; \
+		$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
+	done
 
 $(flashprefix)/root-radiobox.jffs2_lzma_klzma \
 $(flashprefix)/root-neutrino.jffs2_lzma_klzma \
@@ -58,8 +96,17 @@ $(flashprefix)/root-enigma+neutrino.jffs2_lzma_klzma \
 $(flashprefix)/root-enigma.jffs2_lzma_klzma \
 $(flashprefix)/root-lcars.jffs2_lzma_klzma \
 $(flashprefix)/root-null.jffs2_lzma_klzma: \
-$(flashprefix)/root-%.jffs2_lzma_klzma: $(flashprefix)/root-%-jffs2_lzma_klzma $(hostprefix)/bin/mkfs.jffs2
+$(flashprefix)/root-%.jffs2_lzma_klzma: \
+$(flashprefix)/root-%-jffs2_lzma_klzma \
+$(hostprefix)/bin/mkfs.jffs2 \
+$(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@
+	until $(hostprefix)/bin/checkImage $@ ; do \
+		if [ $$? = "3" ]; then exit; fi;\
+		dd if=/dev/urandom of=$</bad_magic_payload count=1 bs=256; \
+		rm -f $@; \
+		$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
+	done
 
 ################ $fs-to-boot.flfs*x
 $(flashprefix)/cramfs.flfs1x $(flashprefix)/cramfs.flfs2x: \

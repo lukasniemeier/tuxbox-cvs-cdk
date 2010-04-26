@@ -942,19 +942,6 @@ AC_SUBST(flashprefix_ro)
 flashprefix_rw=${flashprefix}/rw
 AC_SUBST(flashprefix_rw)
 
-AC_ARG_WITH(checkImage,
-	[  --with-checkImage=[[none,rename,warn]]
-                          How/if to invoke checkImage [[none]]],
-	[CHECKIMAGE_BEHAVIOR="$withval"],[CHECKIMAGE_BEHAVIOR="true"])
-if [[ "$withval" = "rename" ]] ; then
-	TUXBOX_CHECKIMAGE='$(hostprefix)/bin/checkImage $@ || mv $@ $@_bad'
-elif [[ "$withval" = "warn" ]] ; then
-	TUXBOX_CHECKIMAGE='rm -f $@_bad; $(hostprefix)/bin/checkImage $@ || touch $@_bad'
-else
-	TUXBOX_CHECKIMAGE=@true
-fi
-AC_SUBST(TUXBOX_CHECKIMAGE)
-
 AC_ARG_WITH(archivedir,
 	[  --with-archivedir=DIR   where to store downloaded files [[Archive/]]],
 	[archivedir="$with_archivedir"],[archivedir="$buildprefix/Archive"])

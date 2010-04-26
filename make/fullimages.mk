@@ -18,6 +18,9 @@
 # Note the difference between $partition-$gui-$fstype (directory) and 
 # $partition-$gui.$fstype (filesystem image of type $fstype).
 
+TUXBOX_CHECKIMAGE = \
+	$(hostprefix)/bin/checkImage $@ $(subst x,,$(subst .flfs,-,$(suffix $(word 1,$+)))) || mv $@ $@_bad
+
 $(flashprefix)/neutrino-cramfs.img1x $(flashprefix)/neutrino-cramfs.img2x: \
 $(flashprefix)/neutrino-cramfs.img%: \
 		$(flashprefix)/cramfs.flfs% \
@@ -29,7 +32,7 @@ $(flashprefix)/neutrino-cramfs.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/neutrino-squashfs.img1x $(flashprefix)/neutrino-squashfs.img2x:\
@@ -43,7 +46,7 @@ $(flashprefix)/neutrino-squashfs.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/neutrino-squashfs_nolzma.img1x $(flashprefix)/neutrino-squashfs_nolzma.img2x:\
@@ -57,7 +60,7 @@ $(flashprefix)/neutrino-squashfs_nolzma.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/neutrino-jffs2.img1x $(flashprefix)/neutrino-jffs2.img2x: \
@@ -71,7 +74,7 @@ $(flashprefix)/neutrino-jffs2.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/neutrino-jffs2_lzma.img1x $(flashprefix)/neutrino-jffs2_lzma.img2x: \
@@ -85,7 +88,7 @@ $(flashprefix)/neutrino-jffs2_lzma.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/neutrino-jffs2_lzma_klzma.img1x $(flashprefix)/neutrino-jffs2_lzma_klzma.img2x: \
@@ -99,7 +102,7 @@ $(flashprefix)/neutrino-jffs2_lzma_klzma.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 ######################
@@ -115,7 +118,7 @@ $(flashprefix)/radiobox-cramfs.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/radiobox-squashfs.img1x $(flashprefix)/radiobox-squashfs.img2x:\
@@ -129,7 +132,7 @@ $(flashprefix)/radiobox-squashfs.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/radiobox-jffs2.img1x $(flashprefix)/radiobox-jffs2.img2x: \
@@ -138,7 +141,7 @@ $(flashprefix)/radiobox-jffs2.img%: \
 		$(flashprefix)/root-radiobox.jffs2 \
 		$(hostprefix)/bin/checkImage
 	cat $< $(word 2,$+) > $@
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/radiobox-jffs2_lzma.img1x $(flashprefix)/radiobox-jffs2_lzma.img2x: \
@@ -147,7 +150,7 @@ $(flashprefix)/radiobox-jffs2_lzma.img%: \
 		$(flashprefix)/root-radiobox.jffs2_lzma \
 		$(hostprefix)/bin/checkImage
 	cat $< $(word 2,$+) > $@
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/radiobox-jffs2_lzma_klzma.img1x $(flashprefix)/radiobox-jffs2_lzma_klzma.img2x: \
@@ -156,7 +159,7 @@ $(flashprefix)/radiobox-jffs2_lzma_klzma.img%: \
 		$(flashprefix)/root-radiobox.jffs2_lzma_klzma \
 		$(hostprefix)/bin/checkImage
 	cat $< $(word 2,$+) > $@
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 ################################################################
@@ -171,7 +174,7 @@ $(flashprefix)/enigma-cramfs.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/enigma-squashfs.img1x $(flashprefix)/enigma-squashfs.img2x: \
@@ -185,7 +188,7 @@ $(flashprefix)/enigma-squashfs.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/enigma-squashfs_nolzma.img1x $(flashprefix)/enigma-squashfs_nolzma.img2x: \
@@ -199,7 +202,7 @@ $(flashprefix)/enigma-squashfs_nolzma.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 if BOXTYPE_DREAMBOX
@@ -276,7 +279,7 @@ $(flashprefix)/enigma-jffs2.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/enigma-jffs2_lzma.img1x $(flashprefix)/enigma-jffs2_lzma.img2x: \
@@ -290,7 +293,7 @@ $(flashprefix)/enigma-jffs2_lzma.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/enigma-jffs2_lzma_klzma.img1x $(flashprefix)/enigma-jffs2_lzma_klzma.img2x: \
@@ -304,7 +307,7 @@ $(flashprefix)/enigma-jffs2_lzma_klzma.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 ################################################################
@@ -314,7 +317,7 @@ $(flashprefix)/lcars-jffs2.img%: \
 		$(flashprefix)/root-lcars.jffs2 \
 		$(hostprefix)/bin/checkImage
 	cat $< $(word 2,$+) > $@
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 ################################################################
@@ -324,7 +327,7 @@ $(flashprefix)/null-jffs2.img%: \
 		$(flashprefix)/root-null.jffs2 \
 		$(hostprefix)/bin/checkImage
 	cat $< $(word 2,$+) > $@
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/null-jffs2_lzma.img1x $(flashprefix)/null-jffs2_lzma.img2x: \
@@ -333,7 +336,7 @@ $(flashprefix)/null-jffs2_lzma.img%: \
 		$(flashprefix)/root-null.jffs2_lzma \
 		$(hostprefix)/bin/checkImage
 	cat $< $(word 2,$+) > $@
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/null-jffs2_lzma_klzma.img1x $(flashprefix)/null-jffs2_lzma_klzma.img2x: \
@@ -342,7 +345,7 @@ $(flashprefix)/null-jffs2_lzma_klzma.img%: \
 		$(flashprefix)/root-null.jffs2_lzma_klzma \
 		$(hostprefix)/bin/checkImage
 	cat $< $(word 2,$+) > $@
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 ################################################################
@@ -357,7 +360,7 @@ $(flashprefix)/enigma+neutrino-squashfs.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/enigma+neutrino-squashfs_nolzma.img1x $(flashprefix)/enigma+neutrino-squashfs_nolzma.img2x:\
@@ -371,7 +374,7 @@ $(flashprefix)/enigma+neutrino-squashfs_nolzma.img%: \
 		--part ppcboot=$< \
 		--part root=$(word 2,$+) \
 		--part var=$(word 3,$+)
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/enigma+neutrino-jffs2_lzma.img1x $(flashprefix)/enigma+neutrino-jffs2_lzma.img2x: \
@@ -385,7 +388,7 @@ $(flashprefix)/enigma+neutrino-jffs2_lzma.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/enigma+neutrino-jffs2_lzma_klzma.img1x $(flashprefix)/enigma+neutrino-jffs2_lzma_klzma.img2x: \
@@ -399,7 +402,7 @@ $(flashprefix)/enigma+neutrino-jffs2_lzma_klzma.img%: \
 		then echo "fatal error: File $@ too large ($$FILESIZE > 8257536)"; \
 		rm $@; exit 1; \
 	fi
-	@TUXBOX_CHECKIMAGE@
+	$(TUXBOX_CHECKIMAGE) && \
 	@TUXBOX_CUSTOMIZE@
 
 # target yadd-enigma+neutrino makes no sense, use
