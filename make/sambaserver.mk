@@ -2,8 +2,8 @@ $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 	@PREPARE_samba@
 	cd @DIR_samba@ && \
 		cd source && \
-		$(BUILDENV) \
 		autoconf configure.in > configure && \
+		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
