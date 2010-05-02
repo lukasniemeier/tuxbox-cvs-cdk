@@ -202,6 +202,10 @@ sqlite;3.6.20;sqlite-3.6.20;sqlite-amalgamation-3.6.20.tar.gz;extract:sqlite-ama
 #
 linux_dream;2.6.9;linux-2.6.9;linux-2.6.9.tar.bz2:linuxppc-2.6.9-r1.diff.bz2:linuxppc-2.6.9-dream-s7.diff.bz2:squashfs2.2r2.diff.bz2:squashfs_lzma.diff.bz2:linux-2.6.9-dream.diff;remove:linux;extract:linux-2.6.9.tar.bz2;patch:linuxppc-2.6.9-r1.diff.bz2;patch:linuxppc-2.6.9-dream-s7.diff.bz2;patch:squashfs2.2r2.diff.bz2;patch:squashfs_lzma.diff.bz2;patch:linux-2.6.9-dream.diff;link:linux-2.6.9:linux
 linux_dream_kernel_headers;2.6.9.1;linux-libc-headers-2.6.9.1;linux-libc-headers-2.6.9.1.tar.bz2:linux-libc-headers.diff;remove:linux-libc-headers;extract:linux-libc-headers-2.6.9.1.tar.bz2;patch:linux-libc-headers.diff
+binutils_dream;2.15.91.0.2;binutils-2.15.91.0.2;binutils-2.15.91.0.2.tar.bz2;extract:binutils-2.15.91.0.2.tar.bz2
+bootstrap_gcc_dream;3.4.4;gcc-3.4.4;gcc-core-3.4.4.tar.bz2;extract:gcc-core-3.4.4.tar.bz2;
+glibc_dream;2.3.2;glibc-2.3.2;glibc-2.3.2.tar.bz2:nptl-0.60.tar.bz2:glibc-2.3.2-r0.diff.bz2;extract:glibc-2.3.2.tar.bz2;dirextract:nptl-0.60.tar.bz2;patch:glibc-2.3.2-r0.diff.bz2;patch:glibc_ppc4xx_ibmstropt.diff;patch:glibc-ibmppc4xx_fp_perflib.diff;patch:glibc-makefile-printf.diff
+gcc_dream;3.4.4;gcc-3.4.4;gcc-core-3.4.4.tar.bz2:gcc-g++-3.4.4.tar.bz2:gcc-g++-ppc4xx.diff;extract:gcc-core-3.4.4.tar.bz2;extract:gcc-g++-3.4.4.tar.bz2;patch:gcc-g++-ppc4xx.diff;patch:gcc-ibmppc4xx_fp_perflib.diff
 dreamfiles;20061230;dreamfiles_20061230;dreamfiles_20061230.tar.bz2;dirextract:dreamfiles_20061230.tar.bz2
 dreamdriver_dm7000;20071022;dreamdriver_dm7000_20071022;dreamdriver_dm7000_20071022.tar.bz2;dirextract:dreamdriver_dm7000_20071022.tar.bz2
 dreamdriver_dm56x0;20071022;dreamdriver_dm56x0_20071022;dreamdriver_dm56x0_20071022.tar.bz2;dirextract:dreamdriver_dm56x0_20071022.tar.bz2

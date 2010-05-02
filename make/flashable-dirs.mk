@@ -391,6 +391,8 @@ endif
 if !ENABLE_UCLIBC
 	$(INSTALL) -d $(dreamfilesrootdir)/lib/gconv
 	cp -vR $(buildprefix)/@DIR_dreamfiles@/dreamfiles/lib/gconv/* $(dreamfilesrootdir)/lib/gconv
+	$(INSTALL) -d $(dreamfilesrootdir)/lib/locale
+	cp -vR $(buildprefix)/@DIR_dreamfiles@/dreamfiles/lib/locale/* $(dreamfilesrootdir)/lib/locale
 endif
 	@CLEANUP_dreamfiles@
 if BOXMODEL_DM7000

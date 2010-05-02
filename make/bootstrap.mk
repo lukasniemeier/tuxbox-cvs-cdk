@@ -26,10 +26,14 @@ endif
 	$(INSTALL) -d $(targetprefix)/var/tuxbox/boot
 	$(INSTALL) -d $(targetprefix)$(UCODEDIR)
 if ENABLE_IDE
+if BOXTYPE_DREAMBOX
+	$(INSTALL) -d $(targetprefix)/hdd
+else
 	$(INSTALL) -d $(targetprefix)/mnt/hdd1
 	$(INSTALL) -d $(targetprefix)/mnt/hdd2
 	$(INSTALL) -d $(targetprefix)/mnt/mmc
 	ln -sf /mnt/hdd1 $(targetprefix)/hdd
+endif
 endif
 	$(INSTALL) -d $(hostprefix)/$(target)
 	$(INSTALL) -d $(hostprefix)/bin
@@ -183,6 +187,106 @@ endif
 	touch $@
 
 if !USE_FOREIGN_TOOLCHAIN
+if BOXTYPE_DREAMBOX
+$(DEPDIR)/binutils: @DEPENDS_binutils_dream@ directories 
+	@PREPARE_binutils_dream@
+	cd @DIR_binutils_dream@ && \
+		CC=$(CC) \
+		CFLAGS="$(CFLAGS) -D_FORTIFY_SOURCE=0" \
+		@CONFIGURE_binutils_dream@ \
+			--target=$(target) \
+			--prefix=$(hostprefix) \
+			--disable-nls \
+			--nfp && \
+		$(MAKE) all all-gprof && \
+		@INSTALL_binutils_dream@
+	@CLEANUP_binutils_dream@
+	touch $@
+
+$(DEPDIR)/bootstrap_gcc: @DEPENDS_bootstrap_gcc_dream@ binutils linuxdir
+	@PREPARE_bootstrap_gcc_dream@
+	$(INSTALL) -d $(hostprefix)/$(target)/sys-include
+	ln -sf $(buildprefix)/linux/include/{asm,linux} $(hostprefix)/$(target)/sys-include/
+	cd @DIR_bootstrap_gcc_dream@ && \
+		CC=$(CC) CFLAGS="$(CFLAGS) -D_FORTIFY_SOURCE=0" \
+		@CONFIGURE_bootstrap_gcc_dream@ \
+			--build=$(build) \
+			--host=$(build) \
+			--target=$(target) \
+			--prefix=$(hostprefix) \
+			--with-cpu=$(CPU_MODEL) \
+			--enable-target-optspace \
+			--enable-languages="c" \
+			--disable-shared \
+			--disable-nls \
+			--disable-threads \
+			--with-float=soft && \
+		$(MAKE) all && \
+		@INSTALL_bootstrap_gcc_dream@
+	rm -rf $(hostprefix)/$(target)/sys-include
+	@CLEANUP_bootstrap_gcc_dream@
+	touch $@
+
+
+$(DEPDIR)/libc: @DEPENDS_glibc_dream@ bootstrap_gcc install-linux-headers
+	@PREPARE_glibc_dream@
+	cd @DIR_glibc_dream@ && \
+		CC=$(target)-gcc \
+		AR=$(target)-ar \
+		RANLIB=$(target)-ranlib \
+		CFLAGS="$(TARGET_CFLAGS)" \
+		LDFLAGS="$(TARGET_LDFLAGS)" \
+		@CONFIGURE_glibc_dream@ \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix= \
+			--with-headers=$(buildprefix)/linux/include \
+			--enable-kernel=2.6.5 \
+			--disable-profile \
+			--enable-shared \
+			--enable-add-ons=nptl \
+			--with-__thread \
+			--without-fp \
+			--with-tls && \
+		$(MAKE) all && \
+		@INSTALL_glibc_dream@
+	@CLEANUP_glibc_dream@
+	rm $(hostprefix)/$(target)/include/asm-generic 2> /dev/null || /bin/true;
+	rm $(buildprefix)/linux-libc-headers 2> /dev/null || /bin/true
+	touch $@
+
+$(DEPDIR)/gcc: @DEPENDS_gcc_dream@ libc
+	@PREPARE_gcc_dream@
+	$(INSTALL) -d $(hostprefix)/$(target)/sys-include
+	@if [ -s $(hostprefix)/$(target)/lib/nof ] ; then \
+		rm $(hostprefix)/$(target)/lib/nof; \
+	fi
+	cp -p $(hostprefix)/$(target)/include/limits.h $(hostprefix)/$(target)/sys-include/
+	cd @DIR_gcc_dream@ && \
+		CC=$(CC) CFLAGS="$(CFLAGS) -D_FORTIFY_SOURCE=0" \
+		@CONFIGURE_gcc_dream@ \
+			--build=$(build) \
+			--host=$(build) \
+			--target=$(target) \
+			--prefix=$(hostprefix) \
+			--with-cpu=$(CPU_MODEL) \
+			--enable-target-optspace \
+			--enable-languages="c,c++" \
+			--enable-shared \
+			--enable-threads=posix \
+			--disable-nls \
+			--with-float=soft \
+			--enable-__cxa_atexit && \
+		$(MAKE) all && \
+		@INSTALL_gcc_dream@
+	rm -rf $(hostprefix)/$(target)/sys-include
+	@for i in `find $(hostprefix)/$(target)/lib/nof -type f` ; do mv $$i $(hostprefix)/$(target)/lib; done
+	@for i in `find $(hostprefix)/$(target)/lib/nof -type l` ; do mv $$i $(hostprefix)/$(target)/lib; done
+	rm -rf $(hostprefix)/$(target)/lib/nof
+	ln -sf $(hostprefix)/$(target)/lib $(hostprefix)/$(target)/lib/nof
+	@CLEANUP_gcc_dream@
+	touch $@
+else
 if BOXTYPE_COOL
 BINUTILS_OPTS= \
 --disable-multilib \
@@ -543,6 +647,7 @@ $(archivedir)/eglibc-localedef-2_8.tar.bz2 \
 $(archivedir)/eglibc-ports-2_8.tar.bz2: \
 $(archivedir)/eglibc-2_8.tar.bz2
 
+endif
 endif
 
 # This rule script checks if all archives are present at the given address but

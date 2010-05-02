@@ -189,6 +189,10 @@ sqlite;make:install:prefix=TARGET
 #
 linux_dream
 linux_dream_kernel_headers
+binutils_dream;make:install
+bootstrap_gcc_dream;make:install
+glibc_dream;make:install:install_root=TARGET;install:-m644:libc_pic.a:math/libm_pic.a:resolv/libresolv_pic.a:dlfcn/libdl_pic.a:TARGET/lib;install:-d:TARGET/lib/libc_pic;install:-m644:elf/soinit.os:TARGET/lib/libc_pic/soinit.o;install:-m644:elf/sofini.os:TARGET/lib/libc_pic/sofini.o;install:-m644:libc.map:TARGET/lib/libc_pic.map;install:-m644:libm.map:TARGET/lib/libm_pic.map;install:-m644:libdl.map:TARGET/lib/libdl_pic.map
+gcc_dream;make:install;install:-m644:TARGETNAME/libstdc++-v3/src/libstdc++-symbol.ver:TARGET/lib/libstdc++_pic.map;archive:TARGET/lib/libstdc++_pic.a:TARGETNAME/libstdc++-v3/src/.libs/*.o:TARGETNAME/libstdc++-v3/libsupc++/*.o;install:-m644:TARGETNAME/nof/libstdc++-v3/src/libstdc++-symbol.ver:TARGET/lib/nof/libstdc++_pic.map;archive:TARGET/lib/nof/libstdc++_pic.a:TARGETNAME/nof/libstdc++-v3/src/.libs/*.o:TARGETNAME/nof/libstdc++-v3/libsupc++/*.o
 
 #
 # ipbox

@@ -1256,6 +1256,10 @@ case "${BOXTYPE}" in
 		TUXBOX_RULES_MAKE(dreamdriver_dm7000)
 		TUXBOX_RULES_MAKE(dreamdriver_dm56x0)
 		TUXBOX_RULES_MAKE(dreamdriver_dm500)
+		TUXBOX_RULES_MAKE_EXDIR(binutils_dream)
+		TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc_dream)
+		TUXBOX_RULES_MAKE_EXDIR(glibc_dream)
+		TUXBOX_RULES_MAKE_EXDIR(gcc_dream)
 		;;
 	ipbox)
 		TUXBOX_RULES_MAKE(uboot_ipbox)

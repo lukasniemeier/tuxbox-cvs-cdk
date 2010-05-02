@@ -40,6 +40,9 @@ endif
 
 $(DEPDIR)/busybox: bootstrap @DEPENDS_busybox@ $(BUSYBOX_PATCHES) $(busybox_conf)
 	@PREPARE_busybox@
+if BOXTYPE_DREAMBOX
+	cd @DIR_busybox@ && patch -p1 -E -i $(buildprefix)/Patches/busybox-dream.diff
+endif
 	m4 $(BUSYBOX_M4) -Dyadd -DPREFIX=\`\"$(targetprefix)\"\' $(busybox_conf) > @DIR_busybox@/.config
 	cd @DIR_busybox@ && \
 		$(MAKE) all install \
@@ -50,6 +53,9 @@ $(DEPDIR)/busybox: bootstrap @DEPENDS_busybox@ $(BUSYBOX_PATCHES) $(busybox_conf
 
 flash-busybox: bootstrap $(flashprefix)/root @DEPENDS_busybox@ $(BUSYBOX_PATCHES) $(busybox_conf)
 	@PREPARE_busybox@
+if BOXTYPE_DREAMBOX
+	cd @DIR_busybox@ && patch -p1 -E -i $(buildprefix)/Patches/busybox-dream.diff
+endif
 	m4 $(BUSYBOX_M4) -Dflash -DPREFIX=\`\"$(flashprefix)/root\"\' $(busybox_conf) > @DIR_busybox@/.config
 	cd @DIR_busybox@ && \
 		$(MAKE) all install \
