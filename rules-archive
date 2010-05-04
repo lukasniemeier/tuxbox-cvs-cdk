@@ -208,6 +208,7 @@ linuxppc-2.6.9-dream-s7.diff.bz2;http://sources.dreamboxupdate.com/download/kern
 binutils-2.15.91.0.2.tar.bz2;ftp://ftp.kernel.org/pub/linux/devel/binutils
 glibc-2.3.2.tar.bz2;ftp://$(gnuserver)/glibc
 glibc-2.3.2-r0.diff.bz2;http://sources.dreamboxupdate.com/download/patches
+nptl-0.60.tar.bz2;ftp://www.arte.unipi.it/pub/Linux
 gcc-core-3.4.4.tar.bz2;ftp://$(gnuserver)/gcc/gcc-3.4.4
 gcc-g++-3.4.4.tar.bz2;ftp://$(gnuserver)/gcc/gcc-3.4.4
 squashfs2.2r2.diff.bz2;http://sources.dreamboxupdate.com/download/kernel-patches
