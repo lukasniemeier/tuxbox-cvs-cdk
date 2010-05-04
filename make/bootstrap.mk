@@ -348,7 +348,6 @@ endif
 	@CLEANUP_bootstrap_gcc@
 	touch $@
 endif
-endif
 
 UCLIBC_M4 =
 
@@ -647,6 +646,7 @@ $(archivedir)/eglibc-localedef-2_8.tar.bz2 \
 $(archivedir)/eglibc-ports-2_8.tar.bz2: \
 $(archivedir)/eglibc-2_8.tar.bz2
 
+endif
 endif
 endif
 
