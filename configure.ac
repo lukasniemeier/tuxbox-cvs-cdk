@@ -308,14 +308,22 @@ AM_CONDITIONAL(ENABLE_DOSFSTOOLS,test "$enable_fs_dosfstools" = "yes")
 AC_ARG_ENABLE(drive-gui,
    AS_HELP_STRING(--enable-drive-gui,   enable neutrino gui-setup for ide hdd mmc administration - uses utillinux fdisk instead of busybox),
    [case "${enableval}" in
-      yes) if test "$enable_ide" = "yes" -o "$enable_mmc" = "yes"; then
-	     enable_drive_gui=yes
+      yes) if test "$enable_ide" = "yes" -o "$enable_mmc" = "yes" ; then
+		if test "$enable_kernel26" = "yes"; then 
+			enable_drive_gui=no
+		else
+			enable_drive_gui=yes
+		fi
 	   else
 	     enable_drive_gui=no
 	   fi ;;
       *) enable_drive_gui=no
    esac],[if test "$enable_ide" = "yes" -o "$enable_mmc" = "yes"; then
-	     enable_drive_gui=yes
+	     	if test "$enable_kernel26" = "yes"; then 
+			enable_drive_gui=no
+		else
+			enable_drive_gui=yes
+		fi
 	   else
 	     enable_drive_gui=no
 	   fi])
