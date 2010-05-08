@@ -3,10 +3,7 @@ $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 	cd @DIR_samba@ && \
 		cd source && \
 		autoconf configure.in > configure && \
-		$(BUILDENV) \
 		./configure \
-			--build=$(build) \
-			--host=$(target) \
 			--prefix= \
 			samba_cv_struct_timespec=yes \
 			samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
@@ -25,7 +22,21 @@ $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 		ln -sf /var/etc/smb.conf $(targetprefix)/etc/smb.conf && \
 		./bin/make_smbcodepage c 850 codepages/codepage_def.850 \
 			$(targetprefix)/lib/codepages/codepage.850 && \
-		$(MAKE) clean && \
+		$(MAKE) distclean && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix= \
+			samba_cv_struct_timespec=yes \
+			samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
+			--with-configdir=/etc \
+			--with-privatedir=/etc/samba/private \
+			--with-lockdir=/var/lock \
+			--with-piddir=/var/run \
+			--with-logfilebase=/var/log \
+			--disable-cups \
+			--with-swatdir=$(targetprefix)/swat && \
 		for i in smbd nmbd smbclient smbmount smbmnt smbpasswd; do \
 			$(MAKE) bin/$$i; \
 			$(INSTALL) bin/$$i $(targetprefix)/bin; \
