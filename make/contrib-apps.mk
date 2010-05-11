@@ -409,7 +409,7 @@ $(flashprefix)/root/bin/ncftp: ncftp | $(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 #screen
-$(DEPDIR)/screen: bootstrap @DEPENDS_screen@
+$(DEPDIR)/screen: bootstrap libncurses @DEPENDS_screen@
 	@PREPARE_screen@
 	cd @DIR_screen@ && \
 		$(BUILDENV) \
