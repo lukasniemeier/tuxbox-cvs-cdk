@@ -333,7 +333,8 @@ $(flashprefix)/root/bin/lufsd: bootstrap @DEPENDS_lufs@ | $(flashprefix)/root
 			--prefix=$(flashprefix)/root \
 			--exec_prefix=$(flashprefix)/root \
 			--disable-kernel-support && \
-		$(MAKE) all install
+		$(MAKE) all && \
+		$(MAKE) install
 	rm $(flashprefix)/root/bin/auto.ftpfs
 	rm $(flashprefix)/root/bin/auto.sshfs
 	rm $(flashprefix)/root/bin/lufsmount
@@ -393,7 +394,8 @@ $(DEPDIR)/ncftp: bootstrap @DEPENDS_ncftp@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) clean all LD=$(target)-ld && \
+		$(MAKE) clean && \
+		$(MAKE) all LD=$(target)-ld && \
 		@INSTALL_ncftp@
 	@CLEANUP_ncftp@
 	touch $@
