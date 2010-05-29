@@ -30,8 +30,9 @@ $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 			--prefix= \
 			samba_cv_struct_timespec=yes \
 			samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
+			samba_cv_HAVE_IFACE_IFCONF=yes \
 			--with-configdir=/etc \
-			--with-privatedir=/etc/samba/private \
+			--with-privatedir=/var/etc/samba/private \
 			--with-lockdir=/var/lock \
 			--with-piddir=/var/run \
 			--with-logfilebase=/var/log \
