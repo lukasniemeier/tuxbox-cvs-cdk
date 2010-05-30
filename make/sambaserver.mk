@@ -31,6 +31,9 @@ $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 			samba_cv_struct_timespec=yes \
 			samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
 			samba_cv_HAVE_IFACE_IFCONF=yes \
+			samba_cv_HAVE_EXPLICIT_LARGEFILE_SUPPORT=yes \
+			samba_cv_HAVE_OFF64_T=yes \
+			samba_cv_have_longlong=yes \
 			--with-configdir=/etc \
 			--with-privatedir=/var/etc/samba/private \
 			--with-lockdir=/var/lock \
