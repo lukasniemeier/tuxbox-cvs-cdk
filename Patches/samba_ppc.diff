@@ -47,6 +47,63 @@ diff -uNr samba-2.2.12.org//source/configure.in samba-2.2.12/source/configure.in
 diff -uNr samba-2.2.12.org//source/Makefile.in samba-2.2.12/source/Makefile.in
 --- samba-2.2.12.org//source/Makefile.in	2004-08-12 20:24:19.000000000 +0200
 +++ samba-2.2.12/source/Makefile.in	2010-03-15 19:12:23.000000000 +0100
+@@ -138,7 +138,7 @@
+ 
+ LIBSMB_OBJ = libsmb/clientgen.o libsmb/cliconnect.o libsmb/clifile.o \
+ 		libsmb/clirap.o libsmb/clierror.o libsmb/climessage.o \
+-		libsmb/clireadwrite.o libsmb/clilist.o libsmb/cliprint.o \
++		libsmb/clireadwrite.o libsmb/clilist.o \
+ 		libsmb/clitrans.o libsmb/clisecdesc.o libsmb/clidgram.o \
+ 		libsmb/namequery.o libsmb/nmblib.o libsmb/clistr.o \
+ 		libsmb/nterr.o libsmb/smbdes.o libsmb/smbencrypt.o \
+@@ -147,7 +147,7 @@
+ 		libsmb/passchange.o libsmb/unexpected.o $(RPC_PARSE_OBJ1) \
+ 		libsmb/namecache.o
+ 
+-LIBMSRPC_OBJ = libsmb/cli_lsarpc.o libsmb/cli_samr.o libsmb/cli_spoolss.o \
++LIBMSRPC_OBJ = libsmb/cli_lsarpc.o libsmb/cli_samr.o \
+ 				libsmb/cli_netlogon.o libsmb/cli_srvsvc.o libsmb/cli_dfs.o \
+ 				libsmb/cli_reg.o \
+ 				rpc_client/cli_pipe.o libsmb/cli_pipe_util.o
+@@ -157,8 +157,7 @@
+                  rpc_server/srv_pipe_hnd.o rpc_server/srv_reg.o rpc_server/srv_reg_nt.o \
+                  rpc_server/srv_samr.o rpc_server/srv_samr_nt.o rpc_server/srv_srvsvc.o rpc_server/srv_srvsvc_nt.o \
+                  rpc_server/srv_util.o rpc_server/srv_wkssvc.o rpc_server/srv_wkssvc_nt.o \
+-                 rpc_server/srv_pipe.o rpc_server/srv_dfs.o rpc_server/srv_dfs_nt.o \
+-		 rpc_server/srv_spoolss.o rpc_server/srv_spoolss_nt.o rpc_client/cli_spoolss_notify.o
++                 rpc_server/srv_pipe.o rpc_server/srv_dfs.o rpc_server/srv_dfs_nt.o 
+ 
+ # this includes only the low level parse code, not stuff
+ # that requires knowledge of security contexts
+@@ -169,7 +168,7 @@
+                 rpc_parse/parse_reg.o rpc_parse/parse_rpc.o \
+                 rpc_parse/parse_samr.o rpc_parse/parse_srv.o \
+                 rpc_parse/parse_wks.o \
+-		rpc_parse/parse_spoolss.o rpc_parse/parse_dfs.o
++		rpc_parse/parse_dfs.o
+ 
+ RPC_CLIENT_OBJ = rpc_client/cli_netlogon.o rpc_client/cli_pipe.o \
+ 		rpc_client/cli_login.o \
+@@ -200,7 +199,7 @@
+ 	    smbd/vfs.o smbd/vfs-wrap.o smbd/statcache.o \
+             smbd/posix_acls.o lib/sysacls.o \
+ 	    smbd/process.o smbd/service.o smbd/error.o \
+-	    printing/printfsp.o lib/util_seaccess.o \
++	    lib/util_seaccess.o \
+ 	    libsmb/cli_pipe_util.o
+ 
+ PRINTING_OBJ = printing/pcap.o printing/print_svid.o \
+@@ -213,8 +212,8 @@
+ 
+ SMBD_OBJ = $(SMBD_OBJ1) $(MSDFS_OBJ) $(PARAM_OBJ) $(LIBSMB_OBJ) $(UBIQX_OBJ) \
+            $(RPC_SERVER_OBJ) $(RPC_PARSE_OBJ) $(RPC_CLIENT_OBJ) \
+-           $(LOCKING_OBJ) $(PASSDB_OBJ) $(PRINTING_OBJ) $(PROFILE_OBJ) $(LIB_OBJ) \
+-	   $(PRINTBACKEND_OBJ) $(QUOTAOBJS) $(OPLOCK_OBJ) $(NOTIFY_OBJ)
++           $(LOCKING_OBJ) $(PASSDB_OBJ) $(PROFILE_OBJ) $(LIB_OBJ) \
++	   $(QUOTAOBJS) $(OPLOCK_OBJ) $(NOTIFY_OBJ)
+ 
+ 
+ NMBD_OBJ1 = nmbd/asyncdns.o nmbd/nmbd.o nmbd/nmbd_become_dmb.o \
 @@ -702,29 +702,29 @@
  install: installbin installman installscripts installcp installswat
  
@@ -139,3 +196,390 @@ diff -uNr samba-2.2.12.org//source/include/includes.h samba-2.2.12/source/includ
  #ifdef HAVE_POLL_H
  #include <poll.h>
  #endif
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/client/client.c samba-2.2.12_noprint/source/client/client.c
+--- samba-2.2.12/source/client/client.c	2004-08-12 20:24:36.000000000 +0200
++++ samba-2.2.12_noprint/source/client/client.c	2010-05-23 23:23:21.405028276 +0200
+@@ -1347,7 +1347,7 @@
+ 	}
+ }
+ 
+-
++#if 0
+ /****************************************************************************
+   cancel a print job
+   ****************************************************************************/
+@@ -1423,7 +1423,7 @@
+ {
+ 	cli_print_queue(cli, queue_fn);  
+ }
+-
++#endif
+ /****************************************************************************
+ delete some files
+ ****************************************************************************/
+@@ -1887,7 +1887,7 @@
+   {"altname",cmd_altname,"<file> show alt name",{COMPL_NONE,COMPL_NONE}},
+   {"archive",cmd_archive,"<level>\n0=ignore archive bit\n1=only get archive files\n2=only get archive files and reset archive bit\n3=get all files and reset archive bit",{COMPL_NONE,COMPL_NONE}},
+   {"blocksize",cmd_block,"blocksize <number> (default 20)",{COMPL_NONE,COMPL_NONE}},
+-  {"cancel",cmd_cancel,"<jobid> cancel a print queue entry",{COMPL_NONE,COMPL_NONE}},
++//  {"cancel",cmd_cancel,"<jobid> cancel a print queue entry",{COMPL_NONE,COMPL_NONE}},
+   {"cd",cmd_cd,"[directory] change/report the remote directory",{COMPL_REMOTE,COMPL_NONE}},
+   {"chmod",cmd_chmod,"<src> <mode> chmod a file using UNIX permission",{COMPL_REMOTE,COMPL_REMOTE}},
+   {"chown",cmd_chown,"<src> <uid> <gid> chown a file using UNIX uids and gids",{COMPL_REMOTE,COMPL_REMOTE}},
+@@ -1910,13 +1910,13 @@
+   {"mput",cmd_mput,"<mask> put all matching files",{COMPL_REMOTE,COMPL_NONE}},
+   {"newer",cmd_newer,"<file> only mget files newer than the specified local file",{COMPL_LOCAL,COMPL_NONE}},
+   {"open",cmd_open,"<mask> open a file",{COMPL_REMOTE,COMPL_NONE}},
+-  {"print",cmd_print,"<file name> print a file",{COMPL_NONE,COMPL_NONE}},
+-  {"printmode",cmd_printmode,"<graphics or text> set the print mode",{COMPL_NONE,COMPL_NONE}},
++//  {"print",cmd_print,"<file name> print a file",{COMPL_NONE,COMPL_NONE}},
++//  {"printmode",cmd_printmode,"<graphics or text> set the print mode",{COMPL_NONE,COMPL_NONE}},
+   {"prompt",cmd_prompt,"toggle prompting for filenames for mget and mput",{COMPL_NONE,COMPL_NONE}},  
+   {"put",cmd_put,"<local name> [remote name] put a file",{COMPL_LOCAL,COMPL_REMOTE}},
+   {"pwd",cmd_pwd,"show current remote directory (same as 'cd' with no args)",{COMPL_NONE,COMPL_NONE}},
+   {"q",cmd_quit,"logoff the server",{COMPL_NONE,COMPL_NONE}},
+-  {"queue",cmd_queue,"show the print queue",{COMPL_NONE,COMPL_NONE}},
++//  {"queue",cmd_queue,"show the print queue",{COMPL_NONE,COMPL_NONE}},
+   {"quit",cmd_quit,"logoff the server",{COMPL_NONE,COMPL_NONE}},
+   {"rd",cmd_rmdir,"<directory> remove a directory",{COMPL_NONE,COMPL_NONE}},
+   {"recurse",cmd_recurse,"toggle directory recursion for mget and mput",{COMPL_NONE,COMPL_NONE}},  
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/rpc_server/srv_pipe.c samba-2.2.12_noprint/source/rpc_server/srv_pipe.c
+--- samba-2.2.12/source/rpc_server/srv_pipe.c	2004-08-12 20:24:27.000000000 +0200
++++ samba-2.2.12_noprint/source/rpc_server/srv_pipe.c	2010-05-23 22:34:18.515108727 +0200
+@@ -515,7 +515,9 @@
+     { "wkssvc",   "ntsvcs",  api_wkssvc_rpc },
+     { "NETLOGON", "lsass",   api_netlog_rpc },
+     { "winreg",   "winreg",  api_reg_rpc },
++#if 0
+     { "spoolss",  "spoolss", api_spoolss_rpc },
++#endif
+ #ifdef WITH_MSDFS
+     { "netdfs",   "netdfs" , api_netdfs_rpc },
+ #endif
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/smbd/close.c samba-2.2.12_noprint/source/smbd/close.c
+--- samba-2.2.12/source/smbd/close.c	2004-08-12 20:24:20.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/close.c	2010-05-23 22:11:21.245027603 +0200
+@@ -135,7 +135,7 @@
+ 		err1 = -1;
+ 
+ 	if (fsp->print_file) {
+-		print_fsp_end(fsp, normal_close);
++		//print_fsp_end(fsp, normal_close);
+ 		file_free(fsp);
+ 		return 0;
+ 	}
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/smbd/fileio.c samba-2.2.12_noprint/source/smbd/fileio.c
+--- samba-2.2.12/source/smbd/fileio.c	2004-08-12 20:24:21.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/fileio.c	2010-05-23 22:10:41.765038540 +0200
+@@ -163,7 +163,7 @@
+ 	int write_path = -1; 
+ 
+ 	if (fsp->print_file)
+-		return print_job_write(fsp->print_jobid, data, n);
++		return 0;//print_job_write(fsp->print_jobid, data, n);
+ 
+ 	if (!fsp->can_write) {
+ 		errno = EPERM;
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/smbd/lanman.c samba-2.2.12_noprint/source/smbd/lanman.c
+--- samba-2.2.12/source/smbd/lanman.c	2004-08-12 20:24:21.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/lanman.c	2010-05-23 22:23:06.516287278 +0200
+@@ -360,6 +360,7 @@
+ /****************************************************************************
+   get a print queue
+   ****************************************************************************/
++#if 0
+ static void PackDriverData(struct pack_desc* desc)
+ {
+   char drivdata[4+4+32];
+@@ -1066,7 +1067,7 @@
+   
+   return True;
+ }
+-
++#endif
+ /****************************************************************************
+   get info level for a server list query
+   ****************************************************************************/
+@@ -1897,7 +1898,7 @@
+ 
+   return(True);
+ }
+-
++#if 0
+ /****************************************************************************
+   delete a print job
+   Form: <W> <> 
+@@ -2092,7 +2093,7 @@
+ 	
+ 	return(True);
+ }
+-
++#endif
+ 
+ /****************************************************************************
+   get info about the server
+@@ -3292,6 +3293,7 @@
+   {"RNetUserGetInfo",	RAP_WUserGetInfo,	api_RNetUserGetInfo,0},
+   {"NetUserGetGroups",	RAP_WUserGetGroups,	api_NetUserGetGroups,0},
+   {"NetWkstaGetInfo",	RAP_WWkstaGetInfo,	api_NetWkstaGetInfo,0},
++#if 0
+   {"DosPrintQEnum",	RAP_WPrintQEnum,	api_DosPrintQEnum,0},
+   {"DosPrintQGetInfo",	RAP_WPrintQGetInfo,	api_DosPrintQGetInfo,0},
+   {"WPrintQueuePause",  RAP_WPrintQPause,	api_WPrintQueueCtrl,0},
+@@ -3303,16 +3305,21 @@
+   {"RDosPrintJobResume",RAP_WPrintJobContinue,	api_RDosPrintJobDel,0},
+   {"WPrintDestEnum",	RAP_WPrintDestEnum,	api_WPrintDestEnum,0},
+   {"WPrintDestGetInfo",	RAP_WPrintDestGetInfo,	api_WPrintDestGetInfo,0},
++#endif
+   {"NetRemoteTOD",	RAP_NetRemoteTOD,	api_NetRemoteTOD,0},
++#if 0
+   {"WPrintQueuePurge",	RAP_WPrintQPurge,	api_WPrintQueueCtrl,0},
++#endif
+   {"NetServerEnum",	RAP_NetServerEnum2,	api_RNetServerEnum,0},
+   {"WAccessGetUserPerms",RAP_WAccessGetUserPerms,api_WAccessGetUserPerms,0},
+   {"SetUserPassword",	RAP_WUserPasswordSet2,	api_SetUserPassword,0},
+   {"WWkstaUserLogon",	RAP_WWkstaUserLogon,	api_WWkstaUserLogon,0},
++#if 0
+   {"PrintJobInfo",	RAP_WPrintJobSetInfo,	api_PrintJobInfo,0},
+   {"WPrintDriverEnum",	RAP_WPrintDriverEnum,	api_WPrintDriverEnum,0},
+   {"WPrintQProcEnum",	RAP_WPrintQProcessorEnum,api_WPrintQProcEnum,0},
+   {"WPrintPortEnum",	RAP_WPrintPortEnum,	api_WPrintPortEnum,0},
++#endif
+   {"SamOEMChangePassword",RAP_SamOEMChgPasswordUser2_P,api_SamOEMChangePassword,0},
+   {NULL,		-1,	api_Unsupported,0}};
+ 
+diff -U 3 -H -d -r -N -x '*~' -x Makefile -x 'config*' -- samba-2.2.12_orig/source/smbd/open.c samba-2.2.12_noprint/source/smbd/open.c
+--- samba-2.2.12_orig/source/smbd/open.c	2004-08-12 20:24:20.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/open.c	2010-05-26 19:28:42.597078078 +0200
+@@ -788,7 +788,7 @@
+ 	int open_mode=0;
+ 	uint16 port = 0;
+ 	mode_t new_mode = (mode_t)0;
+-
++#if 0
+ 	if (conn->printer) {
+ 		/* printers are handled completely differently. Most
+ 			of the passed parameters are ignored */
+@@ -798,7 +798,7 @@
+ 			*action = FILE_WAS_CREATED;
+ 		return print_fsp_open(conn, fname);
+ 	}
+-
++#endif
+ 	fsp = file_new(conn);
+ 	if(!fsp)
+ 		return NULL;
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/smbd/process.c samba-2.2.12_noprint/source/smbd/process.c
+--- samba-2.2.12/source/smbd/process.c	2004-08-12 20:24:20.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/process.c	2010-05-23 22:30:30.835027204 +0200
+@@ -546,10 +546,10 @@
+ /* 0xbd */ { NULL, NULL, 0 },
+ /* 0xbe */ { NULL, NULL, 0 },
+ /* 0xbf */ { NULL, NULL, 0 },
+-/* 0xc0 */ { "SMBsplopen",reply_printopen,AS_USER | QUEUE_IN_OPLOCK },
+-/* 0xc1 */ { "SMBsplwr",reply_printwrite,AS_USER},
+-/* 0xc2 */ { "SMBsplclose",reply_printclose,AS_USER},
+-/* 0xc3 */ { "SMBsplretq",reply_printqueue,AS_USER},
++/* 0xc0 */ { NULL, NULL, 0 },//{ "SMBsplopen",reply_printopen,AS_USER | QUEUE_IN_OPLOCK },
++/* 0xc1 */ { NULL, NULL, 0 },//{ "SMBsplwr",reply_printwrite,AS_USER},
++/* 0xc2 */ { NULL, NULL, 0 },//{ "SMBsplclose",reply_printclose,AS_USER},
++/* 0xc3 */ { NULL, NULL, 0 },//{ "SMBsplretq",reply_printqueue,AS_USER},
+ /* 0xc4 */ { NULL, NULL, 0 },
+ /* 0xc5 */ { NULL, NULL, 0 },
+ /* 0xc6 */ { NULL, NULL, 0 },
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/smbd/reply.c samba-2.2.12_noprint/source/smbd/reply.c
+--- samba-2.2.12/source/smbd/reply.c	2004-08-12 20:25:49.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/reply.c	2010-05-23 22:26:18.916277953 +0200
+@@ -3421,7 +3421,7 @@
+ /****************************************************************************
+  Reply to a printopen.
+ ****************************************************************************/
+-
++#if 0
+ int reply_printopen(connection_struct *conn, 
+ 		    char *inbuf,char *outbuf, int dum_size, int dum_buffsize)
+ {
+@@ -3593,7 +3593,7 @@
+   END_PROFILE(SMBsplwr);
+   return(outsize);
+ }
+-
++#endif
+ /****************************************************************************
+  The guts of the mkdir command, split out so it may be called by the NT SMB
+  code. 
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/smbd/server.c samba-2.2.12_noprint/source/smbd/server.c
+--- samba-2.2.12/source/smbd/server.c	2004-08-12 20:24:21.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/server.c	2010-05-23 22:09:40.085108744 +0200
+@@ -399,7 +399,7 @@
+ 	
+ 	ret = lp_load(servicesf,False,False,True);
+ 
+-	load_printers();
++	//load_printers();
+ 
+ 	/* perhaps the config filename is now set */
+ 	if (!test)
+@@ -888,8 +888,8 @@
+ 	if (!locking_init(0))
+ 		exit(1);
+ 
+-	if (!print_backend_init())
+-		exit(1);
++	//if (!print_backend_init())
++	//	exit(1);
+ 
+ 	if (!share_info_db_init())
+ 		exit(1);
+diff -U 3 -H -d -r -N -- samba-2.2.12/source/smbd/service.c samba-2.2.12_noprint/source/smbd/service.c
+--- samba-2.2.12/source/smbd/service.c	2004-08-12 20:24:20.000000000 +0200
++++ samba-2.2.12_noprint/source/smbd/service.c	2010-05-23 22:12:58.656277393 +0200
+@@ -144,6 +144,7 @@
+    }
+ 
+    /* If we still don't have a service, attempt to add it as a printer. */
++#if 0
+    if (iService < 0)
+    {
+       int iPrinterService;
+@@ -167,6 +168,7 @@
+             DEBUG(3,("%s is not a valid printer name\n", service));
+       }
+    }
++#endif
+ 
+    /* Check for default vfs service?  Unsure whether to implement this */
+    if (iService < 0)
+diff -uNr samba-2.2.12.org//source/include/proto.h samba-2.2.12/source/include/proto.h
+--- samba-2.2.12.org//source/include/proto.h	2004-08-12 20:25:49.000000000 +0200
++++ samba-2.2.12/source/include/proto.h	2010-05-29 23:20:59.000000000 +0200
+@@ -4101,9 +4101,9 @@
+ NTSTATUS _reg_info(pipes_struct *p, REG_Q_INFO *q_u, REG_R_INFO *r_u);
+ 
+ /* The following definitions come from rpc_server/srv_samr.c  */
+-
++#if 0
+ BOOL api_samr_rpc(pipes_struct *p);
+-
++#endif
+ /* The following definitions come from rpc_server/srv_samr_nt.c  */
+ 
+ NTSTATUS _samr_close_hnd(pipes_struct *p, SAMR_Q_CLOSE_HND *q_u, SAMR_R_CLOSE_HND *r_u);
+diff -uNr samba-2.2.12.org//source/Makefile.in samba-2.2.12/source/Makefile.in
+--- samba-2.2.12.org//source/Makefile.in	2010-05-29 23:12:49.000000000 +0200
++++ samba-2.2.12/source/Makefile.in	2010-05-29 23:13:43.000000000 +0200
+@@ -147,7 +147,7 @@
+ 		libsmb/passchange.o libsmb/unexpected.o $(RPC_PARSE_OBJ1) \
+ 		libsmb/namecache.o
+ 
+-LIBMSRPC_OBJ = libsmb/cli_lsarpc.o libsmb/cli_samr.o \
++LIBMSRPC_OBJ = libsmb/cli_lsarpc.o \
+ 				libsmb/cli_netlogon.o libsmb/cli_srvsvc.o libsmb/cli_dfs.o \
+ 				libsmb/cli_reg.o \
+ 				rpc_client/cli_pipe.o libsmb/cli_pipe_util.o
+@@ -155,7 +155,7 @@
+ RPC_SERVER_OBJ = rpc_server/srv_lsa.o rpc_server/srv_lsa_nt.o \
+                  rpc_server/srv_lsa_hnd.o rpc_server/srv_netlog.o rpc_server/srv_netlog_nt.o \
+                  rpc_server/srv_pipe_hnd.o rpc_server/srv_reg.o rpc_server/srv_reg_nt.o \
+-                 rpc_server/srv_samr.o rpc_server/srv_samr_nt.o rpc_server/srv_srvsvc.o rpc_server/srv_srvsvc_nt.o \
++                 rpc_server/srv_srvsvc.o rpc_server/srv_srvsvc_nt.o \
+                  rpc_server/srv_util.o rpc_server/srv_wkssvc.o rpc_server/srv_wkssvc_nt.o \
+                  rpc_server/srv_pipe.o rpc_server/srv_dfs.o rpc_server/srv_dfs_nt.o 
+ 
+@@ -166,7 +166,7 @@
+ 
+ RPC_PARSE_OBJ = rpc_parse/parse_lsa.o rpc_parse/parse_net.o \
+                 rpc_parse/parse_reg.o rpc_parse/parse_rpc.o \
+-                rpc_parse/parse_samr.o rpc_parse/parse_srv.o \
++                rpc_parse/parse_srv.o \
+                 rpc_parse/parse_wks.o \
+ 		rpc_parse/parse_dfs.o
+ 
+@@ -264,13 +264,13 @@
+ SMBPASSWD_OBJ = utils/smbpasswd.o $(PARAM_OBJ) \
+ 				$(LIBSMB_OBJ) $(PASSDB_OBJ) $(GROUPDB_OBJ)\
+ 				$(UBIQX_OBJ) $(RPC_CLIENT_OBJ) $(RPC_PARSE_OBJ) $(LIB_OBJ) \
+-				libsmb/cli_lsarpc.o libsmb/cli_samr.o libsmb/cli_pipe_util.o
++				libsmb/cli_lsarpc.o libsmb/cli_pipe_util.o
+ 
+ PDBEDIT_OBJ = utils/pdbedit.o $(PARAM_OBJ) $(LIBSMB_OBJ) $(PASSDB_OBJ) \
+ 		$(UBIQX_OBJ) $(LIB_OBJ) $(GROUPDB_OBJ)
+ 
+ RPCCLIENT_OBJ1 = rpcclient/rpcclient.o rpcclient/cmd_lsarpc.o \
+-				rpcclient/cmd_samr.o rpcclient/cmd_spoolss.o \
++				rpcclient/cmd_spoolss.o \
+ 				rpcclient/cmd_netlogon.o rpcclient/cmd_srvsvc.o \
+ 				rpcclient/cmd_dfs.o rpcclient/cmd_reg.o \
+ 				rpc_client/cli_login.o rpc_client/cli_netlogon.o \
+@@ -339,7 +339,6 @@
+              rpcclient/display.o \
+              rpcclient/cmd_lsarpc.o \
+              rpcclient/cmd_wkssvc.o \
+-             rpcclient/cmd_samr.o \
+              rpcclient/cmd_srvsvc.o \
+              rpcclient/cmd_netlogon.o \
+              $(PARAM_OBJ) $(LIBSMB_OBJ) $(UBIQX_OBJ) $(LIB_OBJ) \
+diff -uNr samba-2.2.12.org//source/rpc_server/srv_pipe.c samba-2.2.12/source/rpc_server/srv_pipe.c
+--- samba-2.2.12.org//source/rpc_server/srv_pipe.c	2010-05-29 23:12:49.000000000 +0200
++++ samba-2.2.12/source/rpc_server/srv_pipe.c	2010-05-29 23:20:01.000000000 +0200
+@@ -510,7 +510,9 @@
+ static struct api_cmd api_fd_commands[] =
+ {
+     { "lsarpc",   "lsass",   api_ntlsa_rpc },
++#if 0
+     { "samr",     "lsass",   api_samr_rpc },
++#endif
+     { "srvsvc",   "ntsvcs",  api_srvsvc_rpc },
+     { "wkssvc",   "ntsvcs",  api_wkssvc_rpc },
+     { "NETLOGON", "lsass",   api_netlog_rpc },
+diff -uNr samba-2.2.12.org//source/rpc_server/srv_samr.c samba-2.2.12/source/rpc_server/srv_samr.c
+--- samba-2.2.12.org//source/rpc_server/srv_samr.c	2004-08-12 20:24:27.000000000 +0200
++++ samba-2.2.12/source/rpc_server/srv_samr.c	2010-05-29 23:20:49.000000000 +0200
+@@ -1282,6 +1282,7 @@
+ #endif
+ };
+ 
++#if 0
+ /*******************************************************************
+  receives a samr pipe and responds.
+  ********************************************************************/
+@@ -1289,3 +1290,4 @@
+ {
+ 	return api_rpcTNP(p, "api_samr_rpc", api_samr_cmds);
+ }
++#endif
+diff -uNr samba-2.2.12.org//source/utils/smbpasswd.c samba-2.2.12/source/utils/smbpasswd.c
+--- samba-2.2.12.org//source/utils/smbpasswd.c	2004-08-12 20:24:34.000000000 +0200
++++ samba-2.2.12/source/utils/smbpasswd.c	2010-05-30 00:29:50.000000000 +0200
+@@ -322,6 +322,7 @@
+ 	fstrcpy(creds->domain, domain);
+ }
+ 
++#if 0
+ /*********************************************************
+ Join a domain using the administrator username and password
+ **********************************************************/
+@@ -623,6 +624,7 @@
+ 	
+ 	return retval;
+ }
++#endif
+ 
+ /*********************************************************
+ Join a domain. Old server manager method.
+@@ -913,6 +915,7 @@
+ 		load_interfaces();
+ 	}
+ 
++#if 0
+ 	/* Join a domain */
+ 
+ 	if (joining_domain) {
+@@ -948,6 +951,7 @@
+ 		}
+ 	}
+ 	
++#endif
+ 
+         /* Change Trust Password */
+                 
