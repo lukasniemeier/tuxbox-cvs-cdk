@@ -45,7 +45,7 @@ netkit-telnet-0.17.tar.gz;ftp://ftp.uk.linux.org/pub/linux/Networking/netkit
 portmap_5beta.tar.gz;ftp://ftp.porcupine.org/pub/security
 procps-3.2.8.tar.gz;http://procps.sourceforge.net/
 udev-030.tar.gz;http://www.kernel.org/pub/linux/utils/kernel/hotplug
-vsftpd-1.2.2.tar.gz;ftp://vsftpd.beasts.org/users/cevans
+vsftpd-2.2.2.tar.gz;ftp://vsftpd.beasts.org/users/cevans
 mrouted_3.9-beta3.orig.tar.gz;http://archive.debian.org/debian-archive/debian/dists/Debian-2.2/non-free/source/net
 cramfs-1.1.tar.gz;http://prdownloads.sourceforge.net/sourceforge/cramfs
 squashfs2.2r2.tar.gz;http://prdownloads.sourceforge.net/sourceforge/squashfs
