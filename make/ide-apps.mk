@@ -81,18 +81,12 @@ $(DEPDIR)/e2fsprogs: bootstrap @DEPENDS_e2fsprogs@
 			--host=$(target) \
 			--target=$(target) \
 			--prefix=$(targetprefix) \
-			--with-cc=$(target)-gcc \
-			--with-linker=$(target)-ld \
-			--disable-evms \
 			--enable-elf-shlibs \
 			--enable-htree \
 			--disable-profile \
 			--disable-e2initrd-helper \
-			--disable-swapfs \
 			--disable-debugfs \
-			--disable-image \
 			--enable-resizer \
-			--enable-dynamic-e2fsck \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -118,18 +112,12 @@ $(flashprefix)/root/sbin/e2fsck: bootstrap @DEPENDS_e2fsprogs@ | $(flashprefix)/
 			--host=$(target) \
 			--target=$(target) \
 			--prefix=$(targetprefix) \
-			--with-cc=$(target)-gcc \
-			--with-linker=$(target)-ld \
-			--disable-evms \
 			--enable-elf-shlibs \
 			--enable-htree \
 			--disable-profile \
 			--disable-e2initrd-helper \
-			--disable-swapfs \
 			--disable-debugfs \
-			--disable-image \
 			--enable-resizer \
-			--enable-dynamic-e2fsck \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -227,17 +215,11 @@ $(DEPDIR)/xfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_xfsprogs@
 			--host=$(target) \
 			--target=$(target) \
 			--prefix= \
-			--with-cc=$(target)-gcc \
-			--with-linker=$(target)-ld \
-			--disable-evms \
 			--enable-elf-shlibs \
 			--enable-htree \
 			--disable-profile \
-			--disable-swapfs \
 			--disable-debugfs \
-			--disable-image \
 			--enable-resizer \
-			--enable-dynamic-e2fsck \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -284,17 +266,11 @@ $(flashprefix)/root/sbin/mkfs.xfs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPEND
 			--host=$(target) \
 			--target=$(target) \
 			--prefix= \
-			--with-cc=$(target)-gcc \
-			--with-linker=$(target)-ld \
-			--disable-evms \
 			--enable-elf-shlibs \
 			--enable-htree \
 			--disable-profile \
-			--disable-swapfs \
 			--disable-debugfs \
-			--disable-image \
 			--enable-resizer \
-			--enable-dynamic-e2fsck \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -342,17 +318,11 @@ $(DEPDIR)/reiserfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_reiserfs
 			--host=$(target) \
 			--target=$(target) \
 			--prefix= \
-			--with-cc=$(target)-gcc \
-			--with-linker=$(target)-ld \
-			--disable-evms \
 			--enable-elf-shlibs \
 			--enable-htree \
 			--disable-profile \
-			--disable-swapfs \
 			--disable-debugfs \
-			--disable-image \
 			--enable-resizer \
-			--enable-dynamic-e2fsck \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \

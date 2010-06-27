@@ -49,9 +49,7 @@ include make/contrib-libs.mk
 include make/contrib-apps.mk
 
 # Some IDE/HDD tools and applications if IDE-support enabled
-if ENABLE_IDEMMC
 include make/ide-apps.mk
-endif
 
 # Tools (debugger etc) for the Tuxbox developer
 include make/development-tools.mk
