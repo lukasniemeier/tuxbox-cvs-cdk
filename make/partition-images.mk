@@ -26,7 +26,7 @@ $(flashprefix)/root-%-squashfs \
 $(hostprefix)/bin/mksquashfs-lzma \
 $(hostprefix)/bin/checkImage
 	rm -f $@
-	$(hostprefix)/bin/mksquashfs-lzma $< $@ -be
+	$(hostprefix)/bin/mksquashfs-lzma $< $@ -be -all-root
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -34,7 +34,7 @@ $(hostprefix)/bin/checkImage
 		echo "$$trycount/10 try to repair image"; \
 		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
 		rm -f $@; \
-		$(hostprefix)/bin/mksquashfs-lzma $< $@ -be; \
+		$(hostprefix)/bin/mksquashfs-lzma $< $@ -be -all-root; \
 		trycount=`expr $$trycount + 1`; \
 	done
 	chmod 644 $@
@@ -49,7 +49,7 @@ $(flashprefix)/root-%-squashfs_nolzma \
 $(hostprefix)/bin/mksquashfs-nolzma \
 $(hostprefix)/bin/checkImage
 	rm -f $@
-	$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be
+	$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be -all-root
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -57,7 +57,7 @@ $(hostprefix)/bin/checkImage
 		echo "$$trycount/10 try to repair image"; \
 		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
 		rm -f $@; \
-		$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be; \
+		$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be -all-root; \
 		trycount=`expr $$trycount + 1`; \
 	done
 	chmod 644 $@
