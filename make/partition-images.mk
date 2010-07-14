@@ -6,7 +6,7 @@ $(flashprefix)/var-neutrino.jffs2 \
 $(flashprefix)/var-enigma+neutrino.jffs2 \
 $(flashprefix)/var-enigma.jffs2: \
 $(flashprefix)/var-%.jffs2: $(flashprefix)/var-% $(hostprefix)/bin/mkfs.jffs2
-	$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -e 131072 -p -r $< -o $@
+	$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -U -e 131072 -p -r $< -o $@
 
 
 ####### root-$gui.$fstype
@@ -72,7 +72,7 @@ $(flashprefix)/root-%.jffs2: \
 $(flashprefix)/root-%-jffs2 \
 $(hostprefix)/bin/mkfs.jffs2 \
 $(hostprefix)/bin/checkImage
-	$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -e 0x20000 --pad=0x7c0000 -r $< -o $@
+	$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -80,7 +80,7 @@ $(hostprefix)/bin/checkImage
 		echo "$$trycount/10 try to repair image"; \
 		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
 		rm -f $@; \
-		$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
+		$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
 	done
 
@@ -94,7 +94,7 @@ $(flashprefix)/root-%.jffs2_lzma: \
 $(flashprefix)/root-%-jffs2_lzma \
 $(hostprefix)/bin/mkfs.jffs2 \
 $(hostprefix)/bin/checkImage
-	$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@
+	$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -102,7 +102,7 @@ $(hostprefix)/bin/checkImage
 		echo "$$trycount/10 try to repair image"; \
 		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
 		rm -f $@; \
-		$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
+		$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
 	done
 
@@ -116,7 +116,7 @@ $(flashprefix)/root-%.jffs2_lzma_klzma: \
 $(flashprefix)/root-%-jffs2_lzma_klzma \
 $(hostprefix)/bin/mkfs.jffs2 \
 $(hostprefix)/bin/checkImage
-	$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@
+	$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -124,7 +124,7 @@ $(hostprefix)/bin/checkImage
 		echo "$$trycount/10 try to repair image"; \
 		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
 		rm -f $@; \
-		$(hostprefix)/bin/mkfs.jffs2 -b -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
+		$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
 	done
 
