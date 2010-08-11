@@ -41,7 +41,6 @@ if BOXTYPE_DBOX2
 	$(MAKE) flash-ucodes
 endif
 	$(MAKE) flash-tools_misc
-	$(MAKE) flash-fcp
 	$(MAKE) flash-config
 	$(MAKE) flash-busybox
 	$(MAKE) flash-ftpd

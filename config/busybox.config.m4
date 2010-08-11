@@ -14,7 +14,8 @@ CONFIG_HAVE_DOT_CONFIG=y
 #
 option(`CONFIG_DESKTOP', `n', `n')
 # CONFIG_EXTRA_COMPAT is not set
-# CONFIG_FEATURE_ASSUME_UNICODE is not set
+option(`CONFIG_INCLUDE_SUSv2', `y', `y')
+# CONFIG_USE_PORTABLE_CODE is not set
 option(`CONFIG_FEATURE_BUFFERS_USE_MALLOC', `n', `n')
 option(`CONFIG_FEATURE_BUFFERS_GO_ON_STACK', `y', `y')
 option(`CONFIG_FEATURE_BUFFERS_GO_IN_BSS', `n', `n')
@@ -23,7 +24,9 @@ option(`CONFIG_FEATURE_VERBOSE_USAGE', `n', `n')
 option(`CONFIG_FEATURE_COMPRESS_USAGE', `n', `n')
 option(`CONFIG_FEATURE_INSTALLER', `n', `n')
 option(`CONFIG_LOCALE_SUPPORT', `n', `n')
-option(`CONFIG_GETOPT_LONG', `y', `y')
+# CONFIG_UNICODE_SUPPORT is not set
+# CONFIG_UNICODE_USING_LOCALE is not set
+option(`CONFIG_LONG_OPTS', `y', `y')
 option(`CONFIG_FEATURE_DEVPTS', `y', `y')
 option(`CONFIG_FEATURE_CLEAN_UP', `n', `n')
 option(`CONFIG_FEATURE_PIDFILE', `n', `n')
@@ -62,7 +65,6 @@ option(`CONFIG_WERROR', `n', `n')
 option(`CONFIG_NO_DEBUG_LIB', `n', `n')
 option(`CONFIG_DMALLOC', `n', `n')
 option(`CONFIG_EFENCE', `n', `n')
-option(`CONFIG_INCLUDE_SUSv2', `y', `y')
 
 #
 # Installation Options
@@ -92,6 +94,8 @@ option(`CONFIG_FEATURE_EDITING_SAVEHISTORY', `n', `n')
 option(`CONFIG_FEATURE_TAB_COMPLETION', `y', `y')
 option(`CONFIG_FEATURE_USERNAME_COMPLETION', `n', `n')
 option(`CONFIG_FEATURE_EDITING_FANCY_PROMPT', `y', `y')
+# CONFIG_FEATURE_EDITING_ASK_TERMINAL is not set
+# CONFIG_FEATURE_NON_POSIX_CP is not set
 # CONFIG_FEATURE_VERBOSE_CP_MESSAGE is not set
 CONFIG_FEATURE_COPYBUF_KB=4
 option(`CONFIG_MONOTONIC_SYSCALL', `n', `n')
@@ -105,6 +109,7 @@ option(`CONFIG_IOCTL_HEX2STR_ERROR', `y', `y')
 #
 # Archival Utilities
 #
+# CONFIG_FEATURE_SEAMLESS_XZ is not set
 # CONFIG_FEATURE_SEAMLESS_LZMA is not set
 CONFIG_FEATURE_SEAMLESS_BZ2=y
 CONFIG_FEATURE_SEAMLESS_GZ=y
@@ -121,20 +126,27 @@ option(`CONFIG_DPKG_DEB', `n', `n')
 option(`CONFIG_FEATURE_DPKG_DEB_EXTRACT_ONLY', `n', `n')
 option(`CONFIG_GUNZIP', `y', `y')
 option(`CONFIG_GZIP', `y', `y')
+# CONFIG_FEATURE_GZIP_LONG_OPTIONS is not set
+option(`CONFIG_LZOP', `n', `n')
+# CONFIG_LZOP_COMPR_HIGH is not set
 option(`CONFIG_RPM2CPIO', `n', `n')
 option(`CONFIG_RPM', `n', `n')
 option(`CONFIG_TAR', `y', `y')
 option(`CONFIG_FEATURE_TAR_CREATE', `y', `y')
 CONFIG_FEATURE_TAR_AUTODETECT=y
-option(`CONFIG_FEATURE_TAR_FROM', `n', `n')
+option(`CONFIG_FEATURE_TAR_FROM', `y', `y')
 option(`CONFIG_FEATURE_TAR_OLDGNU_COMPATIBILITY', `y', `y')
 option(`CONFIG_FEATURE_TAR_OLDSUN_COMPATIBILITY', `y', `y')
 option(`CONFIG_FEATURE_TAR_GNU_EXTENSIONS', `y', `y')
-option(`CONFIG_FEATURE_TAR_LONG_OPTIONS', `n', `n')
+option(`CONFIG_FEATURE_TAR_LONG_OPTIONS', `y', `y')
+# CONFIG_FEATURE_TAR_TO_COMMAND is not set
 # CONFIG_FEATURE_TAR_UNAME_GNAME is not set
+# CONFIG_FEATURE_TAR_NOPRESERVE_TIME is not set
 option(`CONFIG_UNCOMPRESS', `n', `n')
 option(`CONFIG_UNLZMA', `n', `n')
-option(`CONFIG_FEATURE_LZMA_FAST', `n', `n')
+# CONFIG_LZMA is not set
+# CONFIG_UNXZ is not set
+# CONFIG_XZ is not set
 option(`CONFIG_UNZIP', `n', `n')
 
 #
@@ -147,6 +159,7 @@ option(`CONFIG_CATV', `y', `y')
 option(`CONFIG_CHGRP', `y', `n')
 option(`CONFIG_CHMOD', `y', `y')
 option(`CONFIG_CHOWN', `y', `n')
+# CONFIG_FEATURE_CHOWN_LONG_OPTIONS is not set
 ifdef(`dreambox',
 `option(`CONFIG_CHROOT', `y', `y')',
 `option(`CONFIG_CHROOT', `y', `n')'
@@ -154,11 +167,15 @@ ifdef(`dreambox',
 option(`CONFIG_CKSUM', `n', `n')
 option(`CONFIG_COMM', `n', `n')
 option(`CONFIG_CP', `y', `y')
+# CONFIG_FEATURE_CP_LONG_OPTIONS is not set
 option(`CONFIG_CUT', `y', `y')
 option(`CONFIG_DATE', `y', `y')
 option(`CONFIG_FEATURE_DATE_ISOFMT', `y', `n')
+option(`CONFIG_FEATURE_DATE_NANO', `n', `n')
+option(`CONFIG_FEATURE_DATE_COMPAT', `y', `y')
 option(`CONFIG_DD', `y', `y')
 option(`CONFIG_FEATURE_DD_SIGNAL_HANDLING', `y', `y')
+option(`CONFIG_FEATURE_DD_THIRD_STATUS_LINE', `n', `n')
 option(`CONFIG_FEATURE_DD_IBS_OBS', `n', `n')
 option(`CONFIG_DF', `y', `y')
 option(`CONFIG_FEATURE_DF_FANCY', `y', `y')
@@ -177,6 +194,7 @@ option(`CONFIG_EXPR', `y', `y')
 option(`CONFIG_EXPR_MATH_SUPPORT_64', `n', `n')
 option(`CONFIG_FALSE', `y', `y')
 option(`CONFIG_FOLD', `n', `n')
+option(`CONFIG_FSYNC', `n', `n')
 option(`CONFIG_HEAD', `y', `n')
 option(`CONFIG_FEATURE_FANCY_HEAD', `n', `n')
 option(`CONFIG_HOSTID', `n', `n')
@@ -207,19 +225,20 @@ option(`CONFIG_NOHUP', `n', `n')
 option(`CONFIG_OD', `n', `n')
 option(`CONFIG_PRINTENV', `n', `n')
 option(`CONFIG_PRINTF', `n', `n')
+option(`CONFIG_PWD', `y', `n')
 # CONFIG_READLINK is not set
 # CONFIG_FEATURE_READLINK_FOLLOW is not set
-option(`CONFIG_PWD', `y', `n')
 option(`CONFIG_REALPATH', `n', `n')
 option(`CONFIG_RM', `y', `y')
-option(`CONFIG_FEATURE_RMDIR_LONG_OPTIONS', `n', `n')
 option(`CONFIG_RMDIR', `y', `y')
+option(`CONFIG_FEATURE_RMDIR_LONG_OPTIONS', `n', `n')
 option(`CONFIG_SEQ', `n', `n')
 option(`CONFIG_SHA1SUM', `n', `n')
 option(`CONFIG_SHA256SUM', `n', `n')
 option(`CONFIG_SHA512SUM', `n', `n')
 option(`CONFIG_SLEEP', `y', `y')
 option(`CONFIG_FEATURE_FANCY_SLEEP', `n', `n')
+option(`CONFIG_FEATURE_FLOAT_SLEEP', `n', `n')
 option(`CONFIG_SORT', `y', `y')
 option(`CONFIG_FEATURE_SORT_BIG', `n', `n')
 option(`CONFIG_SPLIT', `n', `n')
@@ -244,6 +263,7 @@ option(`CONFIG_TRUE', `y', `y')
 option(`CONFIG_TTY', `y', `n')
 option(`CONFIG_UNAME', `y', `y')
 option(`CONFIG_UNEXPAND', `n', `n')
+option(`CONFIG_FEATURE_UNEXPAND_LONG_OPTIONS', `n', `n')
 option(`CONFIG_UNIQ', `y', `n')
 option(`CONFIG_USLEEP', `n', `n')
 option(`CONFIG_UUDECODE', `n', `n')
@@ -274,6 +294,7 @@ option(`CONFIG_FEATURE_MD5_SHA1_SUM_CHECK', `n', `n')
 # Console Utilities
 #
 option(`CONFIG_CHVT', `n', `n')
+# CONFIG_FGCONSOLE is not set
 option(`CONFIG_CLEAR', `y', `y')
 option(`CONFIG_DEALLOCVT', `n', `n')
 option(`CONFIG_DUMPKMAP', `n', `n')
@@ -313,9 +334,8 @@ option(`CONFIG_AWK', `y', `y')
 # CONFIG_FEATURE_AWK_LIBM is not set
 # CONFIG_CMP is not set
 option(`CONFIG_DIFF', `n', `n')
-option(`CONFIG_FEATURE_DIFF_BINARY', `n', `n')
+option(`CONFIG_FEATURE_DIFF_LONG_OPTIONS', `n', `n')
 option(`CONFIG_FEATURE_DIFF_DIR', `n', `n')
-option(`CONFIG_FEATURE_DIFF_MINIMAL', `n', `n')
 option(`CONFIG_ED', `n', `n')
 option(`CONFIG_PATCH', `n', `n')
 option(`CONFIG_SED', `y', `y')
@@ -331,6 +351,7 @@ option(`CONFIG_FEATURE_VI_READONLY', `y', `y')
 option(`CONFIG_FEATURE_VI_SETOPTS', `y', `y')
 option(`CONFIG_FEATURE_VI_SET', `y', `y')
 option(`CONFIG_FEATURE_VI_WIN_RESIZE', `y', `y')
+option(`CONFIG_FEATURE_VI_ASK_TERMINAL', `n', `n')
 option(`CONFIG_FEATURE_VI_OPTIMIZE_CURSOR', `y', `y')
 option(`CONFIG_FEATURE_ALLOW_EXEC', `n', `n')
 
@@ -359,6 +380,7 @@ option(`CONFIG_FEATURE_FIND_DELETE', `n', `n')
 option(`CONFIG_FEATURE_FIND_PATH', `n', `n')
 option(`CONFIG_FEATURE_FIND_REGEX', `n', `n')
 option(`CONFIG_FEATURE_FIND_CONTEXT', `n', `n')
+option(`CONFIG_FEATURE_FIND_LINKS', `n', `n')
 option(`CONFIG_GREP', `y', `y')
 option(`CONFIG_FEATURE_GREP_EGREP_ALIAS', `y', `n')
 option(`CONFIG_FEATURE_GREP_FGREP_ALIAS', `n', `n')
@@ -372,6 +394,7 @@ option(`CONFIG_FEATURE_XARGS_SUPPORT_ZERO_TERM', `n', `n')
 #
 # Init Utilities
 #
+# CONFIG_BOOTCHARTD is not set
 option(`CONFIG_INIT', `y', `y')
 option(`CONFIG_FEATURE_USE_INITTAB', `y', `y')
 option(`CONFIG_FEATURE_KILL_REMOVED', `n', `n')
@@ -382,6 +405,8 @@ option(`CONFIG_FEATURE_EXTRA_QUIET', `n', `n')
 option(`CONFIG_FEATURE_INIT_COREDUMPS', `n', `n')
 option(`CONFIG_FEATURE_INITRD', `n', `n')
 option(`CONFIG_HALT', `y', `y')
+# CONFIG_FEATURE_CALL_TELINIT is not set
+CONFIG_TELINIT_PATH=""
 option(`CONFIG_MESG', `n', `n')
 
 #
@@ -393,12 +418,15 @@ option(`CONFIG_USE_BB_SHADOW', `n', `n')
 # CONFIG_USE_BB_CRYPT is not set
 # CONFIG_USE_BB_CRYPT_SHA is not set
 option(`CONFIG_ADDGROUP', `n', `n')
+option(`CONFIG_FEATURE_ADDGROUP_LONG_OPTIONS', `n', `n')
 option(`CONFIG_FEATURE_ADDUSER_TO_GROUP', `n', `n')
 option(`CONFIG_DELGROUP', `n', `n')
 option(`CONFIG_FEATURE_DEL_USER_FROM_GROUP', `n', `n')
 # CONFIG_FEATURE_CHECK_NAMES is not set
 option(`CONFIG_ADDUSER', `n', `n')
 # CONFIG_FEATURE_ADDUSER_LONG_OPTIONS is not set
+CONFIG_FIRST_SYSTEM_ID=0
+CONFIG_LAST_SYSTEM_ID=0
 option(`CONFIG_DELUSER', `n', `n')
 option(`CONFIG_GETTY', `n', `n')
 option(`CONFIG_FEATURE_UTMP', `n', `n')
@@ -429,11 +457,13 @@ option(`CONFIG_LSATTR', `y', `y')',
 option(`CONFIG_FSCK', `n', `n')
 option(`CONFIG_LSATTR', `n', `n')'
 )
+# CONFIG_TUNE2FS is not set
 
 #
 # Linux Module Utilities
 #
 dnl YADD uses standalone versions of module utilities (modutils/module_init_tools); the following options are therefore disabled in YADD.
+# CONFIG_MODINFO is not set
 option(`CONFIG_MODPROBE_SMALL', `n', `n')
 # CONFIG_FEATURE_MODPROBE_SMALL_OPTIONS_ON_CMDLINE is not set
 # CONFIG_FEATURE_MODPROBE_SMALL_CHECK_ALREADY_LOADED is not set
@@ -449,6 +479,7 @@ option(`CONFIG_FEATURE_2_6_MODULES', `y', `y')',
 option(`CONFIG_FEATURE_2_4_MODULES', `y', `y')
 option(`CONFIG_FEATURE_2_6_MODULES', `n', `n')'
 )
+option(`CONFIG_FEATURE_INSMOD_TRY_MMAP', `n', `n')
 # CONFIG_FEATURE_MODPROBE_BLACKLIST is not set
 option(`CONFIG_DEPMOD', `n', `n')
 
@@ -470,6 +501,7 @@ CONFIG_DEFAULT_DEPMOD_FILE="modules.dep"
 #
 # Linux System Utilities
 #
+# CONFIG_REV is not set
 # CONFIG_ACPID is not set
 # CONFIG_FEATURE_ACPID_COMPAT is not set
 # CONFIG_BLKID is not set
@@ -494,33 +526,43 @@ option(`CONFIG_FEATURE_AIX_LABEL', `n', `n')
 option(`CONFIG_FEATURE_SGI_LABEL', `n', `n')
 option(`CONFIG_FEATURE_SUN_LABEL', `n', `n')
 option(`CONFIG_FEATURE_OSF_LABEL', `n', `n')
-# CONFIG_FINDFS is not set
+option(`CONFIG_FINDFS', `n', `n')
+option(`CONFIG_FLOCK', `n', `n')
 option(`CONFIG_FREERAMDISK', `n', `n')
 option(`CONFIG_FSCK_MINIX', `n', `n')
+option(`CONFIG_MKFS_EXT2', `n', `n')
 option(`CONFIG_MKFS_MINIX', `n', `n')
 option(`CONFIG_FEATURE_MINIX2', `n', `n')
-# CONFIG_MKFS_VFAT is not set
+option(`CONFIG_MKFS_REISER', `n', `n')
+option(`CONFIG_MKFS_VFAT', `n', `n')
 option(`CONFIG_GETOPT', `n', `n')
+option(`CONFIG_FEATURE_GETOPT_LONG', `n', `n')
 option(`CONFIG_HEXDUMP', `n', `n')
-# CONFIG_HD is not set
+option(`CONFIG_FEATURE_HEXDUMP_REVERSE', `n', `n')
+option(`CONFIG_HD', `n', `n')
 option(`CONFIG_HWCLOCK', `n', `n')
-#option(`CONFIG_FEATURE_HWCLOCK_LONGOPTIONS', `n', `n')
 option(`CONFIG_FEATURE_HWCLOCK_ADJTIME_FHS', `n', `n')
 option(`CONFIG_IPCRM', `n', `n')
 option(`CONFIG_IPCS', `n', `n')
 option(`CONFIG_LOSETUP', `n', `n')
+option(`CONFIG_LSPCI', `n', `n')
+option(`CONFIG_LSUSB', `n', `n')
 option(`CONFIG_MDEV', `n', `n')
 option(`CONFIG_FEATURE_MDEV_CONF', `n', `n')
+option(`CONFIG_FEATURE_MDEV_RENAME', `n', `n')
+option(`CONFIG_FEATURE_MDEV_RENAME_REGEXP', `n', `n')
+option(`CONFIG_FEATURE_MDEV_EXEC', `n', `n')
+option(`CONFIG_FEATURE_MDEV_LOAD_FIRMWARE', `n', `n')
 ifdef(`ide',
-`option(`CONFIG_MKSWAP', `y', `y')
-option(`CONFIG_FEATURE_MKSWAP_V0', `n', `n')',
-`option(`CONFIG_MKSWAP', `n', `n')
-option(`CONFIG_FEATURE_MKSWAP_V0', `n', `n')'
+`option(`CONFIG_MKSWAP', `y', `y')',
+`option(`CONFIG_MKSWAP', `n', `n')'
 )
+# CONFIG_FEATURE_MKSWAP_UUID is not set
 option(`CONFIG_MORE', `y', `y')
 option(`CONFIG_FEATURE_USE_TERMIOS', `y', `y')
 # CONFIG_VOLUMEID is not set
 # CONFIG_FEATURE_VOLUMEID_EXT is not set
+# CONFIG_FEATURE_VOLUMEID_BTRFS is not set
 # CONFIG_FEATURE_VOLUMEID_REISERFS is not set
 # CONFIG_FEATURE_VOLUMEID_FAT is not set
 # CONFIG_FEATURE_VOLUMEID_HFS is not set
@@ -557,6 +599,7 @@ option(`CONFIG_RDATE', `y', `y')
 option(`CONFIG_READPROFILE', `n', `n')
 # CONFIG_RTCWAKE is not set
 # CONFIG_SCRIPT is not set
+option(`CONFIG_SCRIPTREPLAY', `n', `n')
 option(`CONFIG_SETARCH', `n', `n')
 ifdef(`ide',
 `option(`CONFIG_SWAPONOFF', `y', `y')',
@@ -571,13 +614,20 @@ option(`CONFIG_FEATURE_UMOUNT_ALL', `n', `n')
 # Common options for mount/umount
 #
 option(`CONFIG_FEATURE_MOUNT_LOOP', `y', `y')
+option(`CONFIG_FEATURE_MOUNT_LOOP_CREATE', `n', `n')
 option(`CONFIG_FEATURE_MTAB_SUPPORT', `n', `n')
 
 #
 # Miscellaneous Utilities
 #
+# CONFIG_CONSPY is not set
+# CONFIG_UBIATTACH is not set
+# CONFIG_UBIDETACH is not set
 option(`CONFIG_ADJTIMEX', `n', `n')
 option(`CONFIG_BBCONFIG', `n', `n')
+option(`CONFIG_BEEP', `n', `n')
+CONFIG_FEATURE_BEEP_FREQ=0
+CONFIG_FEATURE_BEEP_LENGTH_MS=0
 # CONFIG_CHAT is not set
 # CONFIG_FEATURE_CHAT_NOFAIL is not set
 # CONFIG_FEATURE_CHAT_TTY_HIFI is not set
@@ -603,6 +653,9 @@ option(`CONFIG_FEATURE_DEVFS', `y', `y')
 option(`CONFIG_EJECT', `n', `n')
 # CONFIG_FEATURE_EJECT_SCSI is not set
 # CONFIG_FBSPLASH is not set
+option(`CONFIG_FLASHCP', `y', `y')
+# CONFIG_FLASH_LOCK is not set
+# CONFIG_FLASH_UNLOCK is not set
 # CONFIG_FLASH_ERASEALL is not set
 # CONFIG_IONICE is not set
 # CONFIG_INOTIFYD is not set
@@ -638,6 +691,7 @@ option(`CONFIG_MOUNTPOINT', `n', `n')
 option(`CONFIG_MT', `n', `n')
 option(`CONFIG_RAIDAUTORUN', `n', `n')
 option(`CONFIG_READAHEAD', `n', `n')
+option(`CONFIG_RFKILL', `n', `n')
 option(`CONFIG_RUNLEVEL', `n', `n')
 option(`CONFIG_RX', `n', `n')
 option(`CONFIG_SETSID', `n', `n')
@@ -647,12 +701,15 @@ option(`CONFIG_TASKSET', `n', `n')
 option(`CONFIG_TIME', `y', `y')
 # CONFIG_TIMEOUT is not set
 option(`CONFIG_TTYSIZE', `n', `n')
+# CONFIG_VOLNAME is not set
+# CONFIG_WALL is not set
 # CONFIG_WATCHDOG is not set
 
 #
 # Networking Utilities
 #
 option(`CONFIG_FEATURE_IPV6', `y', `n')
+# CONFIG_FEATURE_UNIX_LOCAL is not set
 option(`CONFIG_FEATURE_PREFER_IPV4_ADDRESS', `y', `n')
 option(`CONFIG_VERBOSE_RESOLUTION_ERRORS', `n', `n')
 option(`CONFIG_ARP', `n', `n')
@@ -665,6 +722,7 @@ option(`CONFIG_ETHER_WAKE', `n', `n')
 option(`CONFIG_FAKEIDENTD', `n', `n')
 # CONFIG_FTPD is not set
 # CONFIG_FEATURE_FTP_WRITE is not set
+# CONFIG_FEATURE_FTPD_ACCEPT_BROKEN_LIST is not set
 option(`CONFIG_FTPGET', `n', `n')
 option(`CONFIG_FTPPUT', `n', `n')
 option(`CONFIG_FEATURE_FTPGETPUT_LONG_OPTIONS', `n', `n')
@@ -688,6 +746,7 @@ option(`CONFIG_FEATURE_IFCONFIG_MEMSTART_IOADDR_IRQ', `n', `n')
 option(`CONFIG_FEATURE_IFCONFIG_HW', `y', `y')
 option(`CONFIG_FEATURE_IFCONFIG_BROADCAST_PLUS', `y', `y')
 # CONFIG_IFENSLAVE is not set
+# CONFIG_IFPLUGD is not set
 option(`CONFIG_IFUPDOWN', `y', `y')
 CONFIG_IFUPDOWN_IFSTATE_PATH="/var/run/ifstate"
 option(`CONFIG_FEATURE_IFUPDOWN_IP', `y', `n')
@@ -725,10 +784,13 @@ option(`CONFIG_NAMEIF', `n', `n')
 option(`CONFIG_NC', `y', `y')
 option(`CONFIG_NC_SERVER', `y', `y')
 option(`CONFIG_NC_EXTRA', `y', `y')
+# CONFIG_NC_110_COMPAT is not set
 option(`CONFIG_NETSTAT', `y', `y')
 option(`CONFIG_FEATURE_NETSTAT_WIDE', `y', `y')
 # CONFIG_FEATURE_NETSTAT_PRG is not set
 option(`CONFIG_NSLOOKUP', `y', `y')
+option(`CONFIG_NTPD', `n', `n')
+option(`CONFIG_FEATURE_NTPD_SERVER', `n', `n')
 option(`CONFIG_PING', `y', `y')
 option(`CONFIG_PING6', `n', `n')
 option(`CONFIG_FEATURE_FANCY_PING', `y', `y')
@@ -740,25 +802,28 @@ option(`CONFIG_FEATURE_TELNET_TTYPE', `y', `y')
 option(`CONFIG_FEATURE_TELNET_AUTOLOGIN', `n', `n')
 option(`CONFIG_TELNETD', `y', `y')
 option(`CONFIG_FEATURE_TELNETD_STANDALONE', `n', `n')
+option(`CONFIG_FEATURE_TELNETD_INETD_WAIT', `n', `n')
 option(`CONFIG_TFTP', `n', `n')
 option(`CONFIG_TFTPD', `n', `n')
 option(`CONFIG_FEATURE_TFTP_GET', `n', `n')
 option(`CONFIG_FEATURE_TFTP_PUT', `n', `n')
 option(`CONFIG_FEATURE_TFTP_BLOCKSIZE', `n', `n')
+option(`CONFIG_FEATURE_TFTP_PROGRESS_BAR', `n', `n')
 option(`CONFIG_TFTP_DEBUG', `n', `n')
 option(`CONFIG_TRACEROUTE', `n', `n')
+option(`CONFIG_TRACEROUTE6', `n', `n')
 option(`CONFIG_FEATURE_TRACEROUTE_VERBOSE', `n', `n')
 option(`CONFIG_FEATURE_TRACEROUTE_SOURCE_ROUTE', `n', `n')
 option(`CONFIG_FEATURE_TRACEROUTE_USE_ICMP', `y', `y')
-option(`CONFIG_APP_UDHCPD', `n', `n')
-# CONFIG_APP_DHCPRELAY is not set
-# CONFIG_APP_DUMPLEASES is not set
+option(`CONFIG_UDHCPD', `n', `n')
+# CONFIG_DHCPRELAY is not set
+# CONFIG_DUMPLEASES is not set
 # CONFIG_FEATURE_UDHCPD_WRITE_LEASES_EARLY is not set
 CONFIG_DHCPD_LEASES_FILE=""
-option(`CONFIG_APP_UDHCPC', `y', `y')
+option(`CONFIG_UDHCPC', `y', `y')
 # CONFIG_FEATURE_UDHCPC_ARPING is not set
 # CONFIG_FEATURE_UDHCP_PORT is not set
-# CONFIG_UDHCP_DEBUG is not set
+CONFIG_UDHCP_DEBUG=0
 # CONFIG_FEATURE_UDHCP_RFC3397 is not set
 CONFIG_UDHCPC_DEFAULT_SCRIPT="/share/udhcpc/default.script"
 CONFIG_UDHCPC_SLACK_FOR_BUGGY_SERVERS=80
@@ -798,6 +863,7 @@ CONFIG_FEATURE_MIME_CHARSET=""
 #
 # Process Utilities
 #
+# CONFIG_SMEMCAP is not set
 option(`CONFIG_FREE', `y', `y')
 option(`CONFIG_FUSER', `n', `n')
 option(`CONFIG_KILL', `y', `y')
@@ -815,6 +881,7 @@ option(`CONFIG_FEATURE_PS_WIDE', `n', `n')',
 `# CONFIG_PS is not set
 # CONFIG_FEATURE_PS_WIDE is not set')
 # CONFIG_FEATURE_PS_TIME is not set
+# CONFIG_FEATURE_PS_ADDITIONAL_COLUMNS is not set
 # CONFIG_FEATURE_PS_UNUSUAL_SYSTEMS is not set
 option(`CONFIG_RENICE', `y', `y')
 option(`CONFIG_BB_SYSCTL', `n', `n')
@@ -827,6 +894,7 @@ ifdef(`procps',
 # CONFIG_FEATURE_TOP_DECIMALS is not set
 # CONFIG_FEATURE_TOP_SMP_PROCESS is not set
 # CONFIG_FEATURE_TOPMEM is not set
+# CONFIG_FEATURE_SHOW_THREADS is not set
 option(`CONFIG_UPTIME', `y', `y')
 option(`CONFIG_WATCH', `n', `n')
 
@@ -835,7 +903,9 @@ option(`CONFIG_WATCH', `n', `n')
 #
 option(`CONFIG_RUNSV', `n', `n')
 option(`CONFIG_RUNSVDIR', `n', `n')
+option(`CONFIG_FEATURE_RUNSVDIR_LOG', `n', `n')
 option(`CONFIG_SV', `n', `n')
+CONFIG_SV_DEFAULT_SERVICE_DIR=""
 option(`CONFIG_SVLOGD', `n', `n')
 option(`CONFIG_CHPST', `n', `n')
 option(`CONFIG_SETUIDGID', `n', `n')
@@ -848,18 +918,25 @@ option(`CONFIG_GETENFORCE', `n', `n')
 option(`CONFIG_GETSEBOOL', `n', `n')
 option(`CONFIG_LOAD_POLICY', `n', `n')
 option(`CONFIG_MATCHPATHCON', `n', `n')
+option(`CONFIG_RESTORECON', `n', `n')
 option(`CONFIG_RUNCON', `n', `n')
 option(`CONFIG_FEATURE_RUNCON_LONG_OPTIONS', `n', `n')
 option(`CONFIG_SELINUXENABLED', `n', `n')
 option(`CONFIG_SETENFORCE', `n', `n')
+# CONFIG_SETFILES is not set
+# CONFIG_FEATURE_SETFILES_CHECK_OPTION is not set
+# CONFIG_SETSEBOOL is not set
+# CONFIG_SESTATUS is not set
 
 #
 # Shells
 #
 option(`CONFIG_FEATURE_SH_IS_ASH', `y', `y')
 option(`CONFIG_FEATURE_SH_IS_HUSH', `n', `n')
-option(`CONFIG_FEATURE_SH_IS_MSH', `n', `n')
 option(`CONFIG_FEATURE_SH_IS_NONE', `n', `n')
+option(`CONFIG_FEATURE_BASH_IS_ASH', `n', `n')
+option(`CONFIG_FEATURE_BASH_IS_HUSH', `n', `n')
+option(`CONFIG_FEATURE_BASH_IS_NONE', `y', `y')
 option(`CONFIG_ASH', `y', `y')
 
 #
@@ -867,8 +944,6 @@ option(`CONFIG_ASH', `y', `y')
 #
 # CONFIG_ASH_BASH_COMPAT is not set
 option(`CONFIG_ASH_JOB_CONTROL', `y', `n')
-option(`CONFIG_ASH_READ_NCHARS', `n', `n')
-option(`CONFIG_ASH_READ_TIMEOUT', `n', `n')
 option(`CONFIG_ASH_ALIAS', `y', `y')
 option(`CONFIG_ASH_GETOPTS', `n', `n')
 option(`CONFIG_ASH_BUILTIN_ECHO', `n', `n')
@@ -880,6 +955,7 @@ option(`CONFIG_ASH_OPTIMIZE_FOR_SIZE', `y', `n')
 option(`CONFIG_ASH_RANDOM_SUPPORT', `n', `n')
 option(`CONFIG_ASH_EXPAND_PRMT', `n', `n')
 option(`CONFIG_HUSH', `n', `n')
+option(`CONFIG_HUSH_BASH_COMPAT', `n', `n')
 option(`CONFIG_HUSH_HELP', `n', `n')
 option(`CONFIG_HUSH_INTERACTIVE', `n', `n')
 option(`CONFIG_HUSH_JOB', `n', `n')
@@ -888,7 +964,9 @@ option(`CONFIG_HUSH_IF', `n', `n')
 option(`CONFIG_HUSH_LOOPS', `n', `n')
 # CONFIG_HUSH_CASE is not set
 # CONFIG_HUSH_FUNCTIONS is not set
+# CONFIG_HUSH_LOCAL is not set
 # CONFIG_HUSH_EXPORT_N is not set
+# CONFIG_HUSH_RANDOM_SUPPORT is not set
 option(`CONFIG_LASH', `n', `n')
 option(`CONFIG_MSH', `n', `n')
 
@@ -910,6 +988,7 @@ option(`CONFIG_FEATURE_ROTATE_LOGFILE', `y', `y')
 option(`CONFIG_FEATURE_REMOTE_LOG', `y', `y')
 option(`CONFIG_FEATURE_SYSLOGD_DUP', `n', `n')
 option(`CONFIG_FEATURE_IPC_SYSLOG', `n', `n')
+CONFIG_FEATURE_SYSLOGD_READ_BUFFER_SIZE=256
 CONFIG_FEATURE_IPC_SYSLOG_BUFFER_SIZE=0
 option(`CONFIG_LOGREAD', `n', `n')
 option(`CONFIG_FEATURE_LOGREAD_REDUCED_LOCKING', `n', `n')

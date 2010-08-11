@@ -93,7 +93,7 @@ ln -sf /dev/tty5 vc/5
 ln -sf /dev/tty6 vc/6
 cd /
 
-date -s 010101001970
+date -s 197001010100
 
 ROOTFS=$(grep /dev/root /proc/mounts | cut -d " " -f 3)
 
