@@ -1,5 +1,8 @@
 $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 	@PREPARE_samba@
+if !ENABLE_DEBUG
+	cd @DIR_samba@ && patch -p1 -E -i ../Patches/samba_ppc_nodebug.diff
+endif
 	cd @DIR_samba@ && \
 		cd source && \
 		autoconf configure.in > configure && \
@@ -7,12 +10,8 @@ $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 			--prefix= \
 			samba_cv_struct_timespec=yes \
 			samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
-			--with-configdir=/etc \
 			--with-privatedir=/etc/samba/private \
 			--with-lockdir=/var/lock \
-			--with-piddir=/var/run \
-			--with-logfilebase=/var/log \
-			--disable-cups \
 			--with-swatdir=$(targetprefix)/swat && \
 		$(MAKE) bin/make_smbcodepage CC=$(CC) && \
 		$(INSTALL) -d $(targetprefix)/lib/codepages && \
@@ -34,12 +33,13 @@ $(DEPDIR)/sambaserver: bootstrap @DEPENDS_samba@
 			samba_cv_HAVE_EXPLICIT_LARGEFILE_SUPPORT=yes \
 			samba_cv_HAVE_OFF64_T=yes \
 			samba_cv_have_longlong=yes \
-			--with-configdir=/etc \
+			samba_cv_HAVE_STRUCT_FLOCK64=yes \
+			samba_cv_HAVE_FCNTL_LOCK=yes \
+			samba_cv_HAVE_BROKEN_FCNTL64_LOCKS=no \
+			--sysconfdir=/etc \
+			--localstatedir=/var \
 			--with-privatedir=/var/etc/samba/private \
 			--with-lockdir=/var/lock \
-			--with-piddir=/var/run \
-			--with-logfilebase=/var/log \
-			--disable-cups \
 			--with-swatdir=$(targetprefix)/swat && \
 		for i in smbd nmbd smbclient smbmount smbmnt smbpasswd; do \
 			$(MAKE) bin/$$i; \

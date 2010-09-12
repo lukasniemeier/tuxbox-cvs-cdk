@@ -105,7 +105,7 @@ lufs;0.9.7;lufs-0.9.7;lufs-0.9.7.tar.gz:lufs.diff;extract:lufs-0.9.7.tar.gz;patc
 dropbear;0.52;dropbear-0.52;dropbear-0.52.tar.bz2:dropbear-nopass.diff:dropbear-options.diff;extract:dropbear-0.52.tar.bz2;patch:dropbear-nopass.diff;patch:dropbear-options.diff
 kermit;8.0;c-kermit-8.0;cku211.tar.gz;dirextract:cku211.tar.gz;patch:kermit.diff
 libtool;1.5.22;libtool-1.5.22;libtool-1.5.22.tar.gz;extract:libtool-1.5.22.tar.gz
-samba;2.2.12;samba-2.2.12;samba-2.2.12.tar.gz:samba_ppc.diff:samba2212_security.diff;extract:samba-2.2.12.tar.gz;patch:samba_ppc.diff;patch:samba2212_security.diff
+samba;2.0.10;samba-2.0.10;samba-2.0.10.tar.gz:samba_ppc.diff;extract:samba-2.0.10.tar.gz;patch:samba_ppc.diff
 wget;1.11.4;wget-1.11.4;wget-1.11.4.tar.bz2;extract:wget-1.11.4.tar.bz2
 ncftp;3.2.2;ncftp-3.2.2;ncftp-3.2.2-src.tar.bz2;extract:ncftp-3.2.2-src.tar.bz2
 screen;4.0.2;screen-4.0.2;screen-4.0.2.tar.gz:screen.diff;extract:screen-4.0.2.tar.gz;patch:screen.diff
