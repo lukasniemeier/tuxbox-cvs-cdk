@@ -7,6 +7,7 @@ $(appsdir)/dvb/zapit/config.status: bootstrap $(targetprefix)/lib/pkgconfig/tuxb
 	cd $(appsdir)/dvb/zapit && $(CONFIGURE)
 
 zapit: $(appsdir)/dvb/zapit/config.status
-	$(MAKE) -C $(appsdir)/dvb/zapit all install
+	$(MAKE) -C $(appsdir)/dvb/zapit all
+	$(MAKE) -C $(appsdir)/dvb/zapit install
 
 .PHONY: zapit

@@ -12,7 +12,8 @@ $(appsdir)/tuxbox/tools/config.status: bootstrap libfreetype $(targetprefix)/lib
 	cd $(appsdir)/tuxbox/tools && $(CONFIGURE)
 
 tuxbox_tools: $(appsdir)/tuxbox/tools/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/tools all install
+	$(MAKE) -C $(appsdir)/tuxbox/tools all
+	$(MAKE) -C $(appsdir)/tuxbox/tools install
 
 # These are really sub-targets of tuxbox_tools
 
@@ -123,7 +124,8 @@ $(appsdir)/tuxbox/tools/hotplug/config.status: bootstrap
 	cd $(appsdir)/tuxbox/tools/hotplug && $(CONFIGURE)
 
 $(DEPDIR)/tuxbox_hotplug: $(appsdir)/tuxbox/tools/hotplug/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug all install
+	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug all
+	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug install
 	touch $@
 
 # this target does nothing presently
@@ -131,7 +133,8 @@ $(targetprefix)/sbin/hotplug: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug install
 
 flash-hotplug:  $(appsdir)/tuxbox/tools/hotplug/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug all install prefix="$(flashprefix)/root"
+	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug all prefix="$(flashprefix)/root"
+	$(MAKE) -C $(appsdir)/tuxbox/tools/hotplug install prefix="$(flashprefix)/root"
 	@FLASHROOTDIR_MODIFIED@
 endif
 

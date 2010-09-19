@@ -16,7 +16,8 @@ neutrino: $(appsdir)/tuxbox/neutrino/config.status
 flash-neutrino: $(flashprefix)/root-neutrino
 
 $(flashprefix)/root-neutrino: $(appsdir)/tuxbox/neutrino/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/neutrino all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/neutrino all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/neutrino install prefix=$@
 	$(MAKE) -C $(appsdir)/dvb/zapit install prefix=$@
 	$(MAKE) neutrino-additional-fonts targetprefix=$@
 if ENABLE_ESD

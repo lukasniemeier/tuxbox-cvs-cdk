@@ -4,7 +4,8 @@ $(appsdir)/tuxbox/lcd/config.status: bootstrap libfreetype libpng $(targetprefix
 	cd $(appsdir)/tuxbox/lcd && $(CONFIGURE)
 
 lcd: $(appsdir)/tuxbox/lcd/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/lcd all install
+	$(MAKE) -C $(appsdir)/tuxbox/lcd all
+	$(MAKE) -C $(appsdir)/tuxbox/lcd install
 
 lcdip: $(appsdir)/tuxbox/lcd/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/lcd/lcdip all install

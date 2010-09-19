@@ -268,7 +268,8 @@ $(driverdir)/directfb/Makefile: bootstrap libdirectfb
 		--with-kernel-source=$(buildprefix)/linux
 
 $(DEPDIR)/directfb_gtx: $(driverdir)/directfb/Makefile
-	$(MAKE) -C $(driverdir)/directfb all install DESTDIR=$(targetprefix)
+	$(MAKE) -C $(driverdir)/directfb all DESTDIR=$(targetprefix)
+	$(MAKE) -C $(driverdir)/directfb install DESTDIR=$(targetprefix)
 	touch $@
 
 .PHONY: driver-clean
