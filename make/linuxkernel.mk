@@ -124,10 +124,10 @@ if KERNEL26
 		ln -sf $(buildprefix)/linux/include/asm-generic $(hostprefix)/$(target)/include; \
 		ln -sf $(buildprefix)/linux/include/mtd $(hostprefix)/$(target)/include; \
 	else \
-		$(MAKE) -C $(KERNEL_DIR) headers_install ARCH=powerpc; \
-		ln -sf $(buildprefix)/linux/usr/include/linux $(hostprefix)/$(target)/include; \
-		ln -sf $(buildprefix)/linux/usr/include/asm $(hostprefix)/$(target)/include; \
-		ln -sf $(buildprefix)/linux/usr/include/asm-generic $(hostprefix)/$(target)/include; \
+		$(MAKE) -C $(KERNEL_DIR) headers_install ARCH=powerpc && \
+		ln -sf $(buildprefix)/linux/usr/include/linux $(hostprefix)/$(target)/include && \
+		ln -sf $(buildprefix)/linux/usr/include/asm $(hostprefix)/$(target)/include && \
+		ln -sf $(buildprefix)/linux/usr/include/asm-generic $(hostprefix)/$(target)/include && \
 		ln -sf $(buildprefix)/linux/usr/include/mtd $(hostprefix)/$(target)/include; \
 	fi
 endif
