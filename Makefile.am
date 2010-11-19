@@ -1,7 +1,5 @@
 ## Makefile for Tuxbox
 
-J := 1
-
 # Define high-level and yadd targets
 include make/high-level-yadd.mk
 
@@ -191,4 +189,11 @@ include make/disttargets.mk
 
 # add user specific stuff if needed
 -include $(customizationsdir)/user.mk
+
+
+# this makes sure we do not build top-level dependencies in parallel
+# (which would not be too helpful anyway, running many configure and
+# downloads in parallel...), but the sub-targets are still built in
+# parallel, which is useful on multi-processor / multi-core machines
+.NOTPARALLEL:
 

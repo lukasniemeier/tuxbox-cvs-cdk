@@ -34,7 +34,7 @@ $(DEPDIR)/libcommoncplusplus: bootstrap libxml2 @DEPENDS_libcommoncplusplus@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		rm -f $(hostprefix)/bin/ccgnu2-config && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < src/ccgnu2-config > $(hostprefix)/bin/ccgnu2-config && \
 		chmod 755 $(hostprefix)/bin/ccgnu2-config && \
@@ -51,7 +51,7 @@ $(DEPDIR)/libcrypto: bootstrap @DEPENDS_libcrypto@
 		sed -e 's|__TUXBOX_CC__|$(target)-gcc|' -e 's|__TUXBOX_CFLAGS__|$(TARGET_CFLAGS)|' ./Configure > ./Configure.tuxbox && \
 		sh ./Configure.tuxbox shared no-hw no-idea no-md2 $(OPENVPN_NOMD4) no-mdc2 no-rc2 no-rc5 tuxbox --prefix=/ --openssldir=/ && \
 		$(MAKE) depend && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libcrypto@
 	rm -f $(targetprefix)/lib/pkgconfig/openssl.pc && \
 	sed -e "s,^prefix=,prefix=$(targetprefix)," < @DIR_libcrypto@/openssl.pc > $(targetprefix)/lib/pkgconfig/openssl.pc && \
@@ -80,7 +80,7 @@ $(DEPDIR)/libcurl: bootstrap libz @DEPENDS_libcurl_current@
 			--disable-manual \
 			--disable-verbose \
 			--with-random && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		rm -f $(hostprefix)/bin/curl-config && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(hostprefix)/bin/curl-config && \
 		chmod 755 $(hostprefix)/bin/curl-config && \
@@ -104,7 +104,7 @@ $(DEPDIR)/libcurl: bootstrap @DEPENDS_libcurl@
 			--disable-telnet \
 			--without-ssl \
 			--with-random && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		rm -f $(hostprefix)/bin/curl-config && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(hostprefix)/bin/curl-config && \
 		chmod 755 $(hostprefix)/bin/curl-config && \
@@ -131,7 +131,7 @@ $(DEPDIR)/libdirectfb: bootstrap libfreetype libjpeg libpng libz @DEPENDS_libdir
 			--disable-multi \
 			--without-tools \
 			--with-gfxdrivers=none && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libdirectfb@
 	@CLEANUP_libdirectfb@
 	mv $(targetprefix)/lib/libdirectfb.la $(targetprefix)/lib/libdirectfb.la.old
@@ -156,7 +156,7 @@ $(DEPDIR)/libdirectfbpp: bootstrap libdirectfb @DEPENDS_libdirectfbpp@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libdirectfbpp@
 	@CLEANUP_libdirectfbpp@
 	mv $(targetprefix)/lib/libdfb++.la $(targetprefix)/lib/libdfb++.la.old
@@ -172,7 +172,7 @@ $(DEPDIR)/libppdirectfb: bootstrap libdirectfb @DEPENDS_libppdirectfb@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libppdirectfb@
 	@CLEANUP_libppdirectfb@
 	mv $(targetprefix)/lib/lib++dfb.la $(targetprefix)/lib/lib++dfb.la.old
@@ -198,7 +198,7 @@ $(DEPDIR)/libdvbpsi: bootstrap @DEPENDS_libdvbpsi@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libdvbpsi@
 	@CLEANUP_libdvbpsi@
 	touch $@
@@ -211,7 +211,7 @@ $(DEPDIR)/libexpat: bootstrap @DEPENDS_libexpat@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libexpat@
 	@CLEANUP_libexpat@
 	touch $@
@@ -224,7 +224,7 @@ $(DEPDIR)/libffi: bootstrap @DEPENDS_libffi@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libffi@
 	@CLEANUP_libffi@
 	touch $@
@@ -261,7 +261,7 @@ $(DEPDIR)/libfreetype: bootstrap $(FREETYPE_DEPENDS)
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		rm -f $(hostprefix)/bin/freetype-config && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < builds/unix/freetype-config > $(hostprefix)/bin/freetype-config && \
 		chmod 755 $(hostprefix)/bin/freetype-config && \
@@ -305,7 +305,7 @@ $(DEPDIR)/libid3tag: bootstrap libz @DEPENDS_libid3tag@
 			--host=$(target) \
 			--prefix= \
 			--enable-shared=yes && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libid3tag@
 	@CLEANUP_libid3tag@
 	touch $@
@@ -318,7 +318,7 @@ $(DEPDIR)/libjpeg: bootstrap @DEPENDS_libjpeg@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) libjpeg.so.6 && \
+		$(MAKE) libjpeg.so.6 && \
 		@INSTALL_libjpeg@
 	@CLEANUP_libjpeg@
 	touch $@
@@ -335,7 +335,7 @@ $(DEPDIR)/libmad: bootstrap libz @DEPENDS_libmad@
 			--enable-speed \
 			--enable-fpm=$(CPU_ARCH) \
 			--enable-sso && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libmad@
 	@CLEANUP_libmad@
 	touch $@
@@ -358,7 +358,7 @@ $(DEPDIR)/libncurses: bootstrap @DEPENDS_libncurses@
 			--disable-rpath \
 			--without-cxx-binding \
 			--with-fallbacks='linux vt100 xterm' && \
-		$(MAKE) -j $(J) libs \
+		$(MAKE) libs \
 			HOSTCC=$(CC) \
 			HOSTCCFLAGS="$(CFLAGS) -DHAVE_CONFIG_H -I../ncurses -DNDEBUG -D_GNU_SOURCE -I../include" \
 			HOSTLDFLAGS="$(LDFLAGS)" && \
@@ -375,7 +375,7 @@ $(DEPDIR)/libpcap: bootstrap @DEPENDS_libpcap@
 			--host=$(target) \
 			--prefix= \
 			--with-pcap=linux && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libpcap@
 	@CLEANUP_libpcap@
 	touch $@
@@ -388,7 +388,7 @@ $(DEPDIR)/libpng: bootstrap libz @DEPENDS_libpng@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=$(targetprefix) && \
-		$(MAKE) -j $(J) all $(BUILDENV) && \
+		$(MAKE) all $(BUILDENV) && \
 		$(MAKE) install && $(target)-ar cru $(targetprefix)/lib/libpng12_pic.a *.o && \
 		rm -f $(hostprefix)/bin/libpng-config && \
 		ln -s $(targetprefix)/bin/libpng-config $(hostprefix)/bin/libpng-config
@@ -404,7 +404,7 @@ $(DEPDIR)/libreadline: bootstrap @DEPENDS_libreadline@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libreadline@
 	@CLEANUP_libreadline@
 	touch $@
@@ -439,7 +439,7 @@ $(DEPDIR)/libsdl: bootstrap libdirectfb @DEPENDS_libsdl@
 			--disable-video-opengl \
 			--disable-stdio-redirect \
 			--disable-directx && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		rm -f $(hostprefix)/bin/sdl-config && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < sdl-config > $(hostprefix)/bin/sdl-config && \
 		chmod 755 $(hostprefix)/bin/sdl-config && \
@@ -458,7 +458,7 @@ $(DEPDIR)/libsigc: bootstrap @DEPENDS_libsigc@
 			--host=$(target) \
 			--prefix= \
 			--disable-checks && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libsigc@
 	@CLEANUP_libsigc@
 	touch $@
@@ -471,7 +471,7 @@ $(DEPDIR)/libvorbisidec: bootstrap @DEPENDS_libvorbisidec@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= && \
-		$(MAKE) -j $(J) && \
+		$(MAKE) && \
 		@INSTALL_libvorbisidec@
 	@CLEANUP_libvorbisidec@
 	touch $@
@@ -498,7 +498,7 @@ $(DEPDIR)/libxml2: bootstrap @DEPENDS_libxml2@
 			--without-debug \
 			--without-mem-debug \
 			--without-python && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libxml2@
 	@CLEANUP_libxml2@
 	touch $@
@@ -510,7 +510,7 @@ $(DEPDIR)/libz: bootstrap @DEPENDS_libz@
 		./configure \
 			--prefix= \
 			--shared && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_libz@
 	@CLEANUP_libz@
 	touch $@
@@ -542,7 +542,7 @@ $(DEPDIR)/libungif: bootstrap @DEPENDS_libungif@
 			--build=$(build) \
 			--prefix= \
 			--without-x && \
-		$(MAKE) -j $(J) && \
+		$(MAKE) && \
 		@INSTALL_libungif@
 	@CLEANUP_libungif@
 	touch $@
@@ -609,7 +609,7 @@ $(DEPDIR)/libtool: bootstrap @DEPENDS_libtool@
 			--localstatedir=/var \
 			--mandir=/usr/man \
 			--infodir=/usr/info && \
-		$(MAKE) -j $(J) CC=$(target)-gcc && \
+		$(MAKE) CC=$(target)-gcc && \
 		$(INSTALL) -m755 libtool $(hostprefix)/bin
 	@CLEANUP_libtool@
 	touch $@

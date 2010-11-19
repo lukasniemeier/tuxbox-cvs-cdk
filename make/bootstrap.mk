@@ -310,8 +310,8 @@ endif
 			--disable-werror \
 			$(BINUTILS_OPTS) && \
 		$(MAKE) configure-host && \
-		$(MAKE) -j $(J) all && \
-		$(MAKE) -j $(J) all-gprof && \
+		$(MAKE) all && \
+		$(MAKE) all-gprof && \
 		@INSTALL_binutils@
 	@CLEANUP_binutils@
 	touch $@
@@ -342,7 +342,7 @@ endif
 			--disable-threads \
 			--disable-nls \
 			--without-fp && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_bootstrap_gcc@
 	rm -rf $(hostprefix)/$(target)/sys-include
 	@CLEANUP_bootstrap_gcc@
@@ -430,7 +430,7 @@ endif
 			--without-fp \
 			--cache-file=config.cache \
 			$(GLIBC_EXTRA_FLAGS) && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_glibc@
 	@CLEANUP_glibc@
 	sed -e's, /lib/, $(targetprefix)/lib/,g' < $(targetprefix)/lib/libc.so > $(targetprefix)/lib/libc.so.new
@@ -478,7 +478,7 @@ endif
 			--enable-threads \
 			--disable-nls \
 			--without-fp && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		@INSTALL_gcc@
 	rm -rf $(hostprefix)/$(target)/sys-include
 	for i in `find $(hostprefix)/$(target)/lib/nof` ; do mv $$i $(hostprefix)/$(target)/lib; done
@@ -513,7 +513,7 @@ $(DEPDIR)/bootstrap_gcc_static_cool: @DEPENDS_bootstrap_gcc_static_cool@ binutil
 			--enable-symvers=gnu \
 			--enable-languages=c \
 			--enable-target-optspace && \
-		$(MAKE) -j $(J) all-gcc && \
+		$(MAKE) all-gcc && \
 		@INSTALL_bootstrap_gcc_static_cool@
 	rm -rf $(hostprefix)/$(target)/sys-include
 	@CLEANUP_bootstrap_gcc_static_cool@
@@ -541,11 +541,11 @@ $(DEPDIR)/bootstrap_gcc_shared_cool: @DEPENDS_bootstrap_gcc_shared_cool@ bootstr
 			--enable-languages=c \
 			--enable-target-optspace && \
 		$(MAKE) configure-gcc configure-libcpp configure-build-libiberty && \
-		$(MAKE) -j $(J) all-libcpp all-build-libiberty && \
+		$(MAKE) all-libcpp all-build-libiberty && \
 		$(MAKE) configure-libdecnumber && \
-		$(MAKE) -j $(J) -C libdecnumber libdecnumber.a && \
-		$(MAKE) -j $(J) -C gcc libgcc.mvars && \
-		$(MAKE) -j $(J) all-gcc all-target-libgcc && \
+		$(MAKE) -C libdecnumber libdecnumber.a && \
+		$(MAKE) -C gcc libgcc.mvars && \
+		$(MAKE) all-gcc all-target-libgcc && \
 		@INSTALL_bootstrap_gcc_shared_cool@
 	rm -rf $(hostprefix)/$(target)/sys-include
 	@CLEANUP_bootstrap_gcc_shared_cool@
@@ -620,7 +620,7 @@ $(DEPDIR)/gcc: @DEPENDS_gcc_cool@ eglibc
 			--enable-long-long \
 			--enable-target-optspace \
 			--enable-shared && \
-		$(MAKE) -j $(J) all && \
+		$(MAKE) all && \
 		$(MAKE) install
 	@CLEANUP_gcc_cool@
 	touch $@
@@ -648,6 +648,9 @@ $(archivedir)/eglibc-2_8.tar.bz2
 
 endif
 endif
+else
+$(DEPDIR)/bootstrap_gcc:
+	touch $@
 endif
 
 # This rule script checks if all archives are present at the given address but
