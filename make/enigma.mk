@@ -38,6 +38,7 @@ if ENABLE_IDEMMC
 endif
 	cp $(appsdir)/tuxbox/neutrino/data/fonts/*.pcf.gz $@/share/fonts
 	cp $(appsdir)/tuxbox/neutrino/data/fonts/micron*.ttf $@/share/fonts
+	cp $(appsdir)/tuxbox/plugins/tuxtxt/font/tuxtxt.otb $@/share/fonts
 if BOXTYPE_DREAMBOX
 	$(INSTALL) -d $@/share/locale
 	@for i in `find $(targetprefix)/share/locale -name "tuxbox-enigma.mo"` ; \
