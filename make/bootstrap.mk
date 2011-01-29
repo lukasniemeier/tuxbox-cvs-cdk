@@ -168,6 +168,10 @@ if ENABLE_AUTOMOUNT
 	cd $(KERNEL_DIR) && gunzip -cd $(archivedir)/autofs4-2.4-module-20050404.tar.gz | TAPE=- tar -x
 	cd $(KERNEL_DIR) && patch -p1 -E -i ./autofs4-2.4/module-patches/autofs4-2.4.29.patch
 endif
+	cd $(KERNEL_DIR) && \
+	  bzcat $(archivedir)/linux-2.4.34-dbox2-mtd0305.diff.bz2 > linux-2.4.34-dbox2-mtd0305.diff && \
+	  patch -p1 -E -i $(buildprefix)/Patches/linux-2.4.37.11-dbox2-mtd0305.diff && \
+	patch -p1 -E -i linux-2.4.34-dbox2-mtd0305.diff
 	mv @DIR_liblzma465@/C/Lz* $(KERNEL_DIR)/fs/jffs2/
 	mv @DIR_liblzma465@/C/Types.h $(KERNEL_DIR)/fs/jffs2/
 	cd $(KERNEL_DIR) && patch -p1 -E -i $(buildprefix)/Patches/linux-2.4-jffs2_lzma.diff
