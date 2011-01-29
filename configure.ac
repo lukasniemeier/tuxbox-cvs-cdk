@@ -545,6 +545,11 @@ AC_ARG_ENABLE(hddtemp,
 	esac],[enable_hddtemp=no])
 AM_CONDITIONAL(ENABLE_HDDTEMP,test "$enable_hddtemp" = "yes")
 
+AC_ARG_ENABLE(htop,
+	AS_HELP_STRING(--enable-htop,enable htop),
+	,[enable_htop=no])
+AM_CONDITIONAL(ENABLE_HTOP,test "$enable_htop" = "yes")
+
 AC_ARG_ENABLE(input,
 	AS_HELP_STRING(--enable-input,enable the tool named input),
 	,[enable_input=no])
@@ -1400,6 +1405,7 @@ TUXBOX_RULES_MAKE(lzma)
 TUXBOX_RULES_MAKE(lzma_host)
 TUXBOX_RULES_MAKE(openvpn)
 TUXBOX_RULES_MAKE(ipkg)
+TUXBOX_RULES_MAKE(htop)
 
 #
 # ide apps
@@ -1626,6 +1632,7 @@ fbshot				$enable_fbshot
 gdbserver			$enable_gdbserver
 getrc				$enable_getrc
 hddtemp				$enable_hddtemp
+htop				$enable_htop
 input				$enable_input
 ipkg				$enable_ipkg
 kb2rcd				$enable_kb2rcd

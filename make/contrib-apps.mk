@@ -3,9 +3,9 @@
 #   contrib apps
 #
 
-contrib_apps: bzip2 console_data kbd fbset lirc lsof dropbear ssh tcpdump bonnie @LUFS@ kermit wget ncftp screen lzma lzma_host ntpd ntpclient links links_g esound python ser2net ipkg openvpn
+contrib_apps: bzip2 console_data kbd fbset lirc lsof dropbear ssh tcpdump bonnie @LUFS@ kermit wget ncftp screen lzma lzma_host ntpd ntpclient links links_g esound python ser2net ipkg openvpn htop
 
-CONTRIB_DEPSCLEANUP = rm -f .deps/bzip2 .deps/console_data .deps/kbd .deps/directfb_examples .deps/fbset .deps/lirc .deps/lsof .deps/ssh .deps/tcpdump .deps/bonnie .deps/vdr .deps/lufs .deps/dropbear .deps/kermit .deps/wget .deps/ncftp .deps/screen .deps/lzma .deps/lzma_host .deps/ntpd .deps/ntpclient .deps/links .deps/links_g .deps/esound .deps/openntpd .deps/python .deps/ser2net .deps/ipkg .deps/openvpn
+CONTRIB_DEPSCLEANUP = rm -f .deps/bzip2 .deps/console_data .deps/kbd .deps/directfb_examples .deps/fbset .deps/lirc .deps/lsof .deps/ssh .deps/tcpdump .deps/bonnie .deps/vdr .deps/lufs .deps/dropbear .deps/kermit .deps/wget .deps/ncftp .deps/screen .deps/lzma .deps/lzma_host .deps/ntpd .deps/ntpclient .deps/links .deps/links_g .deps/esound .deps/openntpd .deps/python .deps/ser2net .deps/ipkg .deps/openvpn .deps/htop
 
 #bzip2
 $(DEPDIR)/bzip2: bootstrap @DEPENDS_bzip2@
@@ -704,4 +704,31 @@ $(flashprefix)/root/bin/ipkg: | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/ipkg $(flashprefix)/root/bin
 	$(INSTALL) $(targetprefix)/lib/libipkg.so.0 $(flashprefix)/root/lib 
 	ln -sf  /var/etc/ipkg.conf $(flashprefix)/root/etc/ipkg.conf
+	@FLASHROOTDIR_MODIFIED@
+
+#htop
+$(DEPDIR)/htop: libncurses @DEPENDS_htop@
+	@PREPARE_htop@
+	cd @DIR_htop@ && \
+		$(BUILDENV) \
+		[ ! -f $(targetprefix)/include/curses.h ] && \
+			ln -s $(targetprefix)/include/ncurses/curses.h \
+				$(targetprefix)/include/curses.h ; \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix= \
+			ac_cv_file__proc_stat=yes \
+			ac_cv_file__proc_meminfo=yes \
+			ac_cv_func_malloc_0_nonnull=yes \
+			ac_cv_func_realloc_0_nonnull=yes && \
+		$(MAKE) all && \
+		@INSTALL_htop@
+	@CLEANUP_htop@
+	touch $@
+
+flash-htop: $(flashprefix)/root/bin/htop
+
+$(flashprefix)/root/bin/htop: $(DEPDIR)/htop | $(flashprefix)/root
+	$(INSTALL) $(targetprefix)/bin/htop $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@

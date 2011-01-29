@@ -124,6 +124,7 @@ lzma;4.65;lzma-4.65;lzma465.tar.bz2:lzma.diff;dirextract:lzma465.tar.bz2;patch:l
 lzma_host;4.65;lzma-4.65;lzma465.tar.bz2:lzma.diff;dirextract:lzma465.tar.bz2;patch:lzma.diff
 openvpn;2.0.9;openvpn-2.0.9;openvpn-2.0.9.tar.gz;extract:openvpn-2.0.9.tar.gz
 ipkg;0.99.163;ipkg-0.99.163;ipkg-0.99.163.tar.gz;extract:ipkg-0.99.163.tar.gz;patch:ipkg.diff
+htop;0.9;htop-0.9;htop-0.9.tar.gz;extract:htop-0.9.tar.gz
 
 #
 # ide/hdd apps

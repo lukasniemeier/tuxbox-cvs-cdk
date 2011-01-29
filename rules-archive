@@ -129,6 +129,7 @@ lzma465.tar.bz2;http://prdownloads.sourceforge.net/sourceforge/sevenzip
 upx-3.03-src.tar.bz2;http://upx.sourceforge.net/download
 openvpn-2.0.9.tar.gz;http://openvpn.net/release
 ipkg-0.99.163.tar.gz;http://www.handhelds.org/download/packages/ipkg/
+htop-0.9.tar.gz;http://downloads.sourceforge.net/project/htop/htop/0.9/
 
 #
 # ide apps

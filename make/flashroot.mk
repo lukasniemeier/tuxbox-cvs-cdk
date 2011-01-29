@@ -127,6 +127,9 @@ endif
 if ENABLE_HDDTEMP
 	$(MAKE) flash-hddtemp
 endif
+if ENABLE_HTOP
+	$(MAKE) flash-htop
+endif
 if ENABLE_INPUT
 	$(MAKE) flash-input
 endif
