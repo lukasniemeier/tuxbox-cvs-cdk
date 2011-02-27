@@ -40,7 +40,6 @@ if BOXTYPE_DBOX2
 	$(MAKE) flash-camd2
 	$(MAKE) flash-ucodes
 endif
-	$(MAKE) flash-tools_misc
 	$(MAKE) flash-config
 	$(MAKE) flash-busybox
 	$(MAKE) flash-ftpd
@@ -257,7 +256,42 @@ endif
 if ENABLE_FX2_YAHTZEE
 	$(MAKE) flash-yahtzee-fx2
 endif
-
+if ENABLE_AUDIOPLAY
+	$(MAKE) flash-tool-audioplay
+endif
+if ENABLE_AVIAEXT
+	$(MAKE) flash-tool-aviaext
+endif
+if ENABLE_AVIAFBTOOL
+	$(MAKE) flash-tool-aviafbtool
+endif
+if ENABLE_AVSWITCHPP
+	$(MAKE) flash-tool-avswitchpp
+endif
+if ENABLE_FBCLEAR
+	$(MAKE) flash-tool-fbclear
+endif
+if ENABLE_LCDDUMP
+	$(MAKE) flash-tool-lcddump
+endif
+if ENABLE_PLUGINX
+	$(MAKE) flash-tool-pluginx
+endif
+if ENABLE_RCINFO
+	$(MAKE) flash-tool-rcinfo
+endif
+if ENABLE_RCSIM
+	$(MAKE) flash-tool-rcsim
+endif
+if ENABLE_SAA
+	$(MAKE) flash-tool-saa
+endif
+if ENABLE_SHOWPTSDIFF
+	$(MAKE) flash-tool-showptsdiff
+endif
+if ENABLE_SWITCH
+	$(MAKE) flash-tool-switch
+endif
 	$(MAKE) flash-defaultlocale
 	$(MAKE) flash-version
 	@FLASHROOTDIR_MODIFIED@

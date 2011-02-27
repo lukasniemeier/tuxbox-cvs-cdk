@@ -83,14 +83,18 @@ flash-input: $(appsdir)/tuxbox/tools/config.status
 
 ################################################################
 # tools_misc is not misc_tools misspelled ... 
+
+tuxboxmisctools = audioplay aviaext aviafbtool avswitchpp fbclear lcddump pluginx rcinfo rcsim saa showptsdiff switch
+
 switch \
 tools_misc: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/misc install
 
-# The directory $(appsdir)/tuxbox/tools/misc contains several tools;
-# we should probaly not install all in an 8MiB image.
-flash-tools_misc: $(appsdir)/tuxbox/tools/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/tools/misc install prefix=$(flashprefix)/root  bin_PROGRAMS="switch saa rcsim"
+$(patsubst %,tool-%,$(tuxboxmisctools)): $(appsdir)/tuxbox/tools/config.status
+	$(MAKE) -C $(appsdir)/tuxbox/tools/misc install bin_PROGRAMS="$(patsubst tool-%,%,$@)"
+
+$(patsubst %,flash-tool-%,$(tuxboxmisctools)): $(appsdir)/tuxbox/tools/config.status | $(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/tools/misc install prefix=$(flashprefix)/root bin_PROGRAMS="$(patsubst flash-tool-%,%,$@)"
 	@FLASHROOTDIR_MODIFIED@
 
 # This target install every program in $(appsdir)/tuxbox/tools/misc

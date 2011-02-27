@@ -854,6 +854,66 @@ AM_CONDITIONAL(ENABLE_FX2_YAHTZEE,test "$enable_fx2_yahtzee" = "yes")
 
 AC_SUBST(FX2_DEPS)
 
+AC_ARG_ENABLE(audioplay,
+	AS_HELP_STRING(--enable-audioplay,enable tool audioplay),
+	,[enable_audioplay=no])
+AM_CONDITIONAL(ENABLE_AUDIOPLAY,test "audioplay" = "yes")
+
+AC_ARG_ENABLE(aviaext,
+	AS_HELP_STRING(--enable-aviaext,enable tool aviaext),
+	,[enable_aviaext=no])
+AM_CONDITIONAL(ENABLE_AVIAEXT,test "aviaext" = "yes")
+
+AC_ARG_ENABLE(aviafbtool,
+	AS_HELP_STRING(--enable-aviafbtool,enable tool aviafbtool),
+	,[enable_aviafbtool=no])
+AM_CONDITIONAL(ENABLE_AVIAFBTOOL,test "aviafbtool" = "yes")
+
+AC_ARG_ENABLE(avswitchpp,
+	AS_HELP_STRING(--enable-avswitchpp,enable tool avswitchpp),
+	,[enable_avswitchpp=no])
+AM_CONDITIONAL(ENABLE_AVSWITCHPP,test "avswitchpp" = "yes")
+
+AC_ARG_ENABLE(fbclear,
+	AS_HELP_STRING(--enable-fbclear,enable tool fbclear),
+	,[enable_fbclear=no])
+AM_CONDITIONAL(ENABLE_FBCLEAR,test "fbclear" = "yes")
+
+AC_ARG_ENABLE(lcddump,
+	AS_HELP_STRING(--enable-lcddump,enable tool lcddump),
+	,[enable_lcddump=no])
+AM_CONDITIONAL(ENABLE_LCDDUMP,test "lcddump" = "yes")
+
+AC_ARG_ENABLE(pluginx,
+	AS_HELP_STRING(--enable-pluginx,enable tool pluginx),
+	,[enable_pluginx=no])
+AM_CONDITIONAL(ENABLE_PLUGINX,test "pluginx" = "yes")
+
+AC_ARG_ENABLE(rcinfo,
+	AS_HELP_STRING(--enable-rcinfo,enable tool rcinfo),
+	,[enable_rcinfo=no])
+AM_CONDITIONAL(ENABLE_RCINFO,test "rcinfo" = "yes")
+
+AC_ARG_ENABLE(rcsim,
+	AS_HELP_STRING(--disable-rcsim,enable tool rcsim),
+	,[enable_rcsim=yes])
+AM_CONDITIONAL(ENABLE_RCSIM,test "rcsim" = "yes")
+
+AC_ARG_ENABLE(saa,
+	AS_HELP_STRING(--disable-saa,enable tool saa),
+	,[enable_saa=yes])
+AM_CONDITIONAL(ENABLE_SAA,test "saa" = "yes")
+
+AC_ARG_ENABLE(showptsdiff,
+	AS_HELP_STRING(--enable-showptsdiff,enable tool showptsdiff),
+	,[enable_showptsdiff=no])
+AM_CONDITIONAL(ENABLE_SHOWPTSDIFF,test "showptsdiff" = "yes")
+
+AC_ARG_ENABLE(switch,
+	AS_HELP_STRING(--disable-switch,enable tool switch),
+	,[enable_switch=yes])
+AM_CONDITIONAL(ENABLE_SWITCH,test "switch" = "yes")
+
 AC_ARG_WITH(rootpartitionsize,
 	[  --with-rootpartitionsize=SIZE
                           size of the root partition],
@@ -1682,6 +1742,19 @@ FX2: Tank			$enable_fx2_tank
 FX2: Tetris			$enable_fx2_tetris
 FX2: Vier gewinnt		$enable_fx2_vierg
 FX2: Yahtzee			$enable_fx2_yahtzee
+
+Tools: audioplay		$enable_audioplay
+Tools: aviaext			$enable_aviaext
+Tools: aviafbtool		$enable_aviafbtool
+Tools: avswitchpp		$enable_avswitchpp
+Tools: fbclear			$enable_fbclear
+Tools: lcddump			$enable_lcddump
+Tools: pluginx			$enable_pluginx
+Tools: rcinfo			$enable_rcinfo
+Tools: rcsim			$enable_rcsim
+Tools: saa			$enable_saa
+Tools: showptsdiff		$enable_showptsdiff
+Tools: switch			$enable_switch
 
 ccache support:			$enable_ccache
 $ccacheinfo
