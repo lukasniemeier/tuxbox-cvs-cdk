@@ -46,7 +46,7 @@ squashfs;3.0;mksquashfs;squashfs3.0.tar.gz:mksquashfs_lzma.diff:lzma442.tar.bz2:
 #
 # contrib libs
 #
-libboost;boost-1.44.0;boost_1_44_0;boost_1_44_0.tar.bz2;extract:boost_1_44_0.tar.bz2
+libboost;boost-1.45.0;boost_1_45_0;boost_1_45_0.tar.bz2;extract:boost_1_45_0.tar.bz2
 libcommoncplusplus;1.0.13;commoncpp2-1.0.13;commoncpp2-1.0.13.tar.gz:libcommoncplusplus.diff;extract:commoncpp2-1.0.13.tar.gz;patch:libcommoncplusplus.diff
 libcrypto;0.9.7e;openssl-0.9.7e;openssl-0.9.7e.tar.gz:libcrypto.diff;extract:openssl-0.9.7e.tar.gz;patch:libcrypto.diff
 libcurl;7.10.1;curl-7.10.1;curl-7.10.1.tar.gz:libcurl.diff;extract:curl-7.10.1.tar.gz;patch:libcurl.diff
@@ -96,7 +96,7 @@ directfb_examples;1.0.0;DirectFB-examples-1.0.0;DirectFB-examples-1.0.0.tar.gz;e
 fbset;2.1;fbset-2.1;fbset-2.1.tar.gz:fbset.diff;extract:fbset-2.1.tar.gz;patch:fbset.diff
 lirc;0.8.5;lirc-0.8.5;lirc-0.8.5.tar.bz2;extract:lirc-0.8.5.tar.bz2
 lsof;4.80;lsof_4.80;lsof_4.80.tar.gz:lsof.diff;extract:lsof_4.80.tar.gz
-dosfstools;3.0.9;dosfstools-3.0.9;dosfstools-3.0.9.tar.bz2:dosfstools.diff;extract:dosfstools-3.0.9.tar.bz2;patch:dosfstools.diff
+dosfstools;3.0.11;dosfstools-3.0.11;dosfstools-3.0.11.tar.bz2:dosfstools.diff;extract:dosfstools-3.0.11.tar.bz2;patch:dosfstools.diff
 ssh;3.8p1;openssh-3.8p1;openssh-3.8p1.tar.gz:ssh.diff;extract:openssh-3.8p1.tar.gz;patch:ssh.diff
 tcpdump;3.9.4;tcpdump-3.9.4;tcpdump-3.9.4.tar.gz:tcpdump.diff;extract:tcpdump-3.9.4.tar.gz;patch:tcpdump.diff
 bonnie;1.03a;bonnie++-1.03a;bonnie++-1.03a.tgz;extract:bonnie++-1.03a.tgz
@@ -108,7 +108,7 @@ libtool;1.5.22;libtool-1.5.22;libtool-1.5.22.tar.gz;extract:libtool-1.5.22.tar.g
 samba;2.0.10;samba-2.0.10;samba-2.0.10.tar.gz:samba_ppc.diff;extract:samba-2.0.10.tar.gz;patch:samba_ppc.diff
 wget;1.11.4;wget-1.11.4;wget-1.11.4.tar.bz2;extract:wget-1.11.4.tar.bz2
 ncftp;3.2.2;ncftp-3.2.2;ncftp-3.2.2-src.tar.bz2;extract:ncftp-3.2.2-src.tar.bz2
-screen;4.0.2;screen-4.0.2;screen-4.0.2.tar.gz:screen.diff;extract:screen-4.0.2.tar.gz;patch:screen.diff
+screen;4.0.3;screen-4.0.3;screen-4.0.3.tar.gz:screen.diff;extract:screen-4.0.3.tar.gz;patch:screen.diff
 links;1.0;links-1.00;links-1.00.tar.gz;extract:links-1.00.tar.gz
 links_g;2.2;links-2.2;links-2.2.tar.gz;extract:links-2.2.tar.gz
 ntpd;4.2.4p5;ntp-4.2.4p5;ntp-4.2.4p5.tar.gz:ntp.diff;extract:ntp-4.2.4p5.tar.gz;patch:ntp.diff
@@ -122,16 +122,16 @@ lzma443;443;lzma443
 upx_host;3.03;upx-3.03-src;upx-3.03-src.tar.bz2:lzma443.tar.bz2:upx.diff;extract:upx-3.03-src.tar.bz2;patch:upx.diff
 lzma;4.65;lzma-4.65;lzma465.tar.bz2:lzma.diff;dirextract:lzma465.tar.bz2;patch:lzma.diff
 lzma_host;4.65;lzma-4.65;lzma465.tar.bz2:lzma.diff;dirextract:lzma465.tar.bz2;patch:lzma.diff
-openvpn;2.0.9;openvpn-2.0.9;openvpn-2.0.9.tar.gz;extract:openvpn-2.0.9.tar.gz
+openvpn;2.1.4;openvpn-2.1.4;openvpn-2.1.4.tar.gz;extract:openvpn-2.1.4.tar.gz
 ipkg;0.99.163;ipkg-0.99.163;ipkg-0.99.163.tar.gz;extract:ipkg-0.99.163.tar.gz;patch:ipkg.diff
 htop;0.9;htop-0.9;htop-0.9.tar.gz;extract:htop-0.9.tar.gz
 
 #
 # ide/hdd apps
 #
-e2fsprogs;1.41.12;e2fsprogs-1.41.12;e2fsprogs-1.41.12.tar.gz:e2fsprogs_gcc4_build_fix.diff;extract:e2fsprogs-1.41.12.tar.gz;patch:e2fsprogs_gcc4_build_fix.diff
+e2fsprogs;1.41.14;e2fsprogs-1.41.14;e2fsprogs-1.41.14.tar.gz:e2fsprogs_gcc4_build_fix.diff;extract:e2fsprogs-1.41.14.tar.gz;patch:e2fsprogs_gcc4_build_fix.diff
 hddtemp;0.3-beta15;hddtemp-0.3-beta15;hddtemp-0.3-beta15.tar.bz2;extract:hddtemp-0.3-beta15.tar.bz2
-hdparm;9.27;hdparm-9.27;hdparm-9.27.tar.gz;extract:hdparm-9.27.tar.gz
+hdparm;9.37;hdparm-9.37;hdparm-9.37.tar.gz;extract:hdparm-9.37.tar.gz
 parted;1.7.1;parted-1.7.1;parted-1.7.1.tar.gz;extract:parted-1.7.1.tar.gz
 smartmontools;5.38;smartmontools-5.38;smartmontools-5.38.tar.gz;extract:smartmontools-5.38.tar.gz;patch:smartmontools.diff
 utillinux;2.12r;util-linux-2.12r;util-linux-2.12r.tar.bz2;extract:util-linux-2.12r.tar.bz2;patch:util-linux.diff
@@ -147,16 +147,16 @@ msttf;0.0;msttf;arial32.exe:arialb32.exe;dircreate;dirextract:arial32.exe;dirext
 #
 # development tools
 #
-gdb;7.1;gdb-7.1;gdb-7.1.tar.bz2;extract:gdb-7.1.tar.bz2
+gdb;7.2;gdb-7.2;gdb-7.2.tar.bz2;extract:gdb-7.2.tar.bz2
 valgrind;3.3.1;valgrind-3.3.1;valgrind-3.3.1.tar.bz2;extract:valgrind-3.3.1.tar.bz2
 insight;6.8-1;insight-6.8-1;insight-6.8-1.tar.bz2;extract:insight-6.8-1.tar.bz2
 ltrace;0.3.26;ltrace-0.3.26;ltrace_0.3.26.tar.gz:ltrace.diff;extract:ltrace_0.3.26.tar.gz;patch:ltrace.diff
-strace;4.5.18;strace-4.5.18;strace-4.5.18.tar.bz2:strace.diff;extract:strace-4.5.18.tar.bz2;patch:strace.diff
+strace;4.5.20;strace-4.5.20;strace-4.5.20.tar.bz2:strace.diff;extract:strace-4.5.20.tar.bz2;patch:strace.diff
 nano;1.2.4;nano-1.2.4;nano-1.2.4.tar.gz:nano.diff;extract:nano-1.2.4.tar.gz;patch:nano.diff
 mc;4.6.2;mc-4.6.2;mc-4.6.2.tar.gz:mc-4.6.2.diff;extract:mc-4.6.2.tar.gz;patch:mc-4.6.2.diff
-joe;3.5;joe-3.5;joe-3.5.tar.gz;extract:joe-3.5.tar.gz
+joe;3.7;joe-3.7;joe-3.7.tar.gz;extract:joe-3.7.tar.gz
 bash;4.0;bash-4.0;bash-4.0.tar.gz;extract:bash-4.0.tar.gz
-ccache;2.4;ccache-2.4;ccache-2.4.tar.gz;extract:ccache-2.4.tar.gz
+ccache;3.1.4;ccache-3.1.4;ccache-3.1.4.tar.gz;extract:ccache-3.1.4.tar.gz
 
 #
 # java
