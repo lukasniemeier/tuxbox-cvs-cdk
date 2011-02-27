@@ -895,12 +895,12 @@ AC_ARG_ENABLE(rcinfo,
 AM_CONDITIONAL(ENABLE_RCINFO,test "rcinfo" = "yes")
 
 AC_ARG_ENABLE(rcsim,
-	AS_HELP_STRING(--disable-rcsim,enable tool rcsim),
+	AS_HELP_STRING(--disable-rcsim,disable tool rcsim),
 	,[enable_rcsim=yes])
 AM_CONDITIONAL(ENABLE_RCSIM,test "rcsim" = "yes")
 
 AC_ARG_ENABLE(saa,
-	AS_HELP_STRING(--disable-saa,enable tool saa),
+	AS_HELP_STRING(--disable-saa,disable tool saa),
 	,[enable_saa=yes])
 AM_CONDITIONAL(ENABLE_SAA,test "saa" = "yes")
 
@@ -910,7 +910,7 @@ AC_ARG_ENABLE(showptsdiff,
 AM_CONDITIONAL(ENABLE_SHOWPTSDIFF,test "showptsdiff" = "yes")
 
 AC_ARG_ENABLE(switch,
-	AS_HELP_STRING(--disable-switch,enable tool switch),
+	AS_HELP_STRING(--disable-switch,disable tool switch),
 	,[enable_switch=yes])
 AM_CONDITIONAL(ENABLE_SWITCH,test "switch" = "yes")
 
