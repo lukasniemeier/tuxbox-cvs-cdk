@@ -77,6 +77,7 @@ IPBOX_DRIVER_MODDIR = $(flashprefix)/root-squashfs/lib/modules/@VERSION_linux_ip
 IPBOX_DRIVER_DEPENDS = @DEPENDS_dgstationdriver_mutant200s@
 IPBOX_DRIVER_DIR = @DIR_dgstationdriver_mutant200s@
 IPBOX_DRIVER_PREPARE = @PREPARE_dgstationdriver_mutant200s@
+IPBOX_HW_MODEL=0x00010000
 endif
 if BOXMODEL_IP250
 IPBOX_UBOOT_TARGET = relook200s
@@ -86,6 +87,7 @@ IPBOX_DRIVER_MODDIR = $(flashprefix)/root-squashfs/lib/modules/@VERSION_linux_ip
 IPBOX_DRIVER_DEPENDS = @DEPENDS_dgstationdriver_cubecafe@
 IPBOX_DRIVER_DIR = @DIR_dgstationdriver_cubecafe@
 IPBOX_DRIVER_PREPARE = @PREPARE_dgstationdriver_cubecafe@
+IPBOX_HW_MODEL=0x00020000
 endif
 if BOXMODEL_IP350
 IPBOX_UBOOT_TARGET = relook210
@@ -95,6 +97,7 @@ IPBOX_DRIVER_MODDIR = $(flashprefix)/root-squashfs/lib/modules/@VERSION_linux_ip
 IPBOX_DRIVER_DEPENDS = @DEPENDS_dgstationdriver_prime@
 IPBOX_DRIVER_DIR = @DIR_dgstationdriver_prime@
 IPBOX_DRIVER_PREPARE = @PREPARE_dgstationdriver_prime@
+IPBOX_HW_MODEL=0x00021000
 endif
 if BOXMODEL_IP400
 IPBOX_UBOOT_TARGET = relook400s
@@ -103,6 +106,7 @@ IPBOX_DRIVER_MODDIR = $(flashprefix)/root-squashfs/lib/modules/@VERSION_linux_ip
 IPBOX_DRIVER_DEPENDS = @DEPENDS_dgstationdriver_relook400s@
 IPBOX_DRIVER_DIR = @DIR_dgstationdriver_relook400s@
 IPBOX_DRIVER_PREPARE = @PREPARE_dgstationdriver_relook400s@
+IPBOX_HW_MODEL=0x00040000
 endif
 else
 if BOXTYPE_COOL

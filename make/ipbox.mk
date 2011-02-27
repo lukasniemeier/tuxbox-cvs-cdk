@@ -216,7 +216,7 @@ $(flashprefix)/serial_%: $(flashprefix)/usb_% $(hostprefix)/bin/mkdnimg
 
 # USB images
 
-IPBOX_USB_OPTIONS=-vendor_id 0x00444753 -product_id 0x6c6f6f6b -hw_model 0x00020000 -hw_version 0x00010000
+IPBOX_USB_OPTIONS=-vendor_id 0x00444753 -product_id 0x6c6f6f6b -hw_model $(IPBOX_HW_MODEL) -hw_version 0x00010000
 
 ipbox_usb_imgs_neutrino \
 ipbox_usb_imgs_enigma: \
