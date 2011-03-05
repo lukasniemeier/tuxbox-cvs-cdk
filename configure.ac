@@ -857,62 +857,62 @@ AC_SUBST(FX2_DEPS)
 AC_ARG_ENABLE(audioplay,
 	AS_HELP_STRING(--enable-audioplay,enable tool audioplay),
 	,[enable_audioplay=no])
-AM_CONDITIONAL(ENABLE_AUDIOPLAY,test "audioplay" = "yes")
+AM_CONDITIONAL(ENABLE_AUDIOPLAY,test "$enable_audioplay" = "yes")
 
 AC_ARG_ENABLE(aviaext,
 	AS_HELP_STRING(--enable-aviaext,enable tool aviaext),
 	,[enable_aviaext=no])
-AM_CONDITIONAL(ENABLE_AVIAEXT,test "aviaext" = "yes")
+AM_CONDITIONAL(ENABLE_AVIAEXT,test "$enable_aviaext" = "yes")
 
 AC_ARG_ENABLE(aviafbtool,
 	AS_HELP_STRING(--enable-aviafbtool,enable tool aviafbtool),
 	,[enable_aviafbtool=no])
-AM_CONDITIONAL(ENABLE_AVIAFBTOOL,test "aviafbtool" = "yes")
+AM_CONDITIONAL(ENABLE_AVIAFBTOOL,test "$enable_aviafbtool" = "yes")
 
 AC_ARG_ENABLE(avswitchpp,
 	AS_HELP_STRING(--enable-avswitchpp,enable tool avswitchpp),
 	,[enable_avswitchpp=no])
-AM_CONDITIONAL(ENABLE_AVSWITCHPP,test "avswitchpp" = "yes")
+AM_CONDITIONAL(ENABLE_AVSWITCHPP,test "$enable_avswitchpp" = "yes")
 
 AC_ARG_ENABLE(fbclear,
 	AS_HELP_STRING(--enable-fbclear,enable tool fbclear),
 	,[enable_fbclear=no])
-AM_CONDITIONAL(ENABLE_FBCLEAR,test "fbclear" = "yes")
+AM_CONDITIONAL(ENABLE_FBCLEAR,test "$enable_fbclear" = "yes")
 
 AC_ARG_ENABLE(lcddump,
 	AS_HELP_STRING(--enable-lcddump,enable tool lcddump),
 	,[enable_lcddump=no])
-AM_CONDITIONAL(ENABLE_LCDDUMP,test "lcddump" = "yes")
+AM_CONDITIONAL(ENABLE_LCDDUMP,test "$enable_lcddump" = "yes")
 
 AC_ARG_ENABLE(pluginx,
 	AS_HELP_STRING(--enable-pluginx,enable tool pluginx),
 	,[enable_pluginx=no])
-AM_CONDITIONAL(ENABLE_PLUGINX,test "pluginx" = "yes")
+AM_CONDITIONAL(ENABLE_PLUGINX,test "$enable_pluginx" = "yes")
 
 AC_ARG_ENABLE(rcinfo,
 	AS_HELP_STRING(--enable-rcinfo,enable tool rcinfo),
 	,[enable_rcinfo=no])
-AM_CONDITIONAL(ENABLE_RCINFO,test "rcinfo" = "yes")
+AM_CONDITIONAL(ENABLE_RCINFO,test "$enable_rcinfo" = "yes")
 
 AC_ARG_ENABLE(rcsim,
 	AS_HELP_STRING(--disable-rcsim,disable tool rcsim),
 	,[enable_rcsim=yes])
-AM_CONDITIONAL(ENABLE_RCSIM,test "rcsim" = "yes")
+AM_CONDITIONAL(ENABLE_RCSIM,test "$enable_rcsim" = "yes")
 
 AC_ARG_ENABLE(saa,
 	AS_HELP_STRING(--disable-saa,disable tool saa),
 	,[enable_saa=yes])
-AM_CONDITIONAL(ENABLE_SAA,test "saa" = "yes")
+AM_CONDITIONAL(ENABLE_SAA,test "$enable_saa" = "yes")
 
 AC_ARG_ENABLE(showptsdiff,
 	AS_HELP_STRING(--enable-showptsdiff,enable tool showptsdiff),
 	,[enable_showptsdiff=no])
-AM_CONDITIONAL(ENABLE_SHOWPTSDIFF,test "showptsdiff" = "yes")
+AM_CONDITIONAL(ENABLE_SHOWPTSDIFF,test "$enable_showptsdiff" = "yes")
 
 AC_ARG_ENABLE(switch,
 	AS_HELP_STRING(--disable-switch,disable tool switch),
 	,[enable_switch=yes])
-AM_CONDITIONAL(ENABLE_SWITCH,test "switch" = "yes")
+AM_CONDITIONAL(ENABLE_SWITCH,test "$enable_switch" = "yes")
 
 AC_ARG_WITH(rootpartitionsize,
 	[  --with-rootpartitionsize=SIZE
