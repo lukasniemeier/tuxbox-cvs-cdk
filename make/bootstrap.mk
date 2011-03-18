@@ -165,7 +165,7 @@ if ENABLE_FS_LUFS
 	cd $(KERNEL_DIR) && patch -p1 -E -i $(buildprefix)/Patches/linux-2.4.33-dbox2-lufs.diff
 endif
 if ENABLE_FS_CIFS
-	gunzip -cd $(archivedir)/cifs-1.20c-2.4.tar.gz | TAPE=- tar -x
+	gunzip -cd $(archivedir)/cifs-1.20c-2.4.tar.gz | TAPE=- tar -xh
 	cd $(KERNEL_DIR) && patch -p1 -E -i ./cifs_24.patch
 endif
 if ENABLE_AUTOMOUNT
