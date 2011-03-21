@@ -16,6 +16,7 @@ option(`CONFIG_DESKTOP', `n', `n')
 # CONFIG_EXTRA_COMPAT is not set
 option(`CONFIG_INCLUDE_SUSv2', `y', `y')
 # CONFIG_USE_PORTABLE_CODE is not set
+CONFIG_PLATFORM_LINUX=y
 option(`CONFIG_FEATURE_BUFFERS_USE_MALLOC', `n', `n')
 option(`CONFIG_FEATURE_BUFFERS_GO_ON_STACK', `y', `y')
 option(`CONFIG_FEATURE_BUFFERS_GO_IN_BSS', `n', `n')
@@ -116,6 +117,7 @@ CONFIG_FEATURE_SEAMLESS_GZ=y
 # CONFIG_FEATURE_SEAMLESS_Z is not set
 option(`CONFIG_AR', `n', `n')
 option(`CONFIG_FEATURE_AR_LONG_FILENAMES', `n', `n')
+option(`CONFIG_FEATURE_AR_CREATE', `n', `n')
 option(`CONFIG_BUNZIP2', `y', `y')
 # CONFIG_BZIP2 is not set
 option(`CONFIG_CPIO', `n', `n')
@@ -142,6 +144,7 @@ option(`CONFIG_FEATURE_TAR_LONG_OPTIONS', `y', `y')
 # CONFIG_FEATURE_TAR_TO_COMMAND is not set
 # CONFIG_FEATURE_TAR_UNAME_GNAME is not set
 # CONFIG_FEATURE_TAR_NOPRESERVE_TIME is not set
+# CONFIG_FEATURE_TAR_SELINUX is not set
 option(`CONFIG_UNCOMPRESS', `n', `n')
 option(`CONFIG_UNLZMA', `n', `n')
 # CONFIG_LZMA is not set
@@ -153,6 +156,7 @@ option(`CONFIG_UNZIP', `n', `n')
 # Coreutils
 #
 option(`CONFIG_BASENAME', `y', `y')
+option(`CONFIG_BASE64', `n', `n')
 option(`CONFIG_CAL', `n', `n')
 option(`CONFIG_CAT', `y', `y')
 option(`CONFIG_CATV', `y', `y')
@@ -407,11 +411,14 @@ option(`CONFIG_FEATURE_INITRD', `n', `n')
 option(`CONFIG_HALT', `y', `y')
 # CONFIG_FEATURE_CALL_TELINIT is not set
 CONFIG_TELINIT_PATH=""
+CONFIG_INIT_TERMINAL_TYPE="linux"
 option(`CONFIG_MESG', `n', `n')
 
 #
 # Login/Password Management Utilities
 #
+# CONFIG_ADD_SHELL is not set
+# CONFIG_REMOVE_SHELL is not set
 option(`CONFIG_FEATURE_SHADOWPASSWDS', `y', `n')
 option(`CONFIG_USE_BB_PWD_GRP', `n', `n')
 option(`CONFIG_USE_BB_SHADOW', `n', `n')
@@ -501,6 +508,7 @@ CONFIG_DEFAULT_DEPMOD_FILE="modules.dep"
 #
 # Linux System Utilities
 #
+# CONFIG_BLOCKDEV is not set
 # CONFIG_REV is not set
 # CONFIG_ACPID is not set
 # CONFIG_FEATURE_ACPID_COMPAT is not set
@@ -621,6 +629,8 @@ option(`CONFIG_FEATURE_MTAB_SUPPORT', `n', `n')
 # Miscellaneous Utilities
 #
 # CONFIG_CONSPY is not set
+# CONFIG_NANDWRITE is not set
+# CONFIG_NANDDUMP is not set
 # CONFIG_UBIATTACH is not set
 # CONFIG_UBIDETACH is not set
 option(`CONFIG_ADJTIMEX', `n', `n')
@@ -708,6 +718,7 @@ option(`CONFIG_TTYSIZE', `n', `n')
 #
 # Networking Utilities
 #
+# CONFIG_NBDCLIENT is not set
 option(`CONFIG_FEATURE_IPV6', `y', `n')
 # CONFIG_FEATURE_UNIX_LOCAL is not set
 option(`CONFIG_FEATURE_PREFER_IPV4_ADDRESS', `y', `n')
@@ -833,6 +844,7 @@ option(`CONFIG_WGET', `y', `y')
 option(`CONFIG_FEATURE_WGET_STATUSBAR', `y', `y')
 option(`CONFIG_FEATURE_WGET_AUTHENTICATION', `y', `y')
 option(`CONFIG_FEATURE_WGET_LONG_OPTIONS', `y', `y')
+option(`CONFIG_FEATURE_WGET_TIMEOUT', `y', `y')
 option(`CONFIG_ZCIP', `n', `n')
 # CONFIG_TCPSVD is not set
 ifdef(`openvpn',
@@ -863,6 +875,10 @@ CONFIG_FEATURE_MIME_CHARSET=""
 #
 # Process Utilities
 #
+# CONFIG_IOSTAT is not set
+# CONFIG_MPSTAT is not set
+# CONFIG_PMAP is not set
+# CONFIG_POWERTOP is not set
 # CONFIG_SMEMCAP is not set
 option(`CONFIG_FREE', `y', `y')
 option(`CONFIG_FUSER', `n', `n')
@@ -967,7 +983,6 @@ option(`CONFIG_HUSH_LOOPS', `n', `n')
 # CONFIG_HUSH_LOCAL is not set
 # CONFIG_HUSH_EXPORT_N is not set
 # CONFIG_HUSH_RANDOM_SUPPORT is not set
-option(`CONFIG_LASH', `n', `n')
 option(`CONFIG_MSH', `n', `n')
 
 #
@@ -993,6 +1008,7 @@ CONFIG_FEATURE_IPC_SYSLOG_BUFFER_SIZE=0
 option(`CONFIG_LOGREAD', `n', `n')
 option(`CONFIG_FEATURE_LOGREAD_REDUCED_LOCKING', `n', `n')
 option(`CONFIG_KLOGD', `y', `n')
+# CONFIG_FEATURE_KLOGD_KLOGCTL is not set
 option(`CONFIG_LOGGER', `n', `n')
 
 dnl
