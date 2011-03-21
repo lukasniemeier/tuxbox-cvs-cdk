@@ -31,6 +31,11 @@ if !ENABLE_PROCPS
 BUSYBOX_M4 += -Dprocps
 endif
 
+# if standalone wget is not enabled, use the busybox applet instead
+if !ENABLE_WGET
+BUSYBOX_M4 += -Dwget
+endif
+
 if ENABLE_DEBUG
 BUSYBOX_M4 += -Ddebug
 endif

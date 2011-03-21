@@ -65,6 +65,9 @@ endif
 if ENABLE_STRACE
 ADDITIONAL_DEBS += strace
 endif
+if ENABLE_WGET
+ADDITIONAL_DEBS += wget
+endif
 
 yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTOMOUNT@ @NFSSERVER@ @SAMBASERVER@ @LUFS@ @CONSOLE_TOOLS@ $(ADDITIONAL_DEBS) $(FX2_DEPS) $(FILESYSTEM_DEBS) version defaultlocale
 	@TUXBOX_YADD_CUSTOMIZE@

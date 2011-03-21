@@ -840,11 +840,13 @@ CONFIG_UDHCPC_DEFAULT_SCRIPT="/share/udhcpc/default.script"
 CONFIG_UDHCPC_SLACK_FOR_BUGGY_SERVERS=80
 CONFIG_IFUPDOWN_UDHCPC_CMD_OPTIONS="-b -R"
 option(`CONFIG_VCONFIG', `n', `n')
-option(`CONFIG_WGET', `y', `y')
+ifdef(`wget',
+`option(`CONFIG_WGET', `y', `y')
 option(`CONFIG_FEATURE_WGET_STATUSBAR', `y', `y')
 option(`CONFIG_FEATURE_WGET_AUTHENTICATION', `y', `y')
 option(`CONFIG_FEATURE_WGET_LONG_OPTIONS', `y', `y')
-option(`CONFIG_FEATURE_WGET_TIMEOUT', `y', `y')
+option(`CONFIG_FEATURE_WGET_TIMEOUT', `y', `y')',
+`# CONFIG_WGET is not set')
 option(`CONFIG_ZCIP', `n', `n')
 # CONFIG_TCPSVD is not set
 ifdef(`openvpn',

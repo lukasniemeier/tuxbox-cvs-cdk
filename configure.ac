@@ -696,6 +696,11 @@ AC_ARG_ENABLE(vncviewer,
 	,[enable_vncviewer=no])
 AM_CONDITIONAL(ENABLE_VNCVIEWER,test "$enable_vncviewer" = "yes")
 
+AC_ARG_WITH(wget,
+	AS_HELP_STRING(--with-wget,replace Busybox applet wget with original version),
+	[enable_wget="$withval"],[enable_wget=no])
+AM_CONDITIONAL(ENABLE_WGET,test "$enable_wget" = "yes")
+
 AC_ARG_ENABLE(enigma-dbswitch,
 	AS_HELP_STRING(--disable-enigma-dbswitch,disable Enigma dbswitch),
 	,[enable_enigma_dbswitch=yes])
@@ -1717,6 +1722,7 @@ tuxmail				$enable_tuxmail
 tuxtxt (internal)		$enable_tuxtxt ($enable_internal_tuxtxt)
 tuxwetter			$enable_tuxwetter
 vncviewer			$enable_vncviewer
+wget				$enable_wget
 
 Enigma: dbswitch		$enable_enigma_dbswitch
 Enigma: movieplayer		$enable_enigma_movieplayer

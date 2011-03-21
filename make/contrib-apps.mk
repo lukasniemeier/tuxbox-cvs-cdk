@@ -371,6 +371,10 @@ $(DEPDIR)/wget: bootstrap @DEPENDS_wget@
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
+			--disable-ipv6 \
+			--disable-nls \
+			--disable-opie \
+			--disable-digest \
 			--prefix=&& \
 		$(MAKE) all && \
 		@INSTALL_wget@

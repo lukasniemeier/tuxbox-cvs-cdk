@@ -201,6 +201,9 @@ endif
 if ENABLE_VNCVIEWER
 	$(MAKE) flash-vncviewer
 endif
+if ENABLE_WGET
+	$(MAKE) flash-wget
+endif
 
 if ENABLE_FX2_BOUQUET
 	$(MAKE) flash-bouquet-fx2
