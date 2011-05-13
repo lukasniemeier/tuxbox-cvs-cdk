@@ -111,12 +111,12 @@ diff --new-file -urp linux-2.4.32/fs/squashfs/inode.c linux-2.4.32-squashfs3.0/f
 +	.readpage = squashfs_readpage4K
 +};
 +
-+static struct file_operations squashfs_dir_ops = {
++static const struct file_operations squashfs_dir_ops = {
 +	.read = generic_read_dir,
 +	.readdir = squashfs_readdir
 +};
 +
-+static struct inode_operations squashfs_dir_inode_ops = {
++static const struct inode_operations squashfs_dir_inode_ops = {
 +	.lookup = squashfs_lookup
 +};
 +
@@ -2069,7 +2069,7 @@ diff --new-file -urp linux-2.4.32/fs/squashfs/Makefile linux-2.4.32-squashfs3.0/
 +
 +O_TARGET := squashfs.o
 +
-+obj-y  := inode.o squashfs2_0.o
++obj-y  := inode.o
 +
 +obj-m := $(O_TARGET)
 +
@@ -2983,8 +2983,8 @@ diff --new-file -urp linux-2.4.32/include/linux/squashfs_fs.h linux-2.4.32-squas
 + * squashfs_fs.h
 + */
 +
-+#ifndef CONFIG_SQUASHFS_2_0_COMPATIBILITY
-+#define CONFIG_SQUASHFS_2_0_COMPATIBILITY
++#ifdef CONFIG_SQUASHFS_2_0_COMPATIBILITY
++#undef CONFIG_SQUASHFS_2_0_COMPATIBILITY
 +#endif
 +
 +#ifdef CONFIG_SQUASHFS_VMALLOC
