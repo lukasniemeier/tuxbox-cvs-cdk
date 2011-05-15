@@ -9,7 +9,7 @@ libs: \
 	libreadline libsdl libsigc libz libdvb libtool libFLAC
 
 libs_optional: \
-	libcommoncplusplus libffi \
+	libffi \
 	libboost libgmp \
 	libpcap libxml2 libungif \
 	libexpat libcrypto sqlite

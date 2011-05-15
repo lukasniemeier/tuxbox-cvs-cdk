@@ -1,6 +1,6 @@
 # tuxbox/lcars
 
-$(appsdir)/tuxbox/lcars/config.status: bootstrap libcurl libfreetype $(targetprefix)/include/tuxbox/plugin.h libcommoncplusplus
+$(appsdir)/tuxbox/lcars/config.status: bootstrap libcurl libfreetype $(targetprefix)/include/tuxbox/plugin.h
 	cd $(appsdir)/tuxbox/lcars && $(CONFIGURE)
 
 lcars: $(appsdir)/tuxbox/lcars/config.status
