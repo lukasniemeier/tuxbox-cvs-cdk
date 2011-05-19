@@ -6090,3 +6090,48 @@ Index: b/kernel/timer.c
  DECLARE_TASK_QUEUE(tq_immediate);
  
  /*
+diff -uNr linux-2.4.37.11.org//arch/ppc/8xx_io/uart.c linux-2.4.37.11/arch/ppc/8xx_io/uart.c
+--- linux-2.4.37.11.org//arch/ppc/8xx_io/uart.c	2010-12-18 16:29:59.000000000 +0100
++++ linux-2.4.37.11/arch/ppc/8xx_io/uart.c	2011-04-27 12:47:55.000000000 +0200
+@@ -2292,7 +2292,7 @@
+ 
+ 		/* Get the address of the host memory buffer.*/
+ 		info = &consinfo;
+-		info->tx_bd_base = (cbd_t *)bdbase = (cbd_t *)&cpmp->cp_dpmem[up->smc_tbase];
++		info->tx_bd_base = bdbase = (cbd_t *)&cpmp->cp_dpmem[up->smc_tbase];
+ 		info->tx_cur = (cbd_t *)bdbase;
+ 	}
+ 	max_tx_size = console_tx_buf_len;
+diff -uNr linux-2.4.37.11.org/arch/ppc/boot//simple/m8xx_tty.c linux-2.4.37.11/arch/ppc/boot//simple/m8xx_tty.c
+--- linux-2.4.37.11.org/arch/ppc/boot//simple/m8xx_tty.c	2010-12-18 16:29:59.000000000 +0100
++++ linux-2.4.37.11/arch/ppc/boot//simple/m8xx_tty.c	2011-04-27 13:14:50.000000000 +0200
+@@ -30,7 +30,7 @@
+ #define SMC_INDEX	0
+ #endif
+ 
+-static cpm8xx_t	*cpmp = (cpm8xx_t *)&(((immap_t *)IMAP_ADDR)->im_cpm);
++cpm8xx_t *cpmp = (cpm8xx_t *)&(((immap_t *)IMAP_ADDR)->im_cpm);
+ 
+ unsigned long
+ serial_init(int ignored, bd_t *bd)
+diff -uNr linux-2.4.37.11.org//include/linux/skbuff.h linux-2.4.37.11/include/linux/skbuff.h
+--- linux-2.4.37.11.org//include/linux/skbuff.h	2010-12-18 16:29:59.000000000 +0100
++++ linux-2.4.37.11/include/linux/skbuff.h	2011-04-29 14:38:36.000000000 +0200
+@@ -820,7 +820,7 @@
+ 	return skb->data;
+ }
+ 
+-static inline char *__skb_pull(struct sk_buff *skb, unsigned int len)
++static inline unsigned char *__skb_pull(struct sk_buff *skb, unsigned int len)
+ {
+ 	skb->len-=len;
+ 	if (skb->len < skb->data_len)
+@@ -848,7 +848,7 @@
+ 
+ extern unsigned char * __pskb_pull_tail(struct sk_buff *skb, int delta);
+ 
+-static inline char *__pskb_pull(struct sk_buff *skb, unsigned int len)
++static inline unsigned char *__pskb_pull(struct sk_buff *skb, unsigned int len)
+ {
+ 	if (len > skb_headlen(skb) &&
+ 	    __pskb_pull_tail(skb, len-skb_headlen(skb)) == NULL)

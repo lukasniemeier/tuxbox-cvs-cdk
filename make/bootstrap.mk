@@ -131,7 +131,7 @@ endif
 endif
 
 if ENABLE_FS_CIFS
-KERNEL_DEPENDS += $(archivedir)/cifs-1.20c-2.4.tar.gz
+KERNEL_DEPENDS += $(archivedir)/cifs-1.20c-2.4.tar.gz $(buildprefix)/Patches/linux-2.4-cifs_gcc4.diff
 endif
 
 if ENABLE_AUTOMOUNT
@@ -167,6 +167,7 @@ endif
 if ENABLE_FS_CIFS
 	gunzip -cd $(archivedir)/cifs-1.20c-2.4.tar.gz | TAPE=- tar -xh
 	cd $(KERNEL_DIR) && patch -p1 -E -i ./cifs_24.patch
+	cd $(KERNEL_DIR) && patch -p1 -E -i $(buildprefix)/Patches/linux-2.4-cifs_gcc4.diff
 endif
 if ENABLE_AUTOMOUNT
 	cd $(KERNEL_DIR) && gunzip -cd $(archivedir)/autofs4-2.4-module-20050404.tar.gz | TAPE=- tar -x

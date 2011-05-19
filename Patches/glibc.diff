@@ -489,3 +489,88 @@ diff -uNr glibc-2.3.6.org/configure glibc-2.3.6/configure
         ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
      *) ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
  
+--- glibc-2.3.6/sysdeps/powerpc/powerpc32/Makefile.org  2006-08-21 19:03:01.000000000 -0700
++++ glibc-2.3.6/sysdeps/powerpc/powerpc32/Makefile      2006-08-21 19:03:19.000000000 -0700
+@@ -21,7 +21,7 @@
+ ifneq ($(elf),no)
+ # The initfini generation code doesn't work in the presence of -fPIC, so
+ # we use -fpic instead which is much better.
+-CFLAGS-initfini.s = -g0 -fpic -O1
++CFLAGS-initfini.s = -g0 -fpic -O1 $(fno-unit-at-a-time)
+
+ # There is no benefit to using sdata for these objects, and the user
+ # of the library should be able to control what goes into sdata.
+--- glibc-2.3.6/linuxthreads/sysdeps/powerpc/Makefile.org      2003-02-17 20:33:17.000000000 +0000
++++ glibc-2.3.6/linuxthreads/sysdeps/powerpc/Makefile  2007-04-04 16:26:01.969067632 +0100
+@@ -1,6 +1,6 @@
+ ifeq ($(subdir):$(elf),linuxthreads:yes)
+ # See CFLAGS-initfini.s above; this is the same code.
+-CFLAGS-pt-initfini.s = -g0 -fpic -O1
++CFLAGS-pt-initfini.s = -g0 -fpic -O1 $(fno-unit-at-a-time)
+ endif
+ ifeq ($(subdir),csu)
+ gen-as-const-headers += tcb-offsets.sym
+
+diff -uNr glibc-2.3.6.org//elf/dynamic-link.h glibc-2.3.6/elf/dynamic-link.h
+--- glibc-2.3.6.org//elf/dynamic-link.h	2005-10-17 06:52:23.000000000 +0200
++++ glibc-2.3.6/elf/dynamic-link.h	2011-05-09 18:17:57.000000000 +0200
+@@ -19,47 +19,6 @@
+ 
+ #include <elf.h>
+ #include <assert.h>
+-
+-#ifdef RESOLVE
+-/* We pass reloc_addr as a pointer to void, as opposed to a pointer to
+-   ElfW(Addr), because not all architectures can assume that the
+-   relocated address is properly aligned, whereas the compiler is
+-   entitled to assume that a pointer to a type is properly aligned for
+-   the type.  Even if we cast the pointer back to some other type with
+-   less strict alignment requirements, the compiler might still
+-   remember that the pointer was originally more aligned, thereby
+-   optimizing away alignment tests or using word instructions for
+-   copying memory, breaking the very code written to handle the
+-   unaligned cases.  */
+-# if ! ELF_MACHINE_NO_REL
+-auto inline void __attribute__((always_inline))
+-elf_machine_rel (struct link_map *map, const ElfW(Rel) *reloc,
+-		 const ElfW(Sym) *sym, const struct r_found_version *version,
+-		 void *const reloc_addr);
+-auto inline void __attribute__((always_inline))
+-elf_machine_rel_relative (ElfW(Addr) l_addr, const ElfW(Rel) *reloc,
+-			  void *const reloc_addr);
+-# endif
+-# if ! ELF_MACHINE_NO_RELA
+-auto inline void __attribute__((always_inline))
+-elf_machine_rela (struct link_map *map, const ElfW(Rela) *reloc,
+-		  const ElfW(Sym) *sym, const struct r_found_version *version,
+-		  void *const reloc_addr);
+-auto inline void __attribute__((always_inline))
+-elf_machine_rela_relative (ElfW(Addr) l_addr, const ElfW(Rela) *reloc,
+-			   void *const reloc_addr);
+-# endif
+-# if ELF_MACHINE_NO_RELA || defined ELF_MACHINE_PLT_REL
+-auto inline void __attribute__((always_inline))
+-elf_machine_lazy_rel (struct link_map *map,
+-		      ElfW(Addr) l_addr, const ElfW(Rel) *reloc);
+-# else
+-auto inline void __attribute__((always_inline))
+-elf_machine_lazy_rel (struct link_map *map,
+-		      ElfW(Addr) l_addr, const ElfW(Rela) *reloc);
+-# endif
+-#endif
+-
+ #include <dl-machine.h>
+ 
+ #ifndef VERSYMIDX
+diff -uNr glibc-2.3.6.org//sysdeps/generic/wordexp.c glibc-2.3.6/sysdeps/generic/wordexp.c
+--- glibc-2.3.6.org//sysdeps/generic/wordexp.c	2005-02-16 11:56:31.000000000 +0100
++++ glibc-2.3.6/sysdeps/generic/wordexp.c	2011-05-09 18:12:47.000000000 +0200
+@@ -809,7 +809,7 @@
+ }
+ 
+ /* Function called by child process in exec_comm() */
+-static void
++static inline void
+ internal_function __attribute__ ((always_inline))
+ exec_comm_child (char *comm, int *fildes, int showerr, int noexec)
+ {
