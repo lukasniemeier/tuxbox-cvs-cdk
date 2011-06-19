@@ -329,6 +329,7 @@ if !BOXTYPE_COOL
 #
 # gcc first stage without glibc
 #
+if !DBOX2_GCC4
 if ASSUME_KERNELSOURCES_OLD
 $(DEPDIR)/bootstrap_gcc: @DEPENDS_bootstrap_gcc@ binutils | linuxdir
 else
@@ -356,6 +357,43 @@ endif
 	rm -rf $(hostprefix)/$(target)/sys-include
 	@CLEANUP_bootstrap_gcc@
 	touch $@
+else
+if ASSUME_KERNELSOURCES_OLD
+$(DEPDIR)/bootstrap_gcc: @DEPENDS_bootstrap_gcc41@ binutils | linuxdir
+else
+$(DEPDIR)/bootstrap_gcc: @DEPENDS_bootstrap_gcc41@ binutils linuxdir
+endif
+	@PREPARE_bootstrap_gcc41@
+	$(INSTALL) -d $(hostprefix)/$(target)/sys-include
+	ln -sf $(buildprefix)/linux/include/{asm,linux} $(hostprefix)/$(target)/sys-include/
+	cd @SOURCEDIR_bootstrap_gcc41@ && \
+		bunzip2 -cd $(archivedir)/gcc-4.1.2-patches-1.3.tar.bz2 | TAPE=- tar -x && \
+		for i in patch/*.patch; do ( patch -p0 -f -i $$i || patch -p1 -f -i $$i ); done && cd .. && \
+	cd @DIR_bootstrap_gcc41@ && \
+		CC=$(CC) CFLAGS="$(CFLAGS)" \
+		@CONFIGURE_bootstrap_gcc41@ \
+			--build=$(build) \
+			--host=$(build) \
+			--target=$(target) \
+			--prefix=$(hostprefix) \
+			--with-cpu=$(CPU_MODEL) \
+			--enable-target-optspace \
+			--enable-languages="c" \
+			--disable-shared \
+			--disable-threads \
+			--disable-nls \
+			--without-headers \
+			--with-newlib \
+			--disable-libgomp \
+			--disable-libmudflap \
+			--disable-libssp \
+			--without-fp && \
+		$(MAKE) all && \
+		@INSTALL_bootstrap_gcc41@
+	rm -rf $(hostprefix)/$(target)/sys-include
+	@CLEANUP_bootstrap_gcc41@
+	touch $@
+endif
 endif
 
 UCLIBC_M4 =
@@ -457,6 +495,7 @@ if USE_FOREIGN_TOOLCHAIN
 $(DEPDIR)/gcc: libc linuxdir
 	touch $@
 else
+if !DBOX2_GCC4
 $(DEPDIR)/gcc: @DEPENDS_gcc@ libc
 # if we have a symlink inside the libdir (in case gcc has already been built)
 # we remove it here
@@ -495,6 +534,55 @@ endif
 	ln -sf $(hostprefix)/$(target)/lib $(hostprefix)/$(target)/lib/nof
 	@CLEANUP_gcc@
 	touch $@
+else
+if ENABLE_UCLIBC
+$(DEPDIR)/gcc: @DEPENDS_gcc41@ libc $(archivedir)/100-uclibc-conf.patch $(archivedir)/200-uclibc-locale.patch
+else
+$(DEPDIR)/gcc: @DEPENDS_gcc41@ libc
+endif
+# if we have a symlink inside the libdir (in case gcc has already been built)
+# we remove it here
+	@if [ -h $(hostprefix)/$(target)/lib/nof ]; then \
+		rm -f $(hostprefix)/$(target)/lib/nof; \
+	fi
+	@PREPARE_gcc41@
+	$(INSTALL) -d $(hostprefix)/$(target)/sys-include
+	cp -p $(hostprefix)/$(target)/include/limits.h $(hostprefix)/$(target)/sys-include/
+	cd @SOURCEDIR_gcc41@ && \
+		bunzip2 -cd $(archivedir)/gcc-4.1.2-patches-1.3.tar.bz2 | TAPE=- tar -x && \
+		for i in patch/*.patch; do ( patch -p0 -f -i $$i || patch -p1 -f -i $$i ); done
+if ENABLE_UCLIBC
+	cd @SOURCEDIR_gcc41@ && patch -p1 -f -E -i $(archivedir)/100-uclibc-conf.patch || true
+	cd @SOURCEDIR_gcc41@ && patch -p1 -f -E -i $(archivedir)/200-uclibc-locale.patch
+endif
+	cd @DIR_gcc41@ && \
+		CC=$(CC) CFLAGS="$(CFLAGS)" \
+		@CONFIGURE_gcc41@ \
+			--build=$(build) \
+			--host=$(build) \
+			--target=$(target) \
+			--prefix=$(hostprefix) \
+			--with-cpu=$(CPU_MODEL) \
+			--enable-target-optspace \
+			--enable-languages="c,c++" \
+			--enable-shared \
+			--enable-threads \
+			--disable-nls \
+			--disable-libgomp \
+			--disable-libmudflap \
+			--disable-libssp \
+			--without-fp && \
+		$(MAKE) all && \
+		@INSTALL_gcc41@
+	rm -rf $(hostprefix)/$(target)/sys-include
+	for i in `find $(hostprefix)/$(target)/lib/nof` ; do mv $$i $(hostprefix)/$(target)/lib; done
+	rm -rf $(hostprefix)/$(target)/lib/nof
+	ln -sf $(hostprefix)/$(target)/lib $(hostprefix)/$(target)/lib/nof
+	ln -s libgcc_s.so.1 $(hostprefix)/$(target)/lib/libgcc_s_nof.so.1
+	ln -s libgcc_s.so.1 $(hostprefix)/$(target)/lib/libgcc_s_nof.so
+	@CLEANUP_gcc41@
+	touch $@
+endif
 endif
 
 else

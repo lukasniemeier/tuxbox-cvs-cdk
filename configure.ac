@@ -34,6 +34,17 @@ AM_MAINTAINER_MODE
 
 AC_PROG_CC
 
+AC_ARG_WITH(gcc4,
+	[  --with-gcc4             Dbox2-only compile image using gcc 4.1.2],
+	[
+		if test "$BOXTYPE" = "dbox2"; then
+			dbox2_gcc4="yes"
+		else
+			dbox2_gcc4="no"
+		fi
+	],
+	[dbox2_gcc4="no"])
+AM_CONDITIONAL(DBOX2_GCC4,test "$dbox2_gcc4" = "yes")
 
 AC_ARG_ENABLE(nptl,
 	AS_HELP_STRING(--disable-nptl,do not use native posix threads for glibc (only meaningful for kernel 2.6.x, default for 2.4.x)),
@@ -1347,6 +1358,8 @@ case "${BOXTYPE}" in
 		TUXBOX_RULES_MAKE(dgstationdriver_mutant200s)
 		TUXBOX_RULES_MAKE(dgstationdriver_prime)
 		TUXBOX_RULES_MAKE(dgstationdriver_relook400s)
+		TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc)
+		TUXBOX_RULES_MAKE_EXDIR(gcc)
 		;;
 	coolstream)
 		TUXBOX_RULES_MAKE(linux_cool)
@@ -1359,14 +1372,19 @@ case "${BOXTYPE}" in
 	*)
 		TUXBOX_RULES_MAKE(linux)
 		TUXBOX_RULES_MAKE(linux24)
+		if test "$dbox2_gcc4" = "yes"; then
+			TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc41)
+			TUXBOX_RULES_MAKE_EXDIR(gcc41)
+		else
+			TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc)
+			TUXBOX_RULES_MAKE_EXDIR(gcc)
+		fi
 		;;
 esac
 
 TUXBOX_RULES_MAKE(uboot)
 TUXBOX_RULES_MAKE_EXDIR(binutils)
-TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc)
 TUXBOX_RULES_MAKE_EXDIR(glibc)
-TUXBOX_RULES_MAKE_EXDIR(gcc)
 TUXBOX_RULES_MAKE(uclibc)
 
 #
@@ -1599,6 +1617,11 @@ fi
 if test "$enable_uclibc" == "yes"; then
 	used_libc="uclibc"
 else
+	if test "$dbox2_gcc4" = "yes"; then
+		used_gcc="/gcc 4.1.2"
+	else
+		used_gcc="/gcc 3.4.6"
+	fi
 	used_libc="glibc"
 fi
 
@@ -1628,7 +1651,7 @@ summary:
 target cpu/boxtype:		$CPU_ARCH$CPU_MODEL/$BOXTYPE $BOXMODEL
 kernel:				$used_kernelversion
 kernel config:			$kernel_conf
-libc:				$used_libc
+libc:				$used_libc$used_gcc
 threads:			$GLIBC_PTHREADS
 target:				$target
 host:				$host
