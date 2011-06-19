@@ -111,7 +111,9 @@ AC_ARG_WITH(boxmodel,
 			fi
 			;;
 		*)
-			AC_MSG_ERROR([unsupported value $withval for --with-boxmodel])
+			if test "$BOXTYPE" != "dbox2"; then
+				AC_MSG_ERROR([unsupported value $withval for --with-boxmodel])
+			fi
 			;;
 	esac],
 	[if test "$BOXTYPE" = "dreambox" -o "$BOXTYPE" = "ipbox"; then
