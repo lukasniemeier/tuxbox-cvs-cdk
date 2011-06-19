@@ -27,6 +27,7 @@ $(hostprefix)/bin/mksquashfs-lzma \
 $(hostprefix)/bin/checkImage
 	rm -f $@
 	$(hostprefix)/bin/mksquashfs-lzma $< $@ -be -all-root
+if BOXTYPE_DBOX2
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -37,6 +38,7 @@ $(hostprefix)/bin/checkImage
 		$(hostprefix)/bin/mksquashfs-lzma $< $@ -be -all-root; \
 		trycount=`expr $$trycount + 1`; \
 	done
+endif
 	chmod 644 $@
 	@TUXBOX_CUSTOMIZE@
 
@@ -50,6 +52,7 @@ $(hostprefix)/bin/mksquashfs-nolzma \
 $(hostprefix)/bin/checkImage
 	rm -f $@
 	$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be -all-root
+if BOXTYPE_DBOX2
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -60,6 +63,7 @@ $(hostprefix)/bin/checkImage
 		$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be -all-root; \
 		trycount=`expr $$trycount + 1`; \
 	done
+endif
 	chmod 644 $@
 	@TUXBOX_CUSTOMIZE@
 
@@ -73,6 +77,7 @@ $(flashprefix)/root-%-jffs2 \
 $(hostprefix)/bin/mkfs.jffs2 \
 $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
+if BOXTYPE_DBOX2
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -83,6 +88,7 @@ $(hostprefix)/bin/checkImage
 		$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
 	done
+endif
 
 $(flashprefix)/root-radiobox.jffs2_lzma \
 $(flashprefix)/root-neutrino.jffs2_lzma \
@@ -95,6 +101,7 @@ $(flashprefix)/root-%-jffs2_lzma \
 $(hostprefix)/bin/mkfs.jffs2 \
 $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
+if BOXTYPE_DBOX2
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -105,6 +112,7 @@ $(hostprefix)/bin/checkImage
 		$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
 	done
+endif
 
 $(flashprefix)/root-radiobox.jffs2_lzma_klzma \
 $(flashprefix)/root-neutrino.jffs2_lzma_klzma \
@@ -117,6 +125,7 @@ $(flashprefix)/root-%-jffs2_lzma_klzma \
 $(hostprefix)/bin/mkfs.jffs2 \
 $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
+if BOXTYPE_DBOX2
 	trycount=1; \
 	while [ $$trycount -le "10" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
@@ -127,6 +136,7 @@ $(hostprefix)/bin/checkImage
 		$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
 	done
+endif
 
 ################ $fs-to-boot.flfs*x
 $(flashprefix)/cramfs.flfs1x $(flashprefix)/cramfs.flfs2x: \
