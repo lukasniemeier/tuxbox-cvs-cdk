@@ -6135,3 +6135,21 @@ diff -uNr linux-2.4.37.11.org//include/linux/skbuff.h linux-2.4.37.11/include/li
  {
  	if (len > skb_headlen(skb) &&
  	    __pskb_pull_tail(skb, len-skb_headlen(skb)) == NULL)
+diff -uNr linux-2.4.37.11.org//Rules.make linux-2.4.37.11/Rules.make
+--- linux-2.4.37.11.org//Rules.make	2010-12-18 16:29:59.000000000 +0100
++++ linux-2.4.37.11/Rules.make	2011-05-03 09:57:03.000000000 +0200
+@@ -176,7 +176,13 @@
+ _modinst__: dummy
+ ifneq "$(strip $(ALL_MOBJS))" ""
+ 	mkdir -p $(MODLIB)/kernel/$(MOD_DESTDIR)
+-	cp $(sort $(ALL_MOBJS)) $(MODLIB)/kernel/$(MOD_DESTDIR)
++	for f in $(ALL_MOBJS) ; do \
++		$(OBJCOPY) -R __ksymtab -R .comment -R .note -x \
++		`$(NM) $$f | cut -f3- -d' ' | sed -n \
++			-e 's/__module_parm_\(.*\)/-K \1/p' \
++			-e 's/__ks..tab_\(.*\)/-K \1/p'` \
++		$$f $(MODLIB)/kernel/$(MOD_DESTDIR)/`basename $$f`; \
++	done
+ endif
+ 
+ .PHONY: modules_install
