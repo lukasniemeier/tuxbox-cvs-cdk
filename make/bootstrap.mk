@@ -456,8 +456,8 @@ endif
 	fi
 if CPUMODEL_405
 	rm @SOURCEDIR_glibc@/sysdeps/powerpc/powerpc32/strncmp.S
-	cd @SOURCEDIR_glibc@ && patch -p1 -E -i ../Patches/glibc_ppc4xx_ibmstropt.diff
-	cd @SOURCEDIR_glibc@ && patch -p1 -E -i ../Patches/glibc-ibmppc4xx_fp_perflib.diff
+	cd @SOURCEDIR_glibc@ && patch -p1 -E -i $(buildprefix)/Patches/glibc_ppc4xx_ibmstropt.diff
+	cd @SOURCEDIR_glibc@ && patch -p1 -E -i $(buildprefix)/Patches/glibc-ibmppc4xx_fp_perflib.diff
 endif
 	cd @DIR_glibc@ && \
 		$(BUILDENV) \
