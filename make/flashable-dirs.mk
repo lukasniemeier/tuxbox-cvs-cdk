@@ -187,6 +187,11 @@ endif
 	if [ -f $@/lib/libgcc_s_nof.so.1 -a ! -f $@/lib/libgcc_s.so.1 ]; then \
 		ln -s libgcc_s_nof.so.1 $@/lib/libgcc_s.so.1; \
 	fi
+	for i in libgcc_s_nof.so.1 libgcc_s_nof.so; do \
+		if [ ! -f $@/lib/$$i ]; then \
+			ln -s libgcc_s.so.1 $@/lib/$$i; \
+		fi \
+	done
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/root-radiobox-cramfs \
@@ -260,6 +265,14 @@ endif
 		rm $@/etc/profile.local; \
 		ln -sf /var/etc/profile.local $@/etc/profile.local; \
 	fi
+	if [ -f $@/lib/libgcc_s_nof.so.1 -a ! -f $@/lib/libgcc_s.so.1 ]; then \
+		ln -s libgcc_s_nof.so.1 $@/lib/libgcc_s.so.1; \
+	fi
+	for i in libgcc_s_nof.so.1 libgcc_s_nof.so; do \
+		if [ ! -f $@/lib/$$i ]; then \
+			ln -s libgcc_s.so.1 $@/lib/$$i; \
+		fi \
+	done
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/root-enigma+neutrino-squashfs \
@@ -298,6 +311,11 @@ endif
 	if [ -f $@/lib/libgcc_s_nof.so.1 -a ! -f $@/lib/libgcc_s.so.1 ]; then \
 		ln -s libgcc_s_nof.so.1 $@/lib/libgcc_s.so.1; \
 	fi
+	for i in libgcc_s_nof.so.1 libgcc_s_nof.so; do \
+		if [ ! -f $@/lib/$$i ]; then \
+			ln -s libgcc_s.so.1 $@/lib/$$i; \
+		fi \
+	done
 	@TUXBOX_CUSTOMIZE@
 
 $(flashprefix)/root-enigma+neutrino-jffs2_lzma \
