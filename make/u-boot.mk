@@ -9,7 +9,7 @@
 @DIR_uboot@/u-boot.stripped: bootstrap_gcc @DEPENDS_uboot@ $(bootdir)/u-boot-config/u-boot.config
 	@PREPARE_uboot@
 	cp -pR $(bootdir)/u-boot-tuxbox/* @DIR_uboot@
-	cd @DIR_uboot@ && patch -p1 -E -i ../Patches/u-boot-2010.03.diff
+	cd @DIR_uboot@ && patch -p1 -E -i ../Patches/u-boot-2011.06.diff
 	cp -p $(bootdir)/u-boot-config/u-boot.config @DIR_uboot@/include/configs/dbox2.h
 	$(MAKE) -C @DIR_uboot@ dbox2_config
 	$(MAKE) -C @DIR_uboot@ CROSS_COMPILE=$(target)- u-boot.stripped
