@@ -6,10 +6,10 @@ all:
 everything: yadd-all flash-all-all-all serversupport extra 
 
 if KERNEL26
-bare-os: yadd-u-boot kernel-cdk driver busybox module_init_tools \
+bare-os: yadd-u-boot kernel-cdk driver busybox \
 		tuxbox_hotplug tuxinfo misc_tools
 else
-bare-os: yadd-u-boot kernel-cdk driver busybox modutils tuxinfo misc_tools
+bare-os: yadd-u-boot kernel-cdk driver busybox tuxinfo misc_tools
 endif
 	@TUXBOX_YADD_CUSTOMIZE@
 

@@ -10,7 +10,7 @@ get_ROOTFS
 export TZ KMINOR KV ROOTFS PATH
 
 # use modprobe with kernel 2.6 or yadd
-if [ $KMINOR -ge 6 -o $ROOTFS = "nfs" ]; then
+if [ $KMINOR -ge 6 ]; then
 	IM=modprobe
 else
 	IM=insmod

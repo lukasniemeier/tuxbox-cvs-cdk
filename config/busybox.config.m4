@@ -469,14 +469,13 @@ option(`CONFIG_LSATTR', `n', `n')'
 #
 # Linux Module Utilities
 #
-dnl YADD uses standalone versions of module utilities (modutils/module_init_tools); the following options are therefore disabled in YADD.
 # CONFIG_MODINFO is not set
 option(`CONFIG_MODPROBE_SMALL', `n', `n')
 # CONFIG_FEATURE_MODPROBE_SMALL_OPTIONS_ON_CMDLINE is not set
 # CONFIG_FEATURE_MODPROBE_SMALL_CHECK_ALREADY_LOADED is not set
-option(`CONFIG_INSMOD', `n', `y')
-option(`CONFIG_RMMOD', `n', `y')
-option(`CONFIG_LSMOD', `n', `y')
+option(`CONFIG_INSMOD', `y', `y')
+option(`CONFIG_RMMOD', `y', `y')
+option(`CONFIG_LSMOD', `y', `y')
 option(`CONFIG_FEATURE_LSMOD_PRETTY_2_6_OUTPUT', `n', `n')
 ifdef(`kernel26',
 `option(`CONFIG_MODPROBE', `y', `y')
