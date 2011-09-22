@@ -75,6 +75,9 @@ yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTO
 yadd-none-etc: yadd-none yadd-etc
 	@TUXBOX_YADD_CUSTOMIZE@
 
+yadd-os: bare-os ftpd yadd-ucodes yadd-bootlogos yadd-etc
+	@TUXBOX_YADD_CUSTOMIZE@
+
 yadd-micro-neutrino: bare-os config yadd-ucodes camd2 switch neutrino
 	@TUXBOX_YADD_CUSTOMIZE@
 
