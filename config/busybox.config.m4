@@ -729,7 +729,10 @@ option(`CONFIG_ARPING', `n', `n')
 # CONFIG_FEATURE_BRCTL_FANCY is not set
 # CONFIG_FEATURE_BRCTL_SHOW is not set
 option(`CONFIG_DNSD', `n', `n')
-option(`CONFIG_ETHER_WAKE', `n', `n')
+ifdef(`etherwake',
+`option(`CONFIG_ETHER_WAKE', `y', `y')',
+`option(`CONFIG_ETHER_WAKE', `n', `n')'
+)
 option(`CONFIG_FAKEIDENTD', `n', `n')
 # CONFIG_FTPD is not set
 # CONFIG_FEATURE_FTP_WRITE is not set

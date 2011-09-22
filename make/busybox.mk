@@ -31,6 +31,11 @@ if !ENABLE_PROCPS
 BUSYBOX_M4 += -Dprocps
 endif
 
+# if standalone ether-wake is not enabled, use the busybox applet instead
+if !ENABLE_ETHERWAKE
+BUSYBOX_M4 += -Detherwake
+endif
+
 # if standalone wget is not enabled, use the busybox applet instead
 if !ENABLE_WGET
 BUSYBOX_M4 += -Dwget

@@ -39,9 +39,9 @@ $(flashprefix)/root/bin/fbshot: $(appsdir)/misc/tools/config.status | $(flashpre
 	$(MAKE) -C $(appsdir)/misc/tools/fbshot install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
-flash-etherwake: $(flashprefix)/root/bin/etherwake
+flash-ether-wake: $(flashprefix)/root/bin/ether-wake
 
-$(flashprefix)/root/bin/etherwake: $(appsdir)/misc/tools/config.status | $(flashprefix)/root
+$(flashprefix)/root/bin/ether-wake: $(appsdir)/misc/tools/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/misc/tools/etherwake all prefix=$(flashprefix)/root
 	$(MAKE) -C $(appsdir)/misc/tools/etherwake install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@

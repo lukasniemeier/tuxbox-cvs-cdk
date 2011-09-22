@@ -707,6 +707,11 @@ AC_ARG_ENABLE(vncviewer,
 	,[enable_vncviewer=no])
 AM_CONDITIONAL(ENABLE_VNCVIEWER,test "$enable_vncviewer" = "yes")
 
+AC_ARG_WITH(etherwake,
+	AS_HELP_STRING(--with-etherwake,replace Busybox applet ether-wake with original version),
+	[enable_etherwake="$withval"],[enable_etherwake=no])
+AM_CONDITIONAL(ENABLE_ETHERWAKE,test "$enable_etherwake" = "yes")
+
 AC_ARG_WITH(wget,
 	AS_HELP_STRING(--with-wget,replace Busybox applet wget with original version),
 	[enable_wget="$withval"],[enable_wget=no])
@@ -1716,6 +1721,7 @@ dropbear			$enable_dropbear
 dvbsnoop			$enable_dvbsnoop
 eraseall			$enable_eraseall
 Esound support:			$enable_esd
+ether-wake			$enable_etherwake
 fbshot				$enable_fbshot
 gdbserver			$enable_gdbserver
 getrc				$enable_getrc

@@ -47,7 +47,9 @@ endif
 if ENABLE_FS_LUFS
 	$(MAKE) flash-lufsd
 endif
-	$(MAKE) flash-etherwake
+if ENABLE_ETHERWAKE
+	$(MAKE) flash-ether-wake
+endif
 if BOXTYPE_DREAMBOX
 # TODO: pip and mosaic only work with neutrino...
 	$(MAKE) flash-pip
