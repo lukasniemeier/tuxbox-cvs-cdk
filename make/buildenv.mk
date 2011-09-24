@@ -185,6 +185,11 @@ CONFIGURE_OPTS += \
 	--enable-sambaserver
 endif
 
+if ENABLE_ETHERWAKE
+CONFIGURE_OPTS += \
+	--with-etherwake
+endif
+
 CONFIGURE = \
 	./autogen.sh && \
 	CC=$(target)-gcc \

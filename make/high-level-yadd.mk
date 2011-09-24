@@ -65,9 +65,6 @@ endif
 if ENABLE_STRACE
 ADDITIONAL_DEBS += strace
 endif
-if ENABLE_ETHERWAKE
-ADDITIONAL_DEBS += etherwake
-endif
 if ENABLE_WGET
 ADDITIONAL_DEBS += wget
 endif
