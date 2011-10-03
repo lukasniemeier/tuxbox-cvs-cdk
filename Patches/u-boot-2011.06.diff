@@ -3288,19 +3288,17 @@ diff -uNr u-boot-2011.06.org//Makefile u-boot-2011.06/Makefile
  		| xargs -0 rm -f
  	@rm -f $(OBJS) $(obj)*.bak $(obj)ctags $(obj)etags $(obj)TAGS \
  		$(obj)cscope.* $(obj)*.*~
--	@rm -f $(obj)u-boot $(obj)u-boot.map $(obj)u-boot.hex $(ALL)
-+	@rm -f $(obj)u-boot $(obj)u-boot.* $(ALL)
+-	@rm -f $(obj)u-boot $(obj)u-boot.map $(obj)u-boot.hex $(ALL-y)
++	@rm -f $(obj)u-boot $(obj)u-boot.* $(ALL-y)
  	@rm -f $(obj)u-boot.kwb
  	@rm -f $(obj)u-boot.imx
  	@rm -f $(obj)tools/{env/crc32.c,inca-swap-bytes}
-diff -uNr u-boot-2011.06.org//net/bootp.c u-boot-2011.06/net/bootp.c
---- u-boot-2011.06.org//net/bootp.c	2011-06-27 22:22:42.000000000 +0200
-+++ u-boot-2011.06/net/bootp.c	2011-06-30 18:39:45.000000000 +0200
-@@ -333,7 +333,17 @@
+--- u-boot-2011.09.org/net/bootp.c	2011-09-22 21:58:05.000000000 +0200
++++ u-boot-2011.09/net/bootp.c	2011-09-29 12:42:18.000000000 +0200
+@@ -165,7 +165,20 @@
  		}
+ #endif
  	}
- 
--	TftpStart();
 +#ifdef CONFIG_TUXBOX_NETWORK
 +	NetState = NETLOOP_SUCCESS;
 +#endif /* CONFIG_TUXBOX_NETWORK */
@@ -3312,10 +3310,13 @@ diff -uNr u-boot-2011.06.org//net/bootp.c u-boot-2011.06/net/bootp.c
 +	NetOurRootPath[strrchr(NetOurRootPath, '/')-NetOurRootPath] = 0;
 +#endif /* CONFIG_TUXBOX_BOOTMANAGER */
 +
++#ifndef CONFIG_BOOTP_NO_AUTOMATIC_TFTP
+ 	TftpStart();
++#endif
  }
- #endif
  
-@@ -550,7 +560,7 @@
+ #if !defined(CONFIG_CMD_DHCP)
+@@ -576,7 +589,7 @@
  {
  	volatile uchar *pkt, *iphdr;
  	Bootp_t *bp;
@@ -3324,7 +3325,7 @@ diff -uNr u-boot-2011.06.org//net/bootp.c u-boot-2011.06/net/bootp.c
  
  #if defined(CONFIG_CMD_DHCP)
  	dhcp_state = INIT;
-@@ -727,6 +737,8 @@
+@@ -753,6 +766,8 @@
  			memcpy (&NetOurRootPath, popt + 2, size);
  			NetOurRootPath[size] = 0;
  			break;
@@ -3333,7 +3334,7 @@ diff -uNr u-boot-2011.06.org//net/bootp.c u-boot-2011.06/net/bootp.c
  #if defined(CONFIG_CMD_SNTP) && defined(CONFIG_BOOTP_NTPSERVER)
  		case 42:	/* NTP server IP */
  			NetCopyIP (&NetNtpServerIP, (popt + 2));
-@@ -777,7 +789,7 @@
+@@ -803,7 +818,7 @@
  			if (dhcp_vendorex_proc (popt))
  				break;
  #endif
@@ -3342,27 +3343,6 @@ diff -uNr u-boot-2011.06.org//net/bootp.c u-boot-2011.06/net/bootp.c
  			break;
  		}
  		popt += oplen + 2;	/* Process next option */
-@@ -934,7 +946,20 @@
- #endif
- 				}
- 			}
-+#ifdef CONFIG_TUXBOX_NETWORK
-+			NetState = NETLOOP_SUCCESS;
-+#endif /* CONFIG_TUXBOX_NETWORK */
-+
-+#ifdef CONFIG_TUXBOX_BOOTMANAGER
-+	NetOurRootPath[0] = '/';
-+	NetOurRootPath[1] = 0;
-+	strncpy(NetOurRootPath, BootFile, strrchr(BootFile, '/') - BootFile);
-+	NetOurRootPath[strrchr(NetOurRootPath, '/')-NetOurRootPath] = 0;
-+#endif /* CONFIG_TUXBOX_BOOTMANAGER */
-+
-+#ifndef CONFIG_BOOTP_NO_AUTOMATIC_TFTP
- 			TftpStart();
-+#endif
- 			return;
- 		}
- 		break;
 diff -uNr u-boot-2011.06.org//net/net.c u-boot-2011.06/net/net.c
 --- u-boot-2011.06.org//net/net.c	2011-06-27 22:22:42.000000000 +0200
 +++ u-boot-2011.06/net/net.c	2011-06-30 18:39:45.000000000 +0200
@@ -3440,10 +3420,10 @@ diff -uNr u-boot-2011.06.org//tools/Makefile u-boot-2011.06/tools/Makefile
  
  # Source files which exist outside the tools directory
  EXT_OBJ_FILES-$(CONFIG_BUILD_ENVCRC) += common/env_embedded.o
-@@ -92,6 +93,7 @@
- OBJ_FILES-$(CONFIG_NETCONSOLE) += ncb.o
+@@ -94,6 +95,7 @@
  NOPED_OBJ_FILES-y += os_support.o
  OBJ_FILES-$(CONFIG_SHA1_CHECK_UB_IMG) += ubsha1.o
+ NOPED_OBJ_FILES-y += ublimage.o
 +OBJ_FILES-y += mktree.o
  
  # Don't build by default
@@ -3459,3 +3439,30 @@ diff -uNr u-boot-2011.06.org//tools/Makefile u-boot-2011.06/tools/Makefile
  $(obj)mpc86x_clk$(SFX):	$(obj)mpc86x_clk.o
  	$(HOSTCC) $(HOSTCFLAGS) $(HOSTLDFLAGS) -o $@ $^
  	$(HOSTSTRIP) $@
+diff -uNr u-boot-2011.09.org/include/linux/compiler-gcc3.h u-boot-2011.09/include/linux/compiler-gcc3.h
+--- u-boot-2011.09.org/include/linux/compiler-gcc3.h	1970-01-01 01:00:00.000000000 +0100
++++ u-boot-2011.09/include/linux/compiler-gcc3.h	2011-07-22 04:17:23.000000000 +0200
+@@ -0,0 +1,23 @@
++#ifndef __LINUX_COMPILER_H
++#error "Please don't include <linux/compiler-gcc3.h> directly, include <linux/compiler.h> instead."
++#endif
++
++#if __GNUC_MINOR__ < 2
++# error Sorry, your compiler is too old - please upgrade it.
++#endif
++
++#if __GNUC_MINOR__ >= 3
++# define __used			__attribute__((__used__))
++#else
++# define __used			__attribute__((__unused__))
++#endif
++
++#if __GNUC_MINOR__ >= 4
++#define __must_check		__attribute__((warn_unused_result))
++#endif
++
++#ifdef CONFIG_GCOV_KERNEL
++# if __GNUC_MINOR__ < 4
++#   error "GCOV profiling support for gcc versions below 3.4 not included"
++# endif /* __GNUC_MINOR__ */
++#endif /* CONFIG_GCOV_KERNEL */
