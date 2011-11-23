@@ -32,7 +32,6 @@ busybox;make:install:PREFIX=TARGET
 ftpd;install:-m755:vsftpd:TARGET/sbin/in.ftpd;install:-m644:vsftpd-dbox2.conf:TARGET/etc/vsftpd.conf;install:-d:TARGET/share/empty
 module_init_tools;make:install:DESTDIR=TARGET
 modutils;make:install-bin:sbindir=TARGET/sbin
-netkit_telnet;install:-m755:telnet/telnet:TARGET/bin/telnet;install:-m755:telnetd/telnetd:TARGET/sbin/in.telnetd
 portmap;make:install:BASEDIR=TARGET
 procps;remove:TARGET/bin/ps;install:-m755:top:ps/ps:TARGET/bin;install:-m755:proc/libproc-3.2.8.so:TARGET/lib
 udev;make:install:DESTDIR=TARGET
@@ -123,6 +122,8 @@ lzma_host;install:-m755:CPP/7zip/Compress/LZMA_Alone/lzma:HOST/bin;install:-m755
 openvpn;make:install:DESTDIR=TARGET
 ipkg
 htop;make:install:DESTDIR=TARGET
+netio;remove:TARGET/bin/netio;install:-m755:netio:TARGET/bin
+netio_host;remove:HOST/bin/netio;install:-m755:netio:HOST/bin
 
 #
 # msttf

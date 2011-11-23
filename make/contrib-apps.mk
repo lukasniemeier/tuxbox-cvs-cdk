@@ -3,9 +3,9 @@
 #   contrib apps
 #
 
-contrib_apps: bzip2 console_data kbd fbset lirc lsof dropbear ssh tcpdump bonnie @LUFS@ kermit wget ncftp screen lzma lzma_host ntpd ntpclient links links_g esound python ser2net ipkg openvpn htop
+contrib_apps: bzip2 console_data kbd fbset lirc lsof dropbear ssh tcpdump bonnie @LUFS@ kermit wget ncftp screen lzma lzma_host ntpd ntpclient links links_g esound python ser2net ipkg openvpn htop netio netio_host
 
-CONTRIB_DEPSCLEANUP = rm -f .deps/bzip2 .deps/console_data .deps/kbd .deps/directfb_examples .deps/fbset .deps/lirc .deps/lsof .deps/ssh .deps/tcpdump .deps/bonnie .deps/vdr .deps/lufs .deps/dropbear .deps/kermit .deps/wget .deps/ncftp .deps/screen .deps/lzma .deps/lzma_host .deps/ntpd .deps/ntpclient .deps/links .deps/links_g .deps/esound .deps/openntpd .deps/python .deps/ser2net .deps/ipkg .deps/openvpn .deps/htop
+CONTRIB_DEPSCLEANUP = rm -f .deps/bzip2 .deps/console_data .deps/kbd .deps/directfb_examples .deps/fbset .deps/lirc .deps/lsof .deps/ssh .deps/tcpdump .deps/bonnie .deps/vdr .deps/lufs .deps/dropbear .deps/kermit .deps/wget .deps/ncftp .deps/screen .deps/lzma .deps/lzma_host .deps/ntpd .deps/ntpclient .deps/links .deps/links_g .deps/esound .deps/openntpd .deps/python .deps/ser2net .deps/ipkg .deps/openvpn .deps/htop .deps/netio .deps/netio_host
 
 #bzip2
 $(DEPDIR)/bzip2: bootstrap @DEPENDS_bzip2@
@@ -736,3 +736,29 @@ flash-htop: $(flashprefix)/root/bin/htop
 $(flashprefix)/root/bin/htop: $(DEPDIR)/htop | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/htop $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
+
+$(DEPDIR)/netio: bootstrap @DEPENDS_netio@
+	@PREPARE_netio@
+	cd @DIR_netio@ && \
+		sed "s/gcc/\$$(CC)/" Makefile > Makefile.org && \
+		mv Makefile.org Makefile && \
+		$(BUILDENV) \
+		make linux && \
+		@INSTALL_netio@
+	@CLEANUP_netio@
+	touch $@
+
+flash-netio: $(flashprefix)/root/bin/netio
+
+$(flashprefix)/root/bin/netio: $(DEPDIR)/netio | $(flashprefix)/root
+	$(INSTALL) $(targetprefix)/bin/netio $(flashprefix)/root/bin
+	@FLASHROOTDIR_MODIFIED@
+
+$(DEPDIR)/netio_host: @DEPENDS_netio_host@
+	@PREPARE_netio_host@
+	cd @DIR_netio_host@ && \
+		$(BUILDENV) \
+		make linux && \
+		@INSTALL_netio_host@
+	@CLEANUP_netio_host@
+	touch $@

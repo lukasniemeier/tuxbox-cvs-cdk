@@ -158,6 +158,9 @@ endif
 if ENABLE_MSGBOX
 	$(MAKE) flash-msgbox
 endif
+if ENABLE_NETIO
+	$(MAKE) flash-netio
+endif
 if ENABLE_OPENNTPD
 	$(MAKE) flash-openntpd
 endif

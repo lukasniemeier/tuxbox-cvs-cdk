@@ -616,6 +616,11 @@ AC_ARG_ENABLE(msgbox,
 	,[enable_msgbox=no])
 AM_CONDITIONAL(ENABLE_MSGBOX,test "$enable_msgbox" = "yes")
 
+AC_ARG_ENABLE(netio,
+	AS_HELP_STRING(--enable-netio,enable netio),
+	,[enable_netio=no])
+AM_CONDITIONAL(ENABLE_NETIO,test "$enable_netio" = "yes")
+
 AC_ARG_ENABLE(openntpd,
 	AS_HELP_STRING(--enable-openntpd,include OpenVPN in yadds and images),
 	,[enable_openntpd=no])
@@ -1406,7 +1411,6 @@ TUXBOX_RULES_MAKE(djmount)
 TUXBOX_RULES_MAKE(ftpd)
 TUXBOX_RULES_MAKE(module_init_tools)
 TUXBOX_RULES_MAKE(modutils)
-TUXBOX_RULES_MAKE(netkit_telnet)
 TUXBOX_RULES_MAKE(portmap)
 TUXBOX_RULES_MAKE(procps)
 TUXBOX_RULES_MAKE(udev)
@@ -1494,6 +1498,8 @@ TUXBOX_RULES_MAKE(lzma_host)
 TUXBOX_RULES_MAKE(openvpn)
 TUXBOX_RULES_MAKE(ipkg)
 TUXBOX_RULES_MAKE(htop)
+TUXBOX_RULES_MAKE(netio)
+TUXBOX_RULES_MAKE(netio_host)
 
 #
 # ide apps
@@ -1736,6 +1742,7 @@ links text mode browser		$enable_links
 links graphics mode browser	$enable_links_g
 logomask			$enable_logomask
 msgbox				$enable_msgbox
+netio				$enable_netio
 openntpd			$enable_openntpd
 OpenVPN:			$enable_openvpn
 procps				$enable_procps

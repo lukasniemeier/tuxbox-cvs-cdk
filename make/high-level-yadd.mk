@@ -56,6 +56,9 @@ endif
 if ENABLE_LIRC
 ADDITIONAL_DEBS += lirc
 endif
+if ENABLE_NETIO
+ADDITIONAL_DEBS += netio
+endif
 if ENABLE_OPENVPN
 ADDITIONAL_DEBS += openvpn
 endif
