@@ -172,8 +172,10 @@ flash-dvbsub: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/dvbsub install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
-links-plugin: $(appsdir)/tuxbox/plugins/config.status
+$(DEPDIR)/links-plugin: $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/links all install
+	touch $@
 
 flash-links-plugin: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/links all install install prefix=$(flashprefix)/root
+	@FLASHROOTDIR_MODIFIED@

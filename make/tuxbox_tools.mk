@@ -30,8 +30,9 @@ satfind: $(appsdir)/tuxbox/tools/config.status
 cdkVcInfo: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/cdkVcInfo install
 
-kb2rcd: $(appsdir)/tuxbox/tools/config.status
+$(DEPDIR)/kb2rcd: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/kb2rcd install
+	touch $@
 
 aformat: $(appsdir)/tuxbox/tools/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/tools/aformat install
