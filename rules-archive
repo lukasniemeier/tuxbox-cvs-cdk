@@ -118,7 +118,7 @@ wget-1.11.4.tar.bz2;http://ftp.gnu.org/pub/gnu/wget
 ncftp-3.2.2-src.tar.bz2;ftp://ftp.ncftp.com/ncftp
 screen-4.0.3.tar.gz;ftp://ftp.gnu.org/pub/gnu/screen
 links-1.00.tar.gz;http://www.jikos.cz/~mikulas/links//download
-links-2.2.tar.gz;http://links.twibright.com/download
+links-2.4.tar.bz2;http://links.twibright.com/download
 ntp-4.2.4p5.tar.gz;http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2
 ntpclient_2000_339.tar.gz;http://doolittle.icarus.com/ntpclient
 openntpd-3.9p1.tar.gz;http://ftp-stud.fht-esslingen.de/pub/OpenBSD/OpenNTPD
