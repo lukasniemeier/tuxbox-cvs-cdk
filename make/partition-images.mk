@@ -29,11 +29,11 @@ $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mksquashfs-lzma $< $@ -be -all-root
 if BOXTYPE_DBOX2
 	trycount=1; \
-	while [ $$trycount -le "10" ]; do \
+	while [ $$trycount -le "20" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
 		if [ $$? = "0" -o $$? = "3" ]; then break; fi; \
-		echo "$$trycount/10 try to repair image"; \
-		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
+		echo "$$trycount/20 try to repair image"; \
+		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=`expr 256 \* $$trycount`; \
 		rm -f $@; \
 		$(hostprefix)/bin/mksquashfs-lzma $< $@ -be -all-root; \
 		trycount=`expr $$trycount + 1`; \
@@ -54,11 +54,11 @@ $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be -all-root
 if BOXTYPE_DBOX2
 	trycount=1; \
-	while [ $$trycount -le "10" ]; do \
+	while [ $$trycount -le "20" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
 		if [ $$? = "0" -o $$? = "3" ]; then break; fi; \
-		echo "$$trycount/10 try to repair image"; \
-		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
+		echo "$$trycount/20 try to repair image"; \
+		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=`expr 256 \* $$trycount`; \
 		rm -f $@; \
 		$(hostprefix)/bin/mksquashfs-nolzma $< $@ -be -all-root; \
 		trycount=`expr $$trycount + 1`; \
@@ -79,11 +79,11 @@ $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
 if BOXTYPE_DBOX2
 	trycount=1; \
-	while [ $$trycount -le "10" ]; do \
+	while [ $$trycount -le "20" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
 		if [ $$? = "0" -o $$? = "3" ]; then break; fi; \
-		echo "$$trycount/10 try to repair image"; \
-		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
+		echo "$$trycount/20 try to repair image"; \
+		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=`expr 256 \* $$trycount`; \
 		rm -f $@; \
 		$(hostprefix)/bin/mkfs.jffs2 -x lzma -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
@@ -103,11 +103,11 @@ $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
 if BOXTYPE_DBOX2
 	trycount=1; \
-	while [ $$trycount -le "10" ]; do \
+	while [ $$trycount -le "20" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
 		if [ $$? = "0" -o $$? = "3" ]; then break; fi; \
-		echo "$$trycount/10 try to repair image"; \
-		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
+		echo "$$trycount/20 try to repair image"; \
+		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=`expr 256 \* $$trycount`; \
 		rm -f $@; \
 		$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
@@ -127,11 +127,11 @@ $(hostprefix)/bin/checkImage
 	$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@
 if BOXTYPE_DBOX2
 	trycount=1; \
-	while [ $$trycount -le "10" ]; do \
+	while [ $$trycount -le "20" ]; do \
 		$(hostprefix)/bin/checkImage $@; \
 		if [ $$? = "0" -o $$? = "3" ]; then break; fi; \
-		echo "$$trycount/10 try to repair image"; \
-		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=256; \
+		echo "$$trycount/20 try to repair image"; \
+		dd if=/dev/urandom of=$</bad_magic_payload count=$$trycount bs=`expr 256 \* $$trycount`; \
 		rm -f $@; \
 		$(hostprefix)/bin/mkfs.jffs2 -b -U -e 0x20000 --pad=0x7c0000 -r $< -o $@; \
 		trycount=`expr $$trycount + 1`; \
