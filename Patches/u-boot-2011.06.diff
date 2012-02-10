@@ -92,6 +92,26 @@ diff -uNr u-boot-2011.06.org//board/dbox2/Makefile u-boot-2011.06/board/dbox2/Ma
 +sinclude $(obj).depend
  
  #########################################################################
+--- u-boot-2011.12.org.patched/board/dbox2/lcd.c	2011-05-19 21:54:36.000000000 +0200
++++ u-boot-2011.12/board/dbox2/lcd.c	2012-01-22 12:02:38.000000000 +0100
+@@ -245,7 +245,7 @@
+ 	iop->iop_pddat = LCD_WRITE_DATA | (data & 0xFF) | LCD_CLK_LO;
+ }
+ 
+-static void lcd_clear (void)
++static void dbox_lcd_clear (void)
+ {
+ 	int i, j;
+ 
+@@ -329,7 +329,7 @@
+ 	iop = &immr->im_ioport;
+ 
+ 	lcd_reset_init ();
+-	lcd_clear ();
++	dbox_lcd_clear ();
+ 
+ 	printf ("LCD:   ready\n");
+ 
 diff -uNr u-boot-2011.06.org//board/dbox2/u-boot.lds u-boot-2011.06/board/dbox2/u-boot.lds
 --- u-boot-2011.06.org//board/dbox2/u-boot.lds	2010-08-11 22:33:36.000000000 +0200
 +++ u-boot-2011.06/board/dbox2/u-boot.lds	2011-06-30 18:39:45.000000000 +0200
@@ -239,13 +259,13 @@ diff -uNr u-boot-2011.06.org//boards.cfg u-boot-2011.06/boards.cfg
 diff -uNr u-boot-2011.06.org//common/cmd_bootm.c u-boot-2011.06/common/cmd_bootm.c
 --- u-boot-2011.06.org//common/cmd_bootm.c	2011-06-27 22:22:42.000000000 +0200
 +++ u-boot-2011.06/common/cmd_bootm.c	2011-06-30 18:39:45.000000000 +0200
-@@ -725,7 +725,7 @@
+@@ -734,7 +734,7 @@
  	image_header_t *hdr = (image_header_t *)img_addr;
  
  	if (!image_check_magic(hdr)) {
--		puts ("Bad Magic Number\n");
-+		puts ("u-boot: Bad Magic Number *** THIS IS NOT THE FAMOUS dbox2 'Bad Magic' ***\n");
- 		show_boot_progress (-1);
+-		puts("Bad Magic Number\n");
++		puts("u-boot: Bad Magic Number *** THIS IS NOT THE FAMOUS dbox2 'Bad Magic' ***\n");
+ 		show_boot_progress(-1);
  		return NULL;
  	}
 diff -uNr u-boot-2011.06.org//common/cmd_flash.c u-boot-2011.06/common/cmd_flash.c
@@ -1549,33 +1569,30 @@ diff -uNr u-boot-2011.06.org//common/cmd_nvedit.c u-boot-2011.06/common/cmd_nved
  	if (strchr(name, '=')) {
  		printf("## Error: illegal character '=' in variable name \"%s\"\n", name);
  		return 1;
-@@ -282,8 +293,9 @@
+@@ -285,8 +296,9 @@
  					baudrate);
  				return 1;
  			}
--			printf ("## Switch baudrate to %d bps and press ENTER ...\n",
--				baudrate);
+-			printf("## Switch baudrate to %d bps and"
+-			       "press ENTER ...\n", baudrate);
 +			if (!br_nowait)
-+				printf ("## Switch baudrate to %d bps and press ENTER ...\n",
-+					baudrate);
++				printf("## Switch baudrate to %d bps and"
++				       "press ENTER ...\n", baudrate);
  			udelay(50000);
  			gd->baudrate = baudrate;
  #if defined(CONFIG_PPC) || defined(CONFIG_MCF52x2)
-@@ -292,9 +304,11 @@
+@@ -295,8 +307,9 @@
  
  			serial_setbrg();
  			udelay(50000);
--			for (;;) {
--				if (getc() == '\r')
--					break;
-+			if (!br_nowait) {
-+				for (;;) {
-+					if (getc() == '\r')
-+						break;
-+				}
- 			}
+-			while (getc() != '\r')
+-				;
++			if (!br_nowait)
++				while (getc() != '\r')
++					;
  		}
  	}
+ 
 diff -uNr u-boot-2011.06.org//common/env_common.c u-boot-2011.06/common/env_common.c
 --- u-boot-2011.06.org//common/env_common.c	2011-06-27 22:22:42.000000000 +0200
 +++ u-boot-2011.06/common/env_common.c	2011-06-30 18:46:45.000000000 +0200
@@ -1747,7 +1764,7 @@ diff -uNr u-boot-2011.06.org//common/main.c u-boot-2011.06/common/main.c
  #ifdef CONFIG_SILENT_CONSOLE
  	if (abort)
  		gd->flags &= ~GD_FLG_SILENT;
-@@ -331,6 +416,14 @@
+@@ -354,6 +439,14 @@
  		int prev = disable_ctrlc(1);	/* disable Control C checking */
  # endif
  
@@ -1759,9 +1776,9 @@ diff -uNr u-boot-2011.06.org//common/main.c u-boot-2011.06/common/main.c
 +	#endif /* DBOXFLASHER */
 +#endif /* CONFIG_DBOX2_LCD_INFO */
 +
- # ifndef CONFIG_SYS_HUSH_PARSER
- 		run_command (p, 0);
- # else
+ 		run_command2(p, 0);
+ 
+ # ifdef CONFIG_AUTOBOOT_KEYED
 diff -uNr u-boot-2011.06.org//common/Makefile u-boot-2011.06/common/Makefile
 --- u-boot-2011.06.org//common/Makefile	2011-06-27 22:22:42.000000000 +0200
 +++ u-boot-2011.06/common/Makefile	2011-06-30 18:39:45.000000000 +0200
@@ -2225,7 +2242,7 @@ diff -uNr u-boot-2011.06.org//fs/jffs2/jffs2_1pass.c u-boot-2011.06/fs/jffs2/jff
  					break;
 +#if defined(CONFIG_JFFS2_LZMA)
 +				case JFFS2_COMPR_LZMA:
-+					ret = lzma_decompress(src, lDest, jNode->csize, jNode->dsize);
++					lzma_decompress(src, lDest, jNode->csize, jNode->dsize);
 +					break;
 +#endif
  #if defined(CONFIG_JFFS2_LZO)
@@ -2590,7 +2607,7 @@ diff -uNr u-boot-2011.06.org//fs/jffs2/jffs2_1pass.c u-boot-2011.06/fs/jffs2/jff
  
  	/* turn off the lcd.  Refreshing the lcd adds 50% overhead to the */
  	/* jffs2 list building enterprise nope.  in newer versions the overhead is */
-@@ -1460,260 +1286,71 @@
+@@ -1455,259 +1286,71 @@
  	/* if we are building a list we need to refresh the cache. */
  	jffs_init_1pass_list(part);
  	pL = (struct b_lists *)part->jffs2_priv;
@@ -2714,9 +2731,8 @@ diff -uNr u-boot-2011.06.org//fs/jffs2/jffs2_1pass.c u-boot-2011.06/fs/jffs2/jff
 -
 -			if (*(uint32_t *)(&buf[ofs-buf_ofs]) == 0xffffffff) {
 -				uint32_t inbuf_ofs;
--				uint32_t empty_start, scan_end;
+-				uint32_t scan_end;
 -
--				empty_start = ofs;
 -				ofs += 4;
 -				scan_end = min_t(uint32_t, EMPTY_SCAN_SIZE(
 -							part->sector_size)/8,
@@ -3018,7 +3034,7 @@ diff -uNr u-boot-2011.06.org//fs/squashfs/Makefile u-boot-2011.06/fs/squashfs/Ma
 -$(LIB):	.depend $(OBJS)
 -	$(AR) crv $@ $(OBJS)
 +$(LIB):	$(obj).depend $(OBJS)
-+	$(AR) $(ARFLAGS) $@ $(OBJS)
++	$(call cmd_link_o_target, $(OBJS))
  
  
  #########################################################################
@@ -3068,7 +3084,8 @@ diff -uNr u-boot-2011.06.org//fs/squashfs/uncompress.c u-boot-2011.06/fs/squashf
  
  #ifdef CONFIG_SQUASHFS_LZMA
  #include "LzmaDecode.h"
- #include "LzmaDecode.c"
+-#include "LzmaDecode.c"
++/* #include "LzmaDecode.c" */
  static CLzmaDecoderState state;
  #else
 -#include <zlib.h>
@@ -3295,26 +3312,6 @@ diff -uNr u-boot-2011.06.org//Makefile u-boot-2011.06/Makefile
  	@rm -f $(obj)tools/{env/crc32.c,inca-swap-bytes}
 --- u-boot-2011.09.org/net/bootp.c	2011-09-22 21:58:05.000000000 +0200
 +++ u-boot-2011.09/net/bootp.c	2011-09-29 12:42:18.000000000 +0200
-@@ -165,7 +165,20 @@
- 		}
- #endif
- 	}
-+#ifdef CONFIG_TUXBOX_NETWORK
-+	NetState = NETLOOP_SUCCESS;
-+#endif /* CONFIG_TUXBOX_NETWORK */
-+
-+#ifdef CONFIG_TUXBOX_BOOTMANAGER
-+	NetOurRootPath[0] = '/';
-+	NetOurRootPath[1] = 0;
-+	strncpy(NetOurRootPath, BootFile, strrchr(BootFile, '/') - BootFile);
-+	NetOurRootPath[strrchr(NetOurRootPath, '/')-NetOurRootPath] = 0;
-+#endif /* CONFIG_TUXBOX_BOOTMANAGER */
-+
-+#ifndef CONFIG_BOOTP_NO_AUTOMATIC_TFTP
- 	TftpStart();
-+#endif
- }
- 
  #if !defined(CONFIG_CMD_DHCP)
 @@ -576,7 +589,7 @@
  {
@@ -3357,6 +3354,27 @@ diff -uNr u-boot-2011.06.org//net/net.c u-boot-2011.06/net/net.c
  /**********************************************************************/
  
  IPaddr_t	NetArpWaitPacketIP;
+@@ -336,7 +340,20 @@
+ 		}
+ #endif
+ 	}
++#ifdef CONFIG_TUXBOX_NETWORK
++	NetState = NETLOOP_SUCCESS;
++#endif /* CONFIG_TUXBOX_NETWORK */
++
++#ifdef CONFIG_TUXBOX_BOOTMANAGER
++	NetOurRootPath[0] = '/';
++	NetOurRootPath[1] = 0;
++	strncpy(NetOurRootPath, BootFile, strrchr(BootFile, '/') - BootFile);
++	NetOurRootPath[strrchr(NetOurRootPath, '/')-NetOurRootPath] = 0;
++#endif /* CONFIG_TUXBOX_BOOTMANAGER */
++
++#ifndef CONFIG_BOOTP_NO_AUTOMATIC_TFTP
+ 	TftpStart(TFTPGET);
++#endif
+ }
+ 
+ static void NetInitLoop(enum proto_t protocol)
 diff -uNr u-boot-2011.06.org//net/nfs.c u-boot-2011.06/net/nfs.c
 --- u-boot-2011.06.org//net/nfs.c	2011-06-27 22:22:42.000000000 +0200
 +++ u-boot-2011.06/net/nfs.c	2011-06-30 18:39:45.000000000 +0200
@@ -3439,30 +3457,3 @@ diff -uNr u-boot-2011.06.org//tools/Makefile u-boot-2011.06/tools/Makefile
  $(obj)mpc86x_clk$(SFX):	$(obj)mpc86x_clk.o
  	$(HOSTCC) $(HOSTCFLAGS) $(HOSTLDFLAGS) -o $@ $^
  	$(HOSTSTRIP) $@
-diff -uNr u-boot-2011.09.org/include/linux/compiler-gcc3.h u-boot-2011.09/include/linux/compiler-gcc3.h
---- u-boot-2011.09.org/include/linux/compiler-gcc3.h	1970-01-01 01:00:00.000000000 +0100
-+++ u-boot-2011.09/include/linux/compiler-gcc3.h	2011-07-22 04:17:23.000000000 +0200
-@@ -0,0 +1,23 @@
-+#ifndef __LINUX_COMPILER_H
-+#error "Please don't include <linux/compiler-gcc3.h> directly, include <linux/compiler.h> instead."
-+#endif
-+
-+#if __GNUC_MINOR__ < 2
-+# error Sorry, your compiler is too old - please upgrade it.
-+#endif
-+
-+#if __GNUC_MINOR__ >= 3
-+# define __used			__attribute__((__used__))
-+#else
-+# define __used			__attribute__((__unused__))
-+#endif
-+
-+#if __GNUC_MINOR__ >= 4
-+#define __must_check		__attribute__((warn_unused_result))
-+#endif
-+
-+#ifdef CONFIG_GCOV_KERNEL
-+# if __GNUC_MINOR__ < 4
-+#   error "GCOV profiling support for gcc versions below 3.4 not included"
-+# endif /* __GNUC_MINOR__ */
-+#endif /* CONFIG_GCOV_KERNEL */
