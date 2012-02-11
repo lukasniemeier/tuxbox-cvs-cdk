@@ -142,7 +142,7 @@ hddtemp-0.3-beta15.tar.bz2;http://savannah.c3sl.ufpr.br/hddtemp
 e2fsprogs-1.41.14.tar.gz;http://prdownloads.sourceforge.net/sourceforge/e2fsprogs
 parted-1.7.1.tar.gz;http://ftp.gnu.org/pub/gnu/parted
 smartmontools-5.38.tar.gz;http://prdownloads.sourceforge.net/sourceforge/smartmontools
-util-linux-2.12r.tar.bz2;http://www.kernel.org/pub/linux/utils/util-linux/
+util-linux-2.12r.tar.bz2;http://ftp.uni-frankfurt.de/kernel/linux/utils/util-linux/v2.12
 xfsprogs_2.9.4-1.tar.gz;http://www.dbox2-tuning.net/cvsdata/files
 reiserfsprogs-3.6.21.tar.bz2;http://www.kernel.org/pub/linux/utils/fs/reiserfs
 
