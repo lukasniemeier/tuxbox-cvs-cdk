@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $Id: start_neutrino,v 1.39 2009/11/21 13:35:52 rhabarber1848 Exp $
+# $Id: start_neutrino,v 1.40 2012/03/04 08:38:43 rhabarber1848 Exp $
 
 NTPD_CONF=/var/etc/ntpd.conf
 if [ -x /sbin/ntpd -a -e $NTPD_CONF ] && grep -q ^server $NTPD_CONF; then
@@ -11,7 +11,7 @@ sectionsd $SECTIONSD
 timerd
 camd2
 ZAPIT=""
-if [ ! -e /var/etc/.no_pmt_update -a `cat /proc/bus/avia_version` = "avia600" ] ; then
+if [ ! -e /var/etc/.no_pmt_update ] ; then
 	ZAPIT=-u
 fi
 zapit $ZAPIT
