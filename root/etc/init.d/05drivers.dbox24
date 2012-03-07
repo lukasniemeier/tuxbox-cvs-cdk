@@ -79,10 +79,10 @@ case $1 in
 		fi
 		$IM avia_av firmware=/var/tuxbox/ucodes $AVIA_AV_PARA
 
-		# Bei Avia_gt hw_sections und nowatchdog abfragen
+		# Possibly turn on hardware section filtering and turn off the eNX watchdog
 		GTOPTS=""
-		if [ -e /var/etc/.hw_sections ]; then
-			GTOPTS="hw_sections=0 "
+		if [ -e /var/etc/.hwsections ]; then
+			GTOPTS="hw_sections=1 "
 		fi
 		if [ -e /var/etc/.no_enxwatchdog ]; then
 			GTOPTS="${GTOPTS}no_watchdog=1 "
