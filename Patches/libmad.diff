@@ -12,10 +12,10 @@
 +Version: 0.15.1b
 +Libs: -L${libdir} -lmad
 +Cflags: -I${includedir}
-diff -uNr libmad-0.15.1b.org//configure.ac libmad-0.15.1b/configure.ac
---- libmad-0.15.1b.org//configure.ac	2004-01-23 10:41:32.000000000 +0100
-+++ libmad-0.15.1b/configure.ac	2011-09-28 20:12:26.000000000 +0200
-@@ -124,71 +124,7 @@
+diff -uNr libmad-0.15.1b.org/configure libmad-0.15.1b/configure
+--- libmad-0.15.1b.org/configure	2004-02-05 10:34:07.000000000 +0100
++++ libmad-0.15.1b/configure	2012-03-10 15:06:22.000000000 +0100
+@@ -19083,71 +19083,7 @@
  
  if test "$GCC" = yes
  then
@@ -88,11 +88,6 @@ diff -uNr libmad-0.15.1b.org//configure.ac libmad-0.15.1b/configure.ac
  fi
  
  case "$host" in
-; You can calculate where the next frame will start depending on things
-; like the bitrate. See mad_header_decode().  It seems that when decoding
-; the frame you can go past that boundary.  This attempts to catch those cases,
-; but might not catch all of them.
-; For more info see http://bugs.debian.org/508133
 Index: libmad-0.15.1b/layer12.c
 ===================================================================
 --- libmad-0.15.1b.orig/layer12.c	2008-12-23 21:38:07.000000000 +0100

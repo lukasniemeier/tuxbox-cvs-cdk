@@ -573,7 +573,6 @@ $(flashprefix)/root/sbin/ntpd: openntpd | $(flashprefix)/root
 $(DEPDIR)/esound: bootstrap @DEPENDS_esound@
 	@PREPARE_esound@
 	cd @DIR_esound@ && \
-		autoreconf -f -i && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
