@@ -586,6 +586,7 @@ option(`CONFIG_FEATURE_USE_TERMIOS', `y', `y')
 # CONFIG_FEATURE_VOLUMEID_SYSV is not set
 # CONFIG_FEATURE_VOLUMEID_OCFS2 is not set
 # CONFIG_FEATURE_VOLUMEID_LINUXRAID is not set
+ifdef(`mount',
 option(`CONFIG_MOUNT', `y', `y')
 option(`CONFIG_FEATURE_MOUNT_FAKE', `n', `n')
 option(`CONFIG_FEATURE_MOUNT_VERBOSE', `n', `n')
@@ -600,6 +601,8 @@ option(`CONFIG_FEATURE_MOUNT_FSTAB', `y', `y')
 ifdef(`nfs',
 `option(`CONFIG_FEATURE_MOUNT_NFS', `y', `y')',
 `option(`CONFIG_FEATURE_MOUNT_NFS', `y', `n')'
+),
+option(`CONFIG_MOUNT', `n', `n')
 )
 option(`CONFIG_PIVOT_ROOT', `n', `n')
 option(`CONFIG_RDATE', `y', `y')

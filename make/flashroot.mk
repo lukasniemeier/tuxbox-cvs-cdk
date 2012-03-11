@@ -58,6 +58,9 @@ if ENABLE_IDEMMC
 	$(MAKE) flash-sfdisk
 endif
 endif
+if ENABLE_MOUNT_STANDALONE
+	$(MAKE) flash-mount
+endif
 if ENABLE_AUTOMOUNT
 	$(MAKE) flash-automount
 endif

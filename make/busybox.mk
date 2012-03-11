@@ -8,6 +8,9 @@ if !ENABLE_FDISK_STANDALONE
 BUSYBOX_M4 += -Dfdisk
 endif
 endif
+if !ENABLE_MOUNT_STANDALONE
+BUSYBOX_M4 += -Dmount
+endif
 if ENABLE_EXTFS
 BUSYBOX_M4 += -Dextfs
 endif

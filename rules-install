@@ -92,7 +92,7 @@ lsof;install:-m755:lsof:TARGET/sbin
 ssh;make:install:DESTDIR=TARGET
 e2fsprogs;make:install
 dosfstools;make:install:PREFIX=TARGET
-utillinux;make:install:SBINDIR=TARGET/sbin MAN8DIR=TARGET/man
+utillinux;make:install:BINDIR=TARGET/bin SBINDIR=TARGET/sbin MAN8DIR=TARGET/man
 tcpdump;make:install:DESTDIR=TARGET
 bonnie;make:install:DESTDIR=TARGET/sbin
 vdr;make:install:BINDIR=TARGET/bin:MANDIR=TARGET/man:VIDEODIR=TARGET/video:PLUGINIDIR=TARGET/lib/vdr/plugins

@@ -16,7 +16,11 @@ endif
 if ENABLE_IDEMMC
 FILESYSTEM_DEBS = utillinux
 else
+if ENABLE_MOUNT_STANDALONE
+FILESYSTEM_DEBS = utillinux
+else
 FILESYSTEM_DEBS =
+endif
 endif
 if ENABLE_E2FSPROGS
 FILESYSTEM_DEBS += e2fsprogs
@@ -78,7 +82,7 @@ yadd-none: bare-os config tuxbox_tools lcd ftpd yadd-ucodes yadd-bootlogos @AUTO
 yadd-none-etc: yadd-none yadd-etc
 	@TUXBOX_YADD_CUSTOMIZE@
 
-yadd-os: bare-os ftpd yadd-ucodes yadd-bootlogos yadd-etc @AUTOMOUNT@
+yadd-os: bare-os ftpd yadd-ucodes yadd-bootlogos yadd-etc @AUTOMOUNT@ $(FILESYSTEM_DEBS)
 	@TUXBOX_YADD_CUSTOMIZE@
 
 yadd-micro-neutrino: bare-os config yadd-ucodes camd2 switch neutrino

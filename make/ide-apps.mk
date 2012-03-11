@@ -32,15 +32,22 @@ $(flashprefix)/root/sbin/hdparm: bootstrap @DEPENDS_hdparm@ | $(flashprefix)/roo
 	@TUXBOX_CUSTOMIZE@
 
 # contains [cs]fdisk etc
-$(DEPDIR)/utillinux: bootstrap @DEPENDS_utillinux@
+$(DEPDIR)/utillinux: bootstrap libz libncurses @DEPENDS_utillinux@
 	@PREPARE_utillinux@
 	cd @DIR_utillinux@ && \
 		CC=$(target)-gcc \
 		CFLAGS="-Os -msoft-float -I$(targetprefix)/include/ncurses" \
 		LDFLAGS="$(TARGET_LDFLAGS)" \
 		./configure && \
-		$(MAKE) ARCH=$(CPU_ARCH) all && \
-		@INSTALL_utillinux@
+		$(MAKE) ARCH=$(CPU_ARCH) all
+if ENABLE_MOUNT_STANDALONE
+	$(INSTALL) -D @DIR_utillinux@/mount/mount $(targetprefix)/bin/
+endif
+if ENABLE_FDISK_STANDALONE
+	for i in fdisk cfdisk sfdisk; do \
+		$(INSTALL) -D @DIR_utillinux@/fdisk/$$i $(targetprefix)/sbin/; \
+	done
+endif
 	@CLEANUP_utillinux@
 	touch $@
 
@@ -61,6 +68,13 @@ flash-fdisk: $(flashprefix)/root/sbin/fdisk
 
 $(flashprefix)/root/sbin/fdisk: utillinux | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/sbin/fdisk $@
+	@FLASHROOTDIR_MODIFIED@
+
+#replaces busybox mount
+flash-mount: $(flashprefix)/root/bin/mount
+
+$(flashprefix)/root/bin/mount: utillinux | $(flashprefix)/root
+	$(INSTALL) $(targetprefix)/bin/mount $@
 	@FLASHROOTDIR_MODIFIED@
 
 if ENABLE_UCLIBC

@@ -262,6 +262,7 @@ AC_SUBST(DEFAULT_FS_FSTAB)
 
 # enable all needed filesystem tools by default
 enable_fs_fdisk=no
+enable_fs_mount=no
 enable_fs_e2fsprogs=no
 enable_fs_xfsprogs=no
 enable_fs_reiserfsprogs=no
@@ -281,7 +282,7 @@ fi
 
 AC_ARG_WITH(filesystem-tools,[  --with-filesystem-tools=LIST 
                           comma seperated list of filesystem tools to be used,
-                          allowed values: e2fsprogs, reiserfsprogs, dosfstools, xfsprogs, fdisk (standalone)],[
+                          allowed values: e2fsprogs, reiserfsprogs, dosfstools, xfsprogs, fdisk/mount (standalone)],[
 if test x"${withval+set}" = xset; then
     enable_filesystem_tools=`echo "${withval}" | sed -e 's/[[ 	,]][[ 	,]]*/,/g' -e 's/,$//' -e 's/,/ /g'`
     enable_fs_e2fsprogs=no
@@ -305,6 +306,8 @@ if test x"${withval+set}" = xset; then
 	    fdisk)		if test "$enable_ide" = "yes" -o "$enable_mmc" = "yes"; then
 				    enable_fs_fdisk=yes
 				fi ;;
+	    mount)		enable_fs_mount=yes
+				;;
 	    *)			AC_MSG_ERROR([bad value $i for --with-filesystem-tools]) ;;
 	esac
     done
@@ -314,6 +317,7 @@ AM_CONDITIONAL(ENABLE_E2FSPROGS,test "$enable_fs_e2fsprogs" = "yes")
 AM_CONDITIONAL(ENABLE_XFSPROGS,test "$enable_fs_xfsprogs" = "yes")
 AM_CONDITIONAL(ENABLE_REISERFSPROGS,test "$enable_fs_reiserfsprogs" = "yes")
 AM_CONDITIONAL(ENABLE_DOSFSTOOLS,test "$enable_fs_dosfstools" = "yes")
+AM_CONDITIONAL(ENABLE_MOUNT_STANDALONE,test "$enable_fs_mount" = "yes")
 
 # neutrino drive-gui setup
 AC_ARG_ENABLE(drive-gui,
@@ -1691,6 +1695,7 @@ used busybox-m4-config:		$busybox_conf
 IDE support:			$enable_ide
 MMC support:			$enable_use_mmc
 fdisk standalone:		$enable_fs_fdisk
+mount standalone:		$enable_fs_mount
 fstab default fs:		$DEFAULT_FS_FSTAB
 IDE/MMC: Ext2 support		$enable_ext2 $summary_e2fsprogs_ext2
 IDE/MMC: Ext3 support		$enable_ext3 $summary_e2fsprogs_ext3
