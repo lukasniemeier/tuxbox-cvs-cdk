@@ -253,7 +253,7 @@ endif
 endif
 endif
 
-$(DEPDIR)/libfreetype: bootstrap $(FREETYPE_DEPENDS)
+$(DEPDIR)/libfreetype: bootstrap libz $(FREETYPE_DEPENDS)
 	$(FREETYPE_PREPARE)
 	cd $(FREETYPE_DIR) && \
 		$(BUILDENV) \
