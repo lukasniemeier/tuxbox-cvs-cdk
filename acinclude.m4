@@ -42,7 +42,7 @@ CPU_ARCH="ppc"
 CPU_MODEL="823"
 
 AC_ARG_WITH(boxtype,
-	[  --with-boxtype          valid values: dbox2,tripledragon,dreambox,ipbox,coolstream,generic],
+	[  --with-boxtype          valid values: dbox2,tripledragon,dreambox,ipbox,coolstream,spark,generic],
 	[case "${withval}" in
 dnl		To-Do: extend CPU types and kernel versions when needed
 		dbox2)
@@ -64,6 +64,12 @@ dnl		To-Do: extend CPU types and kernel versions when needed
 			;;
 		tripledragon|generic)
 			BOXTYPE="$withval"
+			;;
+		spark)
+			BOXTYPE="$withval"
+			CPU_ARCH="sh4"
+			enable_kernel26=yes
+			target_alias="sh4-linux"
 			;;
 		coolstream)
 			BOXTYPE="$withval"
@@ -111,7 +117,7 @@ AC_ARG_WITH(boxmodel,
 			fi
 			;;
 		*)
-			if test "$BOXTYPE" != "dbox2"; then
+			if test "$BOXTYPE" != "dbox2" -a "$BOXTYPE" != "spark"; then
 				AC_MSG_ERROR([unsupported value $withval for --with-boxmodel])
 			fi
 			;;
@@ -131,6 +137,7 @@ AM_CONDITIONAL(BOXTYPE_TRIPLE, test "$BOXTYPE" = "tripledragon")
 AM_CONDITIONAL(BOXTYPE_DREAMBOX, test "$BOXTYPE" = "dreambox")
 AM_CONDITIONAL(BOXTYPE_IPBOX, test "$BOXTYPE" = "ipbox")
 AM_CONDITIONAL(BOXTYPE_COOL, test "$BOXTYPE" = "coolstream")
+AM_CONDITIONAL(BOXTYPE_SPARK, test "$BOXTYPE" = "spark")
 AM_CONDITIONAL(BOXTYPE_GENERIC, test "$BOXTYPE" = "generic")
 
 AM_CONDITIONAL(BOXMODEL_DM500,test "$BOXMODEL" = "dm500")
@@ -155,6 +162,8 @@ elif test "$BOXTYPE" = "ipbox"; then
 	AC_DEFINE(HAVE_IPBOX_HARDWARE, 1, [building for an ipbox])
 elif test "$BOXTYPE" = "coolstream"; then
 	AC_DEFINE(HAVE_COOL_HARDWARE, 1, [building for a coolstream])
+elif test "$BOXTYPE" = "spark"; then
+	AC_DEFINE(HAVE_SPARK_HARDWARE, 1, [building for a spark])
 elif test "$BOXTYPE" = "generic"; then
 	AC_DEFINE(HAVE_GENERIC_HARDWARE, 1, [building for a generic device like a standard PC])
 fi
