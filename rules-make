@@ -89,7 +89,7 @@ libmpfr_host;2.3.1;mpfr-2.3.1;mpfr-2.3.1.tar.bz2;extract:mpfr-2.3.1.tar.bz2
 #
 # contrib apps
 #
-bzip2;1.0.2;bzip2-1.0.2;bzip2-1.0.2.tar.gz:bzip2.diff;extract:bzip2-1.0.2.tar.gz;patch:bzip2.diff
+bzip2;1.0.6;bzip2-1.0.6;bzip2-1.0.6.tar.gz:bzip2.diff;extract:bzip2-1.0.6.tar.gz;patch:bzip2.diff
 console_data;1999.08.29;console-data-1999.08.29;console-data_1999.08.29.orig.tar.gz;extract:console-data_1999.08.29.orig.tar.gz
 console_tools;0.2.3;console-tools-0.2.3;console-tools-0.2.3.tar.gz:console-tools.diff;extract:console-tools-0.2.3.tar.gz;patch:console-tools.diff
 kbd;1.15.3;kbd-1.15.3;kbd-1.15.3.tar.gz:kbd.diff;extract:kbd-1.15.3.tar.gz;patch:kbd.diff
@@ -132,7 +132,7 @@ netio_host;1.3.1;netio-1.3.1;netio131.zip;extract:netio131.zip:netio-1.3.1
 #
 # ide/hdd apps
 #
-e2fsprogs;1.41.14;e2fsprogs-1.41.14;e2fsprogs-1.41.14.tar.gz:e2fsprogs_gcc4_build_fix.diff;extract:e2fsprogs-1.41.14.tar.gz;patch:e2fsprogs_gcc4_build_fix.diff
+e2fsprogs;1.42;e2fsprogs-1.42;e2fsprogs-1.42.tar.gz:e2fsprogs_gcc4_build_fix.diff;extract:e2fsprogs-1.42.tar.gz;patch:e2fsprogs_gcc4_build_fix.diff
 hddtemp;0.3-beta15;hddtemp-0.3-beta15;hddtemp-0.3-beta15.tar.bz2;extract:hddtemp-0.3-beta15.tar.bz2
 hdparm;9.37;hdparm-9.37;hdparm-9.37.tar.gz;extract:hdparm-9.37.tar.gz
 parted;1.7.1;parted-1.7.1;parted-1.7.1.tar.gz;extract:parted-1.7.1.tar.gz
@@ -150,7 +150,7 @@ msttf;0.0;msttf;arial32.exe:arialb32.exe;dircreate;dirextract:arial32.exe;dirext
 #
 # development tools
 #
-gdb;7.2;gdb-7.2;gdb-7.2.tar.bz2;extract:gdb-7.2.tar.bz2
+gdb;7.4;gdb-7.4;gdb-7.4.tar.bz2;extract:gdb-7.4.tar.bz2
 valgrind;3.6.1;valgrind-3.6.1;valgrind-3.6.1.tar.bz2;extract:valgrind-3.6.1.tar.bz2
 insight;6.8-1;insight-6.8-1;insight-6.8-1.tar.bz2;extract:insight-6.8-1.tar.bz2
 ltrace;0.3.26;ltrace-0.3.26;ltrace_0.3.26.tar.gz:ltrace.diff;extract:ltrace_0.3.26.tar.gz;patch:ltrace.diff

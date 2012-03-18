@@ -101,6 +101,7 @@ $(DEPDIR)/e2fsprogs: bootstrap @DEPENDS_e2fsprogs@
 			--disable-e2initrd-helper \
 			--disable-debugfs \
 			--enable-resizer \
+			--disable-defrag \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -132,6 +133,7 @@ $(flashprefix)/root/sbin/e2fsck: bootstrap @DEPENDS_e2fsprogs@ | $(flashprefix)/
 			--disable-e2initrd-helper \
 			--disable-debugfs \
 			--enable-resizer \
+			--disable-defrag \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -234,6 +236,7 @@ $(DEPDIR)/xfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_xfsprogs@
 			--disable-profile \
 			--disable-debugfs \
 			--enable-resizer \
+			--disable-defrag \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -285,6 +288,7 @@ $(flashprefix)/root/sbin/mkfs.xfs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPEND
 			--disable-profile \
 			--disable-debugfs \
 			--enable-resizer \
+			--disable-defrag \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \
@@ -337,6 +341,7 @@ $(DEPDIR)/reiserfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_reiserfs
 			--disable-profile \
 			--disable-debugfs \
 			--enable-resizer \
+			--disable-defrag \
 			--enable-fsck \
 			--with-gnu-ld \
 			$(E2FSPROGSOPT) \

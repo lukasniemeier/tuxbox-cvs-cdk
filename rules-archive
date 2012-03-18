@@ -96,11 +96,11 @@ mpfr-2.3.1.tar.bz2;http://www.mpfr.org/mpfr-2.3.1;ftp://ftp.rz.tu-bs.de/pub/mirr
 #
 # contrib apps
 #
-bzip2-1.0.2.tar.gz;ftp://sources.redhat.com/pub/bzip2/v102
+bzip2-1.0.6.tar.gz;http://www.bzip.org/1.0.6
 console-data_1999.08.29.orig.tar.gz;ftp://ftp.gnome.org/mirror/debian-archive/dists/potato/main/source/base
 console-tools-0.2.3.tar.gz;http://prdownloads.sourceforge.net/sourceforge/lct
 kbd-1.15.3.tar.gz;ftp://ftp.altlinux.org/pub/people/legion/kbd
-fbset-2.1.tar.gz;ftp://ftp.nz.debian.org/gentoo/distfiles
+fbset-2.1.tar.gz;http://users.telenet.be/geertu/Linux/fbdev
 lirc-0.8.5.tar.bz2;http://unusedino.de/lirc/software
 openssh-3.8p1.tar.gz;http://www.eng.lsu.edu/mirrors/openssh
 tcpdump-3.9.4.tar.gz;http://www.tcpdump.org/release
@@ -139,7 +139,7 @@ netio131.zip;http://www.ars.de/ars/ars.nsf/f24a6a0b94c22d82862566960071bf5a/aa57
 #
 hdparm-9.37.tar.gz;http://prdownloads.sourceforge.net/sourceforge/hdparm
 hddtemp-0.3-beta15.tar.bz2;http://savannah.c3sl.ufpr.br/hddtemp
-e2fsprogs-1.41.14.tar.gz;http://prdownloads.sourceforge.net/sourceforge/e2fsprogs
+e2fsprogs-1.42.tar.gz;http://prdownloads.sourceforge.net/sourceforge/e2fsprogs
 parted-1.7.1.tar.gz;http://ftp.gnu.org/pub/gnu/parted
 smartmontools-5.38.tar.gz;http://prdownloads.sourceforge.net/sourceforge/smartmontools
 util-linux-2.12r.tar.bz2;http://ftp.uni-frankfurt.de/kernel/linux/utils/util-linux/v2.12
@@ -149,7 +149,7 @@ reiserfsprogs-3.6.21.tar.bz2;http://www.kernel.org/pub/linux/utils/fs/reiserfs
 #
 # development tools
 #
-gdb-7.2.tar.bz2;http://ftp.uni-kl.de/pub/gnu/gdb/
+gdb-7.4.tar.bz2;http://ftp.uni-kl.de/pub/gnu/gdb/
 valgrind-3.6.1.tar.bz2;http://valgrind.org/downloads
 insight-6.8-1.tar.bz2;ftp://sourceware.org/pub/insight/releases/
 ltrace_0.3.26.tar.gz;http://ftp.cica.es/guadalinex/mirror/debian/pool/main/l/ltrace
