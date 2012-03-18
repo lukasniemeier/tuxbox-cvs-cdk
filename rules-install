@@ -218,4 +218,16 @@ bootstrap_eglibc
 eglibc
 gcc_cool
 
+#
+# spark
+#
+linux_spark
+linux_spark_kernel_headers
+binutils_spark
+glibc_spark;rewrite-libtool:TARGET/target/usr/lib/libstdc++.la;rewrite-libtool:TARGET/target/usr/lib/libsupc++.la
+gcc_spark
+ffmpeg;make:install:DESTDIR=TARGET
+opkg;make:install:PREFIX=TARGET
+opkg_host;make:all;install:-m755:src/opkg-cl:HOST/bin/opkg-cl
+
 >>?;rules-install-local

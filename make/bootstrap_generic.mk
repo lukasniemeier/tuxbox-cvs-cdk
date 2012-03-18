@@ -9,10 +9,12 @@ $(DEPDIR)/directories:
 	$(INSTALL) -d $(targetprefix)/boot
 	$(INSTALL) -d $(targetprefix)/dev
 	$(INSTALL) -d $(targetprefix)/etc
+if !BOXTYPE_SPARK
 	$(INSTALL) -d $(targetprefix)/include
-	$(INSTALL) -d $(targetprefix)/mnt
 	$(INSTALL) -d $(targetprefix)/lib
 	$(INSTALL) -d $(targetprefix)/lib/pkgconfig
+endif
+	$(INSTALL) -d $(targetprefix)/mnt
 	$(INSTALL) -d $(targetprefix)/proc
 	$(INSTALL) -d $(targetprefix)/root
 	$(INSTALL) -d $(targetprefix)/sbin
@@ -38,10 +40,12 @@ endif
 	$(INSTALL) -d $(hostprefix)/$(target)
 	$(INSTALL) -d $(hostprefix)/bin
 	$(INSTALL) -d $(bootprefix)
+if !BOXTYPE_SPARK
 	-rm -f $(hostprefix)/$(target)/include
 	-rm -f $(hostprefix)/$(target)/lib
 	-ln -sf $(targetprefix)/include $(hostprefix)/$(target)/include
 	-ln -sf $(targetprefix)/lib $(hostprefix)/$(target)/lib
+endif
 if BOXTYPE_DREAMBOX
 	@for i in linux asm-generic asm mtd ; do \
 		rm -rf $(hostprefix)/$(target)/include/$$i 2> /dev/null || /bin/true; \

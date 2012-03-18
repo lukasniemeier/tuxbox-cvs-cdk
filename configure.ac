@@ -26,6 +26,9 @@ if test "$target_alias" = "" ; then
 fi
 
 AC_CANONICAL_TARGET
+if test "$target" = "sh4-unknown-linux-gnu" ; then
+        target="sh4-linux"
+fi
 AC_SUBST(target)
 
 # automake1.10 comes with verbose warning output, but we don't want them
@@ -696,7 +699,6 @@ AM_CONDITIONAL(ENABLE_TUXMAIL,test "$enable_tuxmail" = "yes")
 AC_ARG_ENABLE(tuxtxt,
 	AS_HELP_STRING(--disable-tuxtxt,disable tuxtxt completely),
 	,[enable_tuxtxt=yes])
-AM_CONDITIONAL(ENABLE_TUXTXT,test "$enable_tuxtxt" = "yes")
 
 AC_ARG_ENABLE(internal-tuxtxt,
 	AS_HELP_STRING(--disable-internal-tuxtxt,[disable internal Tuxtxt cache, use only external Tuxtxt plugin instead]),
@@ -704,6 +706,11 @@ AC_ARG_ENABLE(internal-tuxtxt,
 if ! test "$enable_tuxtxt" = "yes"; then
 	enable_internal_tuxtxt=no
 fi
+if test "$BOXTYPE" = "spark"; then
+	enable_tuxtxt=no
+	enable_internal_tuxtxt=no
+fi
+AM_CONDITIONAL(ENABLE_TUXTXT,test "$enable_tuxtxt" = "yes")
 AM_CONDITIONAL(ENABLE_INTERNAL_TUXTXT,test "$enable_internal_tuxtxt" = "yes")
 
 AC_ARG_ENABLE(tuxwetter,
@@ -1382,6 +1389,16 @@ case "${BOXTYPE}" in
 		TUXBOX_RULES_MAKE_EXDIR(bootstrap_eglibc)
 		TUXBOX_RULES_MAKE_EXDIR(eglibc)
 		TUXBOX_RULES_MAKE_EXDIR(gcc_cool)
+		;;
+	spark)
+		TUXBOX_RULES_MAKE_EXDIR(linux_spark)
+		TUXBOX_RULES_MAKE_EXDIR(linux_spark_kernel_headers)
+		TUXBOX_RULES_MAKE_EXDIR(binutils_spark)
+		TUXBOX_RULES_MAKE_EXDIR(glibc_spark)
+		TUXBOX_RULES_MAKE_EXDIR(gcc_spark)
+		TUXBOX_RULES_MAKE(ffmpeg)
+		TUXBOX_RULES_MAKE(opkg)
+		TUXBOX_RULES_MAKE(opkg_host)
 		;;
 	*)
 		TUXBOX_RULES_MAKE(linux)

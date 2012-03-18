@@ -5,6 +5,18 @@
 # This is deliberate, and makes the target "private".
 
 $(KERNEL_BUILD_FILENAME): bootstrap_gcc linuxdir install-linux-headers $(KERNEL_DIR)/.config
+if BOXTYPE_SPARK
+	$(MAKE) -C $(KERNEL_DIR) oldconfig ARCH=sh
+	$(MAKE) -C $(KERNEL_DIR) include/asm ARCH=sh
+	$(MAKE) -C $(KERNEL_DIR) include/linux/version.h ARCH=sh
+	$(MAKE) -C $(KERNEL_DIR) uImage modules \
+		ARCH=sh \
+		CROSS_COMPILE=$(target)-
+	$(MAKE) -C $(KERNEL_DIR) modules_install \
+		ARCH=sh \
+		CROSS_COMPILE=$(target)- \
+		INSTALL_MOD_PATH=$(targetprefix)
+else
 if BOXTYPE_DREAMBOX
 	$(MAKE) -C $(KERNEL_DIR) zImage modules \
 		ARCH=ppc \
@@ -51,6 +63,7 @@ else
 endif
 endif
 endif
+endif
 # if KERNEL26
 # 	$(INSTALL) -m644 $(KERNEL_DIR)/arch/ppc/boot/images/uImage $(bootprefix)/kernel-cdk
 # else
@@ -73,6 +86,7 @@ else
 $(DEPDIR)/install-linux-headers: linuxdir
 endif
 endif
+if !BOXTYPE_SPARK
 if BOXTYPE_DREAMBOX
 	@PREPARE_linux_dream_kernel_headers@
 	mv $(buildprefix)/@DIR_linux_dream_kernel_headers@/include/asm-ppc $(buildprefix)/@DIR_linux_dream_kernel_headers@/include/asm
@@ -130,6 +144,7 @@ if KERNEL26
 		ln -sf $(buildprefix)/linux/usr/include/asm-generic $(hostprefix)/$(target)/include && \
 		ln -sf $(buildprefix)/linux/usr/include/mtd $(hostprefix)/$(target)/include; \
 	fi
+endif
 endif
 endif
 endif

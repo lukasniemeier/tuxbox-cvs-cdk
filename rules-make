@@ -51,7 +51,7 @@ libboost;boost-1.48.0;boost_1_48_0;boost_1_48_0.tar.bz2;extract:boost_1_48_0.tar
 libcommoncplusplus;1.0.13;commoncpp2-1.0.13;commoncpp2-1.0.13.tar.gz:libcommoncplusplus.diff;extract:commoncpp2-1.0.13.tar.gz;patch:libcommoncplusplus.diff
 libcrypto;0.9.7e;openssl-0.9.7e;openssl-0.9.7e.tar.gz:libcrypto.diff;extract:openssl-0.9.7e.tar.gz;patch:libcrypto.diff
 libcurl;7.10.1;curl-7.10.1;curl-7.10.1.tar.gz:libcurl.diff;extract:curl-7.10.1.tar.gz;patch:libcurl.diff
-libcurl_current;7.19.7;curl-7.19.7;curl-7.19.7.tar.bz2;extract:curl-7.19.7.tar.bz2
+libcurl_current;7.20.0;curl-7.20.0;curl-7.20.0.tar.bz2;extract:curl-7.20.0.tar.bz2
 libdirectfb;1.0.0;DirectFB-1.0.0;DirectFB-1.0.0.tar.gz:libdirectfb.diff;extract:DirectFB-1.0.0.tar.gz;patch:libdirectfb.diff
 libdirectfbpp;1.0.0;DFB++-1.0.0;DFB++-1.0.0.tar.gz;extract:DFB++-1.0.0.tar.gz
 libppdirectfb;1.0.0;++DFB-1.0.0;++DFB-1.0.0.tar.gz:libppdirectfb.diff;extract:++DFB-1.0.0.tar.gz;patch:libppdirectfb.diff
@@ -235,5 +235,17 @@ bootstrap_gcc_shared_cool;4.32.2;gcc-4.3.2;gcc-4.3.2.tar.bz2:gcc-4.3.2.diff;extr
 bootstrap_eglibc;2_8;eglibc-2_8;eglibc-2_8.tar.bz2:eglibc-ports-2_8.tar.bz2;extract:eglibc-2_8.tar.bz2;dirextract:eglibc-ports-2_8.tar.bz2
 eglibc;2_8;eglibc-2_8;eglibc-2_8.tar.bz2:eglibc-ports-2_8.tar.bz2;extract:eglibc-2_8.tar.bz2;dirextract:eglibc-ports-2_8.tar.bz2
 gcc_cool;4.32.2;gcc-4.3.2;gcc-4.3.2.tar.bz2:gcc-4.3.2.diff;extract:gcc-4.3.2.tar.bz2;patch:gcc-4.3.2.diff
+
+#
+# spark
+#
+linux_spark;2.6.32.46;linux-2.6.32;stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm;dirextract:stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm
+linux_spark_kernel_headers;2.6.32.46-45;linux_spark-2.6.32.46-45;stlinux24-sh4-linux-kernel-headers-2.6.32.46-45.noarch.rpm;dirextract:stlinux24-sh4-linux-kernel-headers-2.6.32.46-45.noarch.rpm
+binutils_spark;2.20.51.0.7-48;binutils-2.20.51.0.7-48;stlinux24-cross-sh4-binutils-2.20.51.0.7-48.i386.rpm:stlinux24-cross-sh4-binutils-dev-2.20.51.0.7-48.i386.rpm;dirextract:stlinux24-cross-sh4-binutils-2.20.51.0.7-48.i386.rpm;dirextract:stlinux24-cross-sh4-binutils-dev-2.20.51.0.7-48.i386.rpm
+gcc_spark;4.5.3-97;gcc-4.5.3-97;stlinux24-cross-sh4-cpp-4.5.3-97.i386.rpm:stlinux24-cross-sh4-gcc-4.5.3-97.i386.rpm:stlinux24-cross-sh4-g++-4.5.3-97.i386.rpm;dirextract:stlinux24-cross-sh4-cpp-4.5.3-97.i386.rpm;dirextract:stlinux24-cross-sh4-gcc-4.5.3-97.i386.rpm;dirextract:stlinux24-cross-sh4-g++-4.5.3-97.i386.rpm
+glibc_spark;2.10.2-34;glibc-2.10.2-34;stlinux24-sh4-glibc-2.10.2-34.sh4.rpm:stlinux24-sh4-glibc-dev-2.10.2-34.sh4.rpm:stlinux24-sh4-libstdc++-4.5.3-100.sh4.rpm:stlinux24-sh4-libstdc++-dev-4.5.3-100.sh4.rpm:stlinux24-sh4-libgcc-4.5.3-100.sh4.rpm;dirextract:stlinux24-sh4-glibc-2.10.2-34.sh4.rpm;dirextract:stlinux24-sh4-glibc-dev-2.10.2-34.sh4.rpm;dirextract:stlinux24-sh4-libstdc++-4.5.3-100.sh4.rpm;dirextract:stlinux24-sh4-libstdc++-dev-4.5.3-100.sh4.rpm;dirextract:stlinux24-sh4-libgcc-4.5.3-100.sh4.rpm
+ffmpeg;0.10;ffmpeg-0.10;ffmpeg-0.10.tar.bz2;extract:ffmpeg-0.10.tar.bz2;apatch:ffmpeg-0.6-avoid-UINT64_C.diff;apatch:ffmpeg-0.10-remove-buildtime.diff
+opkg;0.1.8;opkg-0.1.8;opkg-0.1.8.tar.gz:opkg-0.1.8-dont-segfault.diff;extract:opkg-0.1.8.tar.gz;patch:opkg-0.1.8-dont-segfault.diff
+opkg_host;0.1.8;opkg-0.1.8;opkg-0.1.8.tar.gz:opkg-0.1.8-dont-segfault.diff;extract:opkg-0.1.8.tar.gz;apatch:opkg-0.1.8-dont-segfault.diff
 
 >>?;rules-make-local

@@ -70,6 +70,8 @@ dnl		To-Do: extend CPU types and kernel versions when needed
 			CPU_ARCH="sh4"
 			enable_kernel26=yes
 			target_alias="sh4-linux"
+			with_curlversion=current
+			with_freetypeversion=current
 			;;
 		coolstream)
 			BOXTYPE="$withval"

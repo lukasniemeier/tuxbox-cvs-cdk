@@ -73,6 +73,11 @@ $(DEPDIR)/libcurl: bootstrap libz @DEPENDS_libcurl_current@
 			--host=$(target) \
 			--prefix= \
 			--disable-gopher \
+			--disable-file \
+			--disable-rtsp \
+			--disable-imap \
+			--disable-pop3 \
+			--disable-smtp \
 			--disable-ldap \
 			--disable-dict \
 			--disable-telnet \
@@ -323,6 +328,10 @@ $(DEPDIR)/libjpeg: bootstrap @DEPENDS_libjpeg@
 	@CLEANUP_libjpeg@
 	touch $@
 
+if !BOXTYPE_SPARK
+LIBMAD_OPT=--enable-speed --enable-fpm=$(CPU_ARCH)
+endif
+
 $(DEPDIR)/libmad: bootstrap libz @DEPENDS_libmad@
 	@PREPARE_libmad@
 	cd @DIR_libmad@ && \
@@ -332,8 +341,7 @@ $(DEPDIR)/libmad: bootstrap libz @DEPENDS_libmad@
 			--host=$(target) \
 			--prefix= \
 			--enable-shared=yes \
-			--enable-speed \
-			--enable-fpm=$(CPU_ARCH) \
+			$(LIBMAD_OPT) \
 			--enable-sso && \
 		$(MAKE) all && \
 		@INSTALL_libmad@

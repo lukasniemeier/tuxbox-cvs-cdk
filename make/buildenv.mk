@@ -165,6 +165,11 @@ CONFIGURE_OPTS += \
 	--disable-gui-mount
 endif
 
+if !ENABLE_TUXTXT
+CONFIGURE_OPTS += \
+	--disable-tuxtxt
+endif
+
 if !ENABLE_INTERNAL_TUXTXT
 CONFIGURE_OPTS += \
 	--disable-internal-tuxtxt

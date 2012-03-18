@@ -70,6 +70,10 @@ sub process_make_depends (@)
     {
       $output .= "\\\$(archivedir)/" . $_ . " ";
     }
+    elsif ( $_ =~ m#\.rpm$# )
+    {
+      $output .= "\\\$(archivedir)/" . $_ . " ";
+    }
     else
     {
       die "can't recognize type of archive " . $_;
@@ -145,6 +149,10 @@ sub process_make_prepare (@)
       elsif ( $_[1] =~ m#\.exe$# )
       {
 	$output .= "cabextract \\\$(archivedir)/" . $_[1];
+      }
+      elsif ( $_[1] =~ m#\.rpm$# )
+      {
+	$output .= "rpm2cpio \\\$(archivedir)/" . $_[1] . " | cpio --extract --unconditional --preserve-modification-time --make-directories --no-absolute-filenames";
       }
       else
       {

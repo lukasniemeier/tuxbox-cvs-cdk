@@ -12,7 +12,11 @@ include make/buildenv.mk
 # Set up the cross compilation enironment, including linux kernel
 # source and directory structure
 include make/bootstrap_generic.mk
+if BOXTYPE_SPARK
+include make/bootstrap_spark.mk
+else
 include make/bootstrap.mk
+endif
 
 # Target for building and install own independ ccache for tuxbox-cdk
 include make/ccache.mk
