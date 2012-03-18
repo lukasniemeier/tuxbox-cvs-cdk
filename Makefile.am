@@ -11,6 +11,7 @@ include make/buildenv.mk
 
 # Set up the cross compilation enironment, including linux kernel
 # source and directory structure
+include make/bootstrap_generic.mk
 include make/bootstrap.mk
 
 # Target for building and install own independ ccache for tuxbox-cdk
