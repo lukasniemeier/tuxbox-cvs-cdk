@@ -139,7 +139,7 @@ netio131.zip;http://www.ars.de/ars/ars.nsf/f24a6a0b94c22d82862566960071bf5a/aa57
 #
 hdparm-9.37.tar.gz;http://prdownloads.sourceforge.net/sourceforge/hdparm
 hddtemp-0.3-beta15.tar.bz2;http://savannah.c3sl.ufpr.br/hddtemp
-e2fsprogs-1.42.tar.gz;http://prdownloads.sourceforge.net/sourceforge/e2fsprogs
+e2fsprogs-1.41.14.tar.gz;http://prdownloads.sourceforge.net/sourceforge/e2fsprogs
 parted-1.7.1.tar.gz;http://ftp.gnu.org/pub/gnu/parted
 smartmontools-5.38.tar.gz;http://prdownloads.sourceforge.net/sourceforge/smartmontools
 util-linux-2.12r.tar.bz2;http://ftp.uni-frankfurt.de/kernel/linux/utils/util-linux/v2.12

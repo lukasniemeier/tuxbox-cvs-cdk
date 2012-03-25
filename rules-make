@@ -132,7 +132,7 @@ netio_host;1.3.1;netio-1.3.1;netio131.zip;extract:netio131.zip:netio-1.3.1
 #
 # ide/hdd apps
 #
-e2fsprogs;1.42;e2fsprogs-1.42;e2fsprogs-1.42.tar.gz:e2fsprogs_gcc4_build_fix.diff;extract:e2fsprogs-1.42.tar.gz;patch:e2fsprogs_gcc4_build_fix.diff
+e2fsprogs;1.41.14;e2fsprogs-1.41.14;e2fsprogs-1.41.14.tar.gz:e2fsprogs_gcc4_build_fix.diff;extract:e2fsprogs-1.41.14.tar.gz;patch:e2fsprogs_gcc4_build_fix.diff
 hddtemp;0.3-beta15;hddtemp-0.3-beta15;hddtemp-0.3-beta15.tar.bz2;extract:hddtemp-0.3-beta15.tar.bz2
 hdparm;9.37;hdparm-9.37;hdparm-9.37.tar.gz;extract:hdparm-9.37.tar.gz
 parted;1.7.1;parted-1.7.1;parted-1.7.1.tar.gz;extract:parted-1.7.1.tar.gz
