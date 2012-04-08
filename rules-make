@@ -28,7 +28,7 @@ watchdog;5.2.4;watchdog-5.2.4.orig;watchdog_5.2.4.orig.tar.gz:watchdog.diff;extr
 # root
 #
 busybox;1.18.5;busybox-1.18.5;busybox-1.18.5.tar.bz2:busybox-1.17.1.diff;extract:busybox-1.18.5.tar.bz2;patch:busybox-1.17.1.diff
-automount;4.1.4;autofs-4.1.4;autofs-4.1.4.tar.bz2;extract:autofs-4.1.4.tar.bz2;patch:autofs.diff
+automount;4.1.4;autofs-4.1.4;autofs-4.1.4.tar.gz;extract:autofs-4.1.4.tar.gz;patch:autofs.diff
 nfs_utils;1.1.1;nfs-utils-1.1.1;nfs-utils-1.1.1.tar.gz;extract:nfs-utils-1.1.1.tar.gz;patch:nfs-utils.diff
 fusekernel;2.5.3;fuse-2.5.3;fuse-2.5.3.tar.gz;extract:fuse-2.5.3.tar.gz;patch:fuse.diff
 fuse;2.6.2;fuse-2.6.2;fuse-2.6.2.tar.gz;extract:fuse-2.6.2.tar.gz
@@ -62,7 +62,7 @@ libffi;1.20;libffi-1.20;libffi-1.20.tar.gz:libffi.diff;extract:libffi-1.20.tar.g
 libfreetype_realold;2.0.9;freetype-2.0.9;freetype-2.0.9.tar.bz2:libfreetype_realold.diff;extract:freetype-2.0.9.tar.bz2;patch:libfreetype_realold.diff
 libfreetype_old;2.1.4;freetype-2.1.4;freetype-2.1.4.tar.bz2:libfreetype.diff;extract:freetype-2.1.4.tar.bz2;patch:libfreetype.diff
 libfreetype_current;2.3.9;freetype-2.3.9;freetype-2.3.9.tar.bz2:libfreetype.diff;extract:freetype-2.3.9.tar.bz2;patch:libfreetype_current.diff
-libfribidi;0.10.4;fribidi-0.10.4;fribidi-0.10.4.tar.bz2:libfribidi.diff;extract:fribidi-0.10.4.tar.bz2;patch:libfribidi.diff
+libfribidi;0.10.4;fribidi-0.10.4;fribidi-0.10.4.tar.gz:libfribidi.diff;extract:fribidi-0.10.4.tar.gz;patch:libfribidi.diff
 libgmp;4.1.2;gmp-4.1.2;gmp-4.1.2.tar.bz2;extract:gmp-4.1.2.tar.bz2
 libjpeg;6b;jpeg-6b;jpegsrc.v6b.tar.gz:jpeg.diff;extract:jpegsrc.v6b.tar.gz;patch:jpeg.diff
 libmad;0.15.1b;libmad-0.15.1b;libmad-0.15.1b.tar.gz:libmad.diff;extract:libmad-0.15.1b.tar.gz;patch:libmad.diff
