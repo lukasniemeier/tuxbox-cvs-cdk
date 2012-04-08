@@ -10,7 +10,7 @@
 # core
 
 u-boot-2011.12.tar.bz2;ftp://ftp.denx.de/pub/u-boot
-linux-2.4.37.11.tar.bz2;ftp://ftp.de.kernel.org/pub/linux/kernel/v2.4;ftp://ftp.kernel.org/pub/linux/kernel/v2.4
+linux-2.4.37.11.tar.bz2;http://www.mirrorservice.org/sites/ftp.kernel.org/pub/linux/kernel/v2.4
 linux-2.6.26.8.tar.bz2;http://www.mirrorservice.org/sites/ftp.kernel.org/pub/linux/kernel/v2.6
 cifs-1.20c-2.4.tar.gz;http://us1.samba.org/samba/ftp/cifs-cvs
 linux-2.4.34-dbox2-mtd0305.diff.bz2
@@ -142,7 +142,7 @@ hddtemp-0.3-beta15.tar.bz2;http://savannah.c3sl.ufpr.br/hddtemp
 e2fsprogs-1.41.14.tar.gz;http://prdownloads.sourceforge.net/sourceforge/e2fsprogs
 parted-1.7.1.tar.gz;http://ftp.gnu.org/pub/gnu/parted
 smartmontools-5.38.tar.gz;http://prdownloads.sourceforge.net/sourceforge/smartmontools
-util-linux-2.12r.tar.bz2;http://ftp.uni-frankfurt.de/kernel/linux/utils/util-linux/v2.12
+util-linux-2.12r.tar.bz2;http://ftp.cross-lfs.org/pub/clfs/conglomeration/util-linux
 xfsprogs_2.9.4-1.tar.gz;http://www.dbox2-tuning.net/cvsdata/files
 reiserfsprogs-3.6.21.tar.bz2;http://www.kernel.org/pub/linux/utils/fs/reiserfs
 
