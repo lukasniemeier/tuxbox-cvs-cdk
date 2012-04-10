@@ -164,8 +164,8 @@ $(DEPDIR)/lsof: bootstrap @DEPENDS_lsof@
 $(DEPDIR)/dropbear: bootstrap libz @DEPENDS_dropbear@
 	@PREPARE_dropbear@
 	cd @DIR_dropbear@ && \
-		$(BUILDENV) \
 		autoconf && \
+		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -200,8 +200,8 @@ $(flashprefix)/root/sbin/dropbearmulti: $(DEPDIR)/dropbear | $(flashprefix)/root
 $(DEPDIR)/ssh: bootstrap libcrypto libz @DEPENDS_ssh@
 	@PREPARE_ssh@
 	cd @DIR_ssh@ && \
-		$(BUILDENV) \
 		autoconf && \
+		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -296,13 +296,13 @@ if ENABLE_FS_LUFS
 $(DEPDIR)/lufs: bootstrap @DEPENDS_lufs@
 	@PREPARE_lufs@
 	cd @DIR_lufs@ && \
-		$(BUILDENV) \
 		aclocal && \
 		case `libtoolize --version | head -n 1 | awk '{ print $$(NF); }'` in \
 		    0.*|1.*)    libtoolize --force ;; \
 		    *)          libtoolize --force --install ;; \
 		esac && \
 		autoconf && \
+		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -320,13 +320,13 @@ flash-lufsd: $(flashprefix)/root/bin/lufsd
 $(flashprefix)/root/bin/lufsd: bootstrap @DEPENDS_lufs@ | $(flashprefix)/root
 	@PREPARE_lufs@
 	cd @DIR_lufs@ && \
-		$(BUILDENV) \
 		aclocal && \
 		case `libtoolize --version | head -n 1 | awk '{ print $$(NF); }'` in \
 		    0.*|1.*)    libtoolize --force ;; \
 		    *)          libtoolize --force --install ;; \
 		esac && \
 		autoconf && \
+		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \

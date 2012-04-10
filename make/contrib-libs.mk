@@ -49,6 +49,7 @@ $(DEPDIR)/libcrypto: bootstrap @DEPENDS_libcrypto@
 	@PREPARE_libcrypto@
 	cd @DIR_libcrypto@ && \
 		sed -e 's|__TUXBOX_CC__|$(target)-gcc|' -e 's|__TUXBOX_CFLAGS__|$(TARGET_CFLAGS)|' ./Configure > ./Configure.tuxbox && \
+		$(BUILDENV) \
 		sh ./Configure.tuxbox shared no-hw no-idea no-md2 $(OPENVPN_NOMD4) no-mdc2 no-rc2 no-rc5 tuxbox --prefix=/ --openssldir=/ && \
 		$(MAKE) depend && \
 		$(MAKE) all && \
