@@ -397,7 +397,7 @@ $(DEPDIR)/libpng: bootstrap libz @DEPENDS_libpng@
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=$(targetprefix) && \
-		$(MAKE) all $(BUILDENV) && \
+		$(MAKE) all && \
 		$(MAKE) install && $(target)-ar cru $(targetprefix)/lib/libpng12_pic.a *.o && \
 		rm -f $(hostprefix)/bin/libpng-config && \
 		ln -s $(targetprefix)/bin/libpng-config $(hostprefix)/bin/libpng-config

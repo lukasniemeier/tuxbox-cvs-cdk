@@ -250,6 +250,7 @@ $(DEPDIR)/binutils: @DEPENDS_binutils@ directories
 endif
 	@PREPARE_binutils@
 	cd @DIR_binutils@ && \
+		unset CONFIG_SITE && \
 		CC=$(CC) \
 		CFLAGS="$(CFLAGS)" \
 		@CONFIGURE_binutils@ \
@@ -279,6 +280,7 @@ endif
 	$(INSTALL) -d $(hostprefix)/$(target)/sys-include
 	ln -sf $(buildprefix)/linux/include/{asm,linux} $(hostprefix)/$(target)/sys-include/
 	cd @DIR_bootstrap_gcc@ && \
+		unset CONFIG_SITE && \
 		CC=$(CC) CFLAGS="$(CFLAGS)" \
 		@CONFIGURE_bootstrap_gcc@ \
 			--build=$(build) \
@@ -310,6 +312,7 @@ endif
 		bunzip2 -cd $(archivedir)/gcc-4.1.2-patches-1.3.tar.bz2 | TAPE=- tar -x && \
 		for i in patch/*.patch; do ( patch -p0 -f -i $$i || patch -p1 -f -i $$i ); done && cd .. && \
 	cd @DIR_bootstrap_gcc41@ && \
+		unset CONFIG_SITE && \
 		CC=$(CC) CFLAGS="$(CFLAGS)" \
 		@CONFIGURE_bootstrap_gcc41@ \
 			--build=$(build) \
@@ -453,6 +456,7 @@ endif
 	$(INSTALL) -d $(hostprefix)/$(target)/sys-include
 	cp -p $(hostprefix)/$(target)/include/limits.h $(hostprefix)/$(target)/sys-include/
 	cd @DIR_gcc@ && \
+		unset CONFIG_SITE && \
 		CC=$(CC) CFLAGS="$(CFLAGS)" \
 		@CONFIGURE_gcc@ \
 			--build=$(build) \
@@ -496,6 +500,7 @@ if ENABLE_UCLIBC
 	cd @SOURCEDIR_gcc41@ && patch -p1 -f -E -i $(archivedir)/200-uclibc-locale.patch
 endif
 	cd @DIR_gcc41@ && \
+		unset CONFIG_SITE && \
 		CC=$(CC) CFLAGS="$(CFLAGS)" \
 		@CONFIGURE_gcc41@ \
 			--build=$(build) \

@@ -8,6 +8,7 @@ PATH := $(hostprefix)/bin:$(PATH)
 endif
 
 BUILDENV := \
+	unset CONFIG_SITE && \
 	AR=$(target)-ar \
 	AS=$(target)-as \
 	CC=$(target)-gcc \
