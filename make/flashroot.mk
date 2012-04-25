@@ -179,9 +179,6 @@ endif
 if ENABLE_SATFIND
 	$(MAKE) flash-satfind
 endif
-if ENABLE_SHELLEXEC
-	$(MAKE) flash-shellexec
-endif
 if ENABLE_SQLITE
 	$(MAKE) flash-sqlite
 endif
@@ -205,6 +202,9 @@ if ENABLE_TUXTXT
 endif
 if ENABLE_TUXWETTER
 	$(MAKE) flash-tuxwetter
+endif
+if ENABLE_SHELLEXEC
+	$(MAKE) flash-shellexec
 endif
 if ENABLE_VNCVIEWER
 	$(MAKE) flash-vncviewer
