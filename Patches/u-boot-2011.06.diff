@@ -265,7 +265,7 @@ diff -uNr u-boot-2011.06.org//common/cmd_bootm.c u-boot-2011.06/common/cmd_bootm
  	if (!image_check_magic(hdr)) {
 -		puts("Bad Magic Number\n");
 +		puts("u-boot: Bad Magic Number *** THIS IS NOT THE FAMOUS dbox2 'Bad Magic' ***\n");
- 		show_boot_progress(-1);
+ 		bootstage_error(BOOTSTAGE_ID_CHECK_MAGIC);
  		return NULL;
  	}
 diff -uNr u-boot-2011.06.org//common/cmd_flash.c u-boot-2011.06/common/cmd_flash.c
@@ -1776,7 +1776,7 @@ diff -uNr u-boot-2011.06.org//common/main.c u-boot-2011.06/common/main.c
 +	#endif /* DBOXFLASHER */
 +#endif /* CONFIG_DBOX2_LCD_INFO */
 +
- 		run_command2(p, 0);
+ 		run_command(p, 0);
  
  # ifdef CONFIG_AUTOBOOT_KEYED
 diff -uNr u-boot-2011.06.org//common/Makefile u-boot-2011.06/common/Makefile
