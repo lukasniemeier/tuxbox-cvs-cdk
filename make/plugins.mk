@@ -129,38 +129,48 @@ endif
 	@FLASHROOTDIR_MODIFIED@
 
 tuxwetter: libungif input $(appsdir)/tuxbox/plugins/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter install
 
 flash-tuxwetter: libungif flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 sysinfo: $(appsdir)/tuxbox/plugins/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo install
 
 flash-sysinfo: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/sysinfo install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 blockads: input $(appsdir)/tuxbox/plugins/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads install
 
 flash-blockads: flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 clock: input $(appsdir)/tuxbox/plugins/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock install
 
 flash-clock: flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 logomask: $(appsdir)/tuxbox/plugins/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask install
 
 flash-logomask: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 dvbsub: $(appsdir)/tuxbox/plugins/config.status
@@ -173,9 +183,11 @@ flash-dvbsub: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 $(DEPDIR)/links-plugin: $(appsdir)/tuxbox/plugins/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/links all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/links all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/links install
 	touch $@
 
 flash-links-plugin: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/links all install install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/links all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/links install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
