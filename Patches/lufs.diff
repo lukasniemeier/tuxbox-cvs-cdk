@@ -315,3 +315,49 @@ diff -Naur lufs-0.9.7-orig/util/Makefile.in lufs-0.9.7/util/Makefile.in
  # Tell versions [3.59,3.63) of GNU make to not export all variables.
  # Otherwise a system limit (for SysV at least) may be exceeded.
  .NOEXPORT:
+diff -uNr lufs-0.9.7.org/filesystems/ftpfs/ftpfs.cpp lufs-0.9.7/filesystems/ftpfs/ftpfs.cpp
+--- lufs-0.9.7.org/filesystems/ftpfs/ftpfs.cpp	2003-03-08 22:45:29.000000000 +0100
++++ lufs-0.9.7/filesystems/ftpfs/ftpfs.cpp	2012-05-10 08:50:06.395191104 +0200
+@@ -21,6 +21,8 @@
+  */
+ 
+ #include <unistd.h>
++#include <string.h>
++#include <stdlib.h>
+ #include <stdio.h>
+ 
+ #include <sys/types.h>
+diff -uNr lufs-0.9.7.org/filesystems/ftpfs/ftplib.cpp lufs-0.9.7/filesystems/ftpfs/ftplib.cpp
+--- lufs-0.9.7.org/filesystems/ftpfs/ftplib.cpp	2003-03-08 22:45:29.000000000 +0100
++++ lufs-0.9.7/filesystems/ftpfs/ftplib.cpp	2012-05-10 08:51:46.551191048 +0200
+@@ -24,6 +24,7 @@
+ #include <netdb.h>
+ #include <stdio.h>
+ #include <errno.h>
++#include <string.h>
+ 
+ #include <sys/types.h>
+ #include <sys/socket.h>
+diff -uNr lufs-0.9.7.org/filesystems/sshfs/sftplib.cpp lufs-0.9.7/filesystems/sshfs/sftplib.cpp
+--- lufs-0.9.7.org/filesystems/sshfs/sftplib.cpp	2003-03-08 22:45:29.000000000 +0100
++++ lufs-0.9.7/filesystems/sshfs/sftplib.cpp	2012-05-10 08:53:25.823186688 +0200
+@@ -26,6 +26,8 @@
+ #include <fcntl.h>
+ #include <pthread.h>
+ #include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
+ 
+ #include <sys/types.h>
+ #include <sys/stat.h>
+diff -uNr lufs-0.9.7.org/filesystems/sshfs/sshfs.cpp lufs-0.9.7/filesystems/sshfs/sshfs.cpp
+--- lufs-0.9.7.org/filesystems/sshfs/sshfs.cpp	2003-03-08 22:45:29.000000000 +0100
++++ lufs-0.9.7/filesystems/sshfs/sshfs.cpp	2012-05-10 08:53:55.815187677 +0200
+@@ -22,6 +22,7 @@
+ 
+ #include <fcntl.h>
+ #include <unistd.h>
++#include <string.h>
+ 
+ #include <netinet/in.h>
+ 

@@ -423,3 +423,14 @@ diff -uNr xfsprogs-2.9.4.org/repair/sb.c xfsprogs-2.9.4/repair/sb.c
  			rsb->sb_inprogress = 0;
  			clear_sunit = 1;
  
+diff -uNr xfsprogs-2.9.4.org/include/platform_defs.h.in xfsprogs-2.9.4/include/platform_defs.h.in
+--- xfsprogs-2.9.4.org/include/platform_defs.h.in	2007-09-11 04:01:16.000000000 +0200
++++ xfsprogs-2.9.4/include/platform_defs.h.in	2012-05-10 09:51:16.975113123 +0200
+@@ -30,6 +30,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <sys/types.h>
++#include <sys/stat.h>
+ 
+ #undef HAVE___U32
+ #ifdef HAVE___U32
