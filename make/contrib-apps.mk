@@ -110,8 +110,8 @@ $(DEPDIR)/directfb_examples: bootstrap libdirectfb @DEPENDS_directfb_examples@
 $(DEPDIR)/fbset: bootstrap @DEPENDS_fbset@
 	@PREPARE_fbset@
 	cd @DIR_fbset@ && \
-		$(MAKE) \
-			$(BUILDENV) && \
+		$(BUILDENV) \
+		$(MAKE) && \
 		@INSTALL_fbset@
 	@CLEANUP_fbset@
 	touch $@

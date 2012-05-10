@@ -189,9 +189,9 @@ $(DEPDIR)/libppdirectfb: bootstrap libdirectfb @DEPENDS_libppdirectfb@
 $(DEPDIR)/libdvb: bootstrap @DEPENDS_libdvb@
 	@PREPARE_libdvb@
 	cd @DIR_libdvb@ && \
-		$(MAKE) libdvb.a libdvbci.a libdvbmpegtools.a \
 		$(BUILDENV) \
-		CFLAGS="$(TARGET_CFLAGS) -I$(DVB_INCLUDESDIR) -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE" && \
+		CFLAGS="$(TARGET_CFLAGS) -I$(DVB_INCLUDESDIR) -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE" \
+		$(MAKE) libdvb.a libdvbci.a libdvbmpegtools.a && \
 		@INSTALL_libdvb@
 	@CLEANUP_libdvb@
 	touch $@

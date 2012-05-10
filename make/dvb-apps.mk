@@ -8,9 +8,9 @@ dvb_apps: dvbdate dvbstream dvbtext dvbtune vls
 $(DEPDIR)/dvbdate: bootstrap @DEPENDS_dvbdate@
 	@PREPARE_dvbdate@
 	cd @DIR_dvbdate@ && \
-		$(MAKE) dvbdate \
-			$(BUILDENV) \
-			CPPFLAGS="-I$(driverdir)/dvb/include -DNEWSTRUCT" && \
+		$(BUILDENV) \
+		CPPFLAGS="-I$(driverdir)/dvb/include -DNEWSTRUCT" \
+		$(MAKE) dvbdate && \
 		@INSTALL_dvbdate@
 	@CLEANUP_dvbdate@
 	touch $@
@@ -37,9 +37,9 @@ $(DEPDIR)/dvbtext: bootstrap @DEPENDS_dvbtext@
 $(DEPDIR)/dvbtune: bootstrap @DEPENDS_dvbtune@
 	@PREPARE_dvbtune@
 	cd @DIR_dvbtune@ && \
-		$(MAKE) \
-			$(BUILDENV) \
-			CPPFLAGS="-I$(DVB_INCLUDESDIR) -DNEWSTRUCT" && \
+		$(BUILDENV) \
+		CPPFLAGS="-I$(DVB_INCLUDESDIR) -DNEWSTRUCT" \
+		$(MAKE) && \
 		@INSTALL_dvbtune@
 	@CLEANUP_dvbtune@
 	touch $@

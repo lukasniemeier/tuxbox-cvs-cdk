@@ -24,10 +24,10 @@ $(DEPDIR)/gnuboy: bootstrap @DEPENDS_gnuboy@
 $(DEPDIR)/scummvm: bootstrap libreadline libsdl libmad @DEPENDS_scummvm@
 	@PREPARE_scummvm@
 	cd @DIR_scummvm@ && \
-		$(MAKE) \
-			$(BUILDENV) \
-			AR='$(target)-ar cru' \
-			DEFINES="-DUNIX" && \
+		$(BUILDENV) \
+		AR='$(target)-ar cru' \
+		DEFINES="-DUNIX" \
+		$(MAKE) && \
 		@INSTALL_scummvm@
 	@CLEANUP_scummvm@
 	touch $@

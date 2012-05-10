@@ -251,8 +251,8 @@ $(DEPDIR)/xfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_xfsprogs@
 	@CLEANUP_e2fsprogs@
 	@PREPARE_xfsprogs@
 	cd @DIR_xfsprogs@ && \
-		LIBTOOL=$(hostprefix)/bin/libtool \
 		$(BUILDENV) \
+		LIBTOOL=$(hostprefix)/bin/libtool \
 		$(XFSPROGSOPT) \
 		./configure \
 			--build=$(build) \
@@ -302,8 +302,8 @@ $(flashprefix)/root/sbin/mkfs.xfs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPEND
 	@CLEANUP_e2fsprogs@
 	@PREPARE_xfsprogs@
 	cd @DIR_xfsprogs@ && \
-		LIBTOOL=$(hostprefix)/bin/libtool \
 		$(BUILDENV) \
+		LIBTOOL=$(hostprefix)/bin/libtool \
 		$(XFSPROGSOPT) \
 		./configure \
 			--build=$(build) \
@@ -352,8 +352,8 @@ $(DEPDIR)/reiserfsprogs: bootstrap libtool @DEPENDS_e2fsprogs@ @DEPENDS_reiserfs
 	@CLEANUP_e2fsprogs@
 	@PREPARE_reiserfsprogs@
 	cd @DIR_reiserfsprogs@ && \
-		LIBTOOL=$(hostprefix)/bin/libtool \
 		$(BUILDENV) \
+		LIBTOOL=$(hostprefix)/bin/libtool \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
