@@ -23,7 +23,8 @@ $(appsdir)/tuxbox/enigma/config.status: bootstrap libfreetype libfribidi libmad 
 		  --with-mhw-epg=$(MHW_EPG)
 
 enigma: $(appsdir)/tuxbox/enigma/config.status | tuxbox_tools
-	$(MAKE) -C $(appsdir)/tuxbox/enigma all install
+	$(MAKE) -C $(appsdir)/tuxbox/enigma all
+	$(MAKE) -C $(appsdir)/tuxbox/enigma install
 
 # $(targetprefix)/share/locale/*/LC_MESSAGES/libc.mo and
 # $(targetprefix)/share/zoneinfo are from the glibc installation
