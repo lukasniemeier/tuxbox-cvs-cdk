@@ -367,7 +367,7 @@ $(DEPDIR)/libncurses: bootstrap @DEPENDS_libncurses@
 			--disable-rpath \
 			--without-cxx-binding \
 			--with-fallbacks='linux vt100 xterm' && \
-		$(MAKE) libs \
+		$(MAKE) -j1 libs \
 			HOSTCC=$(CC) \
 			HOSTCCFLAGS="$(CFLAGS) -DHAVE_CONFIG_H -I../ncurses -DNDEBUG -D_GNU_SOURCE -I../include" \
 			HOSTLDFLAGS="$(LDFLAGS)" && \
