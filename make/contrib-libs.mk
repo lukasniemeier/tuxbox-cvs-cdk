@@ -235,33 +235,9 @@ $(DEPDIR)/libffi: bootstrap @DEPENDS_libffi@
 	@CLEANUP_libffi@
 	touch $@
 
-if FREETYPE_CURRENT
-FREETYPE_DEPENDS=@DEPENDS_libfreetype_current@
-FREETYPE_DIR=@DIR_libfreetype_current@
-FREETYPE_PREPARE=@PREPARE_libfreetype_current@
-FREETYPE_INSTALL=@INSTALL_libfreetype_current@
-FREETYPE_CLEANUP=@CLEANUP_libfreetype_current@
-else
-if FREETYPE_OLD
-FREETYPE_DEPENDS=@DEPENDS_libfreetype_old@
-FREETYPE_DIR=@DIR_libfreetype_old@
-FREETYPE_PREPARE=@PREPARE_libfreetype_old@
-FREETYPE_INSTALL=@INSTALL_libfreetype_old@
-FREETYPE_CLEANUP=@CLEANUP_libfreetype_old@
-else
-if FREETYPE_REALOLD
-FREETYPE_DEPENDS=@DEPENDS_libfreetype_realold@
-FREETYPE_DIR=@DIR_libfreetype_realold@
-FREETYPE_PREPARE=@PREPARE_libfreetype_realold@
-FREETYPE_INSTALL=@INSTALL_libfreetype_realold@
-FREETYPE_CLEANUP=@CLEANUP_libfreetype_realold@
-endif
-endif
-endif
-
-$(DEPDIR)/libfreetype: bootstrap libz $(FREETYPE_DEPENDS)
-	$(FREETYPE_PREPARE)
-	cd $(FREETYPE_DIR) && \
+$(DEPDIR)/libfreetype: bootstrap libz @DEPENDS_libfreetype@
+	@PREPARE_libfreetype@
+	cd @DIR_libfreetype@ && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
@@ -271,8 +247,8 @@ $(DEPDIR)/libfreetype: bootstrap libz $(FREETYPE_DEPENDS)
 		rm -f $(hostprefix)/bin/freetype-config && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < builds/unix/freetype-config > $(hostprefix)/bin/freetype-config && \
 		chmod 755 $(hostprefix)/bin/freetype-config && \
-		$(FREETYPE_INSTALL)
-	$(FREETYPE_CLEANUP)
+		@INSTALL_libfreetype@
+	@CLEANUP_libfreetype@
 	touch $@
 
 $(DEPDIR)/libfribidi: bootstrap @DEPENDS_libfribidi@
