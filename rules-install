@@ -85,7 +85,7 @@ console_tools;make:install
 kbd;make:install
 directfb_examples;make:install:DESTDIR=TARGET
 fbset;install:-m755:fbset:TARGET/bin
-lirc;make:install
+lirc;make:-j1:install
 lsof;install:-m755:lsof:TARGET/sbin
 ssh;make:install:DESTDIR=TARGET
 e2fsprogs;make:install
