@@ -50,7 +50,28 @@ if KERNEL26
 	$(MAKE) -C $(KERNEL_DIR) modules_install \
 		ARCH=ppc \
 		CROSS_COMPILE=$(target)- \
+		INSTALL_MOD_STRIP=1 \
 		INSTALL_MOD_PATH=$(targetprefix)
+	find $(targetprefix)/lib/modules -name *.ko -type f -a -exec file {} \; | \
+		sed -n -e 's/^\(.*\):.*ELF.*\(executable\|relocatable\|shared object\).*,.* stripped/\1:\2/p' | \
+		( \
+		    IFS=":"; \
+		    while read F S; do \
+		        [ "$${S}" = "relocatable" ] && { \
+			    $(target)-objcopy \
+				    -R .comment \
+				    -R .pdr \
+				    -R .mdebug.abi32 \
+				    -R .note.gnu.build-id \
+				    -R .gnu.attributes \
+				    -R .reginfo \
+				    -x -G __this_module \
+				    --strip-unneeded \
+			    $$F $$F.tmp; \
+			    mv $$F.tmp $$F; \
+		        }; \
+		    done \
+		)
 else
 	$(MAKE) -C $(KERNEL_DIR) zImage modules \
 		ARCH=ppc \
@@ -263,8 +284,31 @@ driver: $(KERNEL_BUILD_FILENAME)
 		KERNEL_LOCATION=$(buildprefix)/linux \
 		CROSS_COMPILE=$(target)- \
 		BIN_DEST=$(targetprefix)/bin \
+		INSTALL_MOD_STRIP=1 \
 		INSTALL_MOD_PATH=$(targetprefix) \
 		install
+if KERNEL26
+	find $(targetprefix)/lib/modules -name *.ko -type f -a -exec file {} \; | \
+		sed -n -e 's/^\(.*\):.*ELF.*\(executable\|relocatable\|shared object\).*,.* stripped/\1:\2/p' | \
+		( \
+		    IFS=":"; \
+		    while read F S; do \
+		        [ "$${S}" = "relocatable" ] && { \
+			    $(target)-objcopy \
+				    -R .comment \
+				    -R .pdr \
+				    -R .mdebug.abi32 \
+				    -R .note.gnu.build-id \
+				    -R .gnu.attributes \
+				    -R .reginfo \
+				    -x -G __this_module \
+				    --strip-unneeded \
+			    $$F $$F.tmp; \
+			    mv $$F.tmp $$F; \
+		        }; \
+		    done \
+		)
+endif
 
 driver-clean:
 	$(MAKE) -C $(driverdir) \
