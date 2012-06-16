@@ -211,7 +211,9 @@ ifdef(`rootsize',,`define(`rootsize',`0x660000')')dnl
 #define CONFIG_CMD_MEMORY	/* md, mm, nm, mw, cp, cmp,	*/
 #define CONFIG_CMD_MISC		/* Misc functions like sleep etc*/
 #define CONFIG_CMD_NET		/* bootp, tftpboot, rarpboot	*/
+#if (UBOOT_TYPE == UBOOT_TYPE_CDK) || (UBOOT_TYPE == UBOOT_TYPE_CDK26)
 #define CONFIG_CMD_NFS		/* NFS support			*/
+#endif
 #define CONFIG_CMD_RUN		/* run command in env variable	*/
 #define CONFIG_CMD_SAVEENV
 #define CONFIG_CMD_XIMG		/* Load part of Multi Image	*/
@@ -323,7 +325,9 @@ ifelse(uboottype,`flasher',`#define CONFIG_TUXBOX_BOOTMANAGER 1
 /*
  * Miscellaneous configurable options
  */
+#if (UBOOT_TYPE == UBOOT_TYPE_CDK) || (UBOOT_TYPE == UBOOT_TYPE_CDK26)
 #define	CONFIG_SYS_LONGHELP			/* undef to save memory		*/
+#endif
 #define	CONFIG_SYS_PROMPT		"=> "	/* Monitor Command Prompt	*/
 
 #ifdef	CONFIG_SYS_HUSH_PARSER
