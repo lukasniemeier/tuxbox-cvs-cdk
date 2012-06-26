@@ -32,7 +32,8 @@ enigma: $(appsdir)/tuxbox/enigma/config.status | tuxbox_tools
 flash-enigma: $(flashprefix)/root-enigma
 
 $(flashprefix)/root-enigma: $(appsdir)/tuxbox/enigma/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/enigma all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/enigma all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/enigma install prefix=$@
 	$(INSTALL) $(appsdir)/dvb/zapit/src/scart.conf $@/var/tuxbox/config
 if ENABLE_IDEMMC
 	$(MAKE) flash-sfdisk
@@ -108,30 +109,39 @@ endif
 
 
 if ENABLE_ENIGMA_DBSWITCH
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dbswitch all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dbswitch all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dbswitch install prefix=$@
 endif
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/demo all install prefix=$@
 if BOXTYPE_DREAMBOX
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamdata all install prefix=$@
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamflash all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamdata all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamdata install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamflash all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dreamflash install prefix=$@
 endif
 if ENABLE_ENIGMA_MOVIEPLAYER
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/movieplayer all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/movieplayer all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/movieplayer install prefix=$@
 endif
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dslconnect all install prefix=$@
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/dsldisconnect all install prefix=$@
 #	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/getset all install prefix=$@
 if ENABLE_ENIGMA_NGRAB
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/ngrabstart all install prefix=$@
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/ngrabstop all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/ngrabstart all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/ngrabstart install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/ngrabstop all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/ngrabstop install prefix=$@
 endif
 if ENABLE_ENIGMA_RSS
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/rss all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/rss all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/rss install prefix=$@
 endif
 if ENABLE_ENIGMA_SCRIPT
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/script all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/script all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/script install prefix=$@
 endif
 if ENABLE_ENIGMA_WEATHER
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/weather all install prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/weather all prefix=$@
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/enigma/weather install prefix=$@
 endif
 	@TUXBOX_CUSTOMIZE@

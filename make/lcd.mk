@@ -8,7 +8,8 @@ lcd: $(appsdir)/tuxbox/lcd/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/lcd install
 
 lcdip: $(appsdir)/tuxbox/lcd/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/lcd/lcdip all install
+	$(MAKE) -C $(appsdir)/tuxbox/lcd/lcdip all
+	$(MAKE) -C $(appsdir)/tuxbox/lcd/lcdip install
 
 flash-lcdmenu: lcd $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/lcdmenu $(flashprefix)/root/bin

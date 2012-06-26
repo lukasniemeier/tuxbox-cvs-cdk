@@ -98,33 +98,43 @@ flash-mosaic: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
 
 shellexec: $(appsdir)/tuxbox/plugins/config.status
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec install
 if ENABLE_BLOCKADS
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec install
 endif
 if ENABLE_CLOCK
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec install
 endif
 if ENABLE_LOGOMASK
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec install
 endif
 if ENABLE_TUXWETTER
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec install
 endif
 
 flash-shellexec: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/shellexec install prefix=$(flashprefix)/root
 if ENABLE_BLOCKADS
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/blockads/shellexec install prefix=$(flashprefix)/root
 endif
 if ENABLE_CLOCK
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/clock/shellexec install prefix=$(flashprefix)/root
 endif
 if ENABLE_LOGOMASK
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/logomask/shellexec install prefix=$(flashprefix)/root
 endif
 if ENABLE_TUXWETTER
-	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all install prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec all prefix=$(flashprefix)/root
+	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter/shellexec install prefix=$(flashprefix)/root
 endif
 	@FLASHROOTDIR_MODIFIED@
 
