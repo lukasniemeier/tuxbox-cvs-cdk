@@ -44,10 +44,11 @@ if ENABLE_MOUNT_STANDALONE
 	$(INSTALL) -D @DIR_utillinux@/mount/mount $(targetprefix)/bin/
 endif
 if ENABLE_FDISK_STANDALONE
-	for i in fdisk cfdisk sfdisk; do \
+	$(INSTALL) -D @DIR_utillinux@/fdisk/fdisk $(targetprefix)/sbin/
+endif
+	for i in cfdisk sfdisk; do \
 		$(INSTALL) -D @DIR_utillinux@/fdisk/$$i $(targetprefix)/sbin/; \
 	done
-endif
 	@CLEANUP_utillinux@
 	touch $@
 
