@@ -53,7 +53,7 @@ endif
 if BOXTYPE_DREAMBOX
 # TODO: pip and mosaic only work with neutrino...
 	$(MAKE) flash-pip
-#	$(MAKE) flash-mosaic
+	$(MAKE) flash-mosaic
 if ENABLE_IDEMMC
 	$(MAKE) flash-sfdisk
 endif
