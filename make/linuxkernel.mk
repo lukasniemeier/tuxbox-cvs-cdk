@@ -44,6 +44,10 @@ if BOXTYPE_IPBOX
 		INSTALL_MOD_PATH=$(targetprefix)
 else
 if KERNEL26
+if DBOX2_GCC47
+	cp -v $(KERNEL_DIR)/Makefile{,.orig} && \
+	sed 's/$$(CROSS_COMPILE)ld$$/$$(CROSS_COMPILE)ld.bfd/g' $(KERNEL_DIR)/Makefile.orig > $(KERNEL_DIR)/Makefile
+endif
 	$(MAKE) -C $(KERNEL_DIR) uImage modules \
 		ARCH=ppc \
 		CROSS_COMPILE=$(target)-
@@ -153,6 +157,9 @@ if KERNEL26
 # needs the linux headers to build. For 2.4 this does nothing. Note that we cheat
 # here and declare the target powerpc since ppc will be gone in a not too distant
 # future and the headers are slowly being removed.
+if DBOX2_GCC47
+	$(MAKE) -C $(KERNEL_DIR) headers_install ARCH=powerpc INSTALL_HDR_PATH=$(targetprefix)
+else
 	@if [ `echo $(KERNELVERSION) | sed -e 's/\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\).*/\3/g'` -lt 18 ]; then \
 		ln -sf $(buildprefix)/linux/include/linux $(hostprefix)/$(target)/include; \
 		ln -sf $(buildprefix)/linux/include/asm $(hostprefix)/$(target)/include; \
@@ -165,6 +172,7 @@ if KERNEL26
 		ln -sf $(buildprefix)/linux/usr/include/asm-generic $(hostprefix)/$(target)/include && \
 		ln -sf $(buildprefix)/linux/usr/include/mtd $(hostprefix)/$(target)/include; \
 	fi
+endif
 endif
 endif
 endif

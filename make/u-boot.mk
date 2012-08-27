@@ -11,6 +11,9 @@
 	cp -pR $(bootdir)/u-boot-tuxbox/* @DIR_uboot@
 	cd @DIR_uboot@ && patch -p1 -E -i ../Patches/u-boot-2011.06.diff
 	cp -p $(bootdir)/u-boot-config/u-boot.config @DIR_uboot@/include/configs/dbox2.h
+if DBOX2_GCC47
+	echo "LD = \$$(CROSS_COMPILE)ld.bfd" >> @DIR_uboot@/board/dbox2/config.mk
+endif
 	$(MAKE) -C @DIR_uboot@ dbox2_config
 	$(MAKE) -C @DIR_uboot@ CROSS_COMPILE=$(target)- u-boot.stripped
 	$(INSTALL) @DIR_uboot@/tools/mkimage $(hostprefix)/bin

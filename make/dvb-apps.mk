@@ -63,7 +63,7 @@ $(DEPDIR)/vls: bootstrap libdvbpsi @DEPENDS_vls@
 # dvb/dvbsnoop
 
 $(appsdir)/dvb/dvbsnoop/config.status: bootstrap
-	cd $(appsdir)/dvb/dvbsnoop && $(CONFIGURE)
+	cd $(appsdir)/dvb/dvbsnoop && $(CONFIGURE_BIN)
 
 $(DEPDIR)/dvbsnoop: $(appsdir)/dvb/dvbsnoop/config.status
 	$(MAKE) -C $(appsdir)/dvb/dvbsnoop all

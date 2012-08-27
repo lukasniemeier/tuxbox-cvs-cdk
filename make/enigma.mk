@@ -13,7 +13,7 @@ ENIGMA_DEPENDS=
 endif
 
 $(appsdir)/tuxbox/enigma/config.status: bootstrap libfreetype libfribidi libmad libid3tag libvorbisidec libpng libsigc libjpeg libungif @LIBGETTEXT@ $(ENIGMA_DEPENDS) $(targetprefix)/lib/pkgconfig/tuxbox.pc $(targetprefix)/lib/pkgconfig/tuxbox-xmltree.pc $(targetprefix)/include/tuxbox/plugin.h
-	cd $(appsdir)/tuxbox/enigma && $(CONFIGURE) \
+	cd $(appsdir)/tuxbox/enigma && $(CONFIGURE_BIN) \
 		  --with-webif=$(WEBIF) \
 		  --with-epg=$(EPG) \
 		  --with-flashtool=$(FLASHTOOL) \
@@ -99,7 +99,9 @@ else
 	mkdir $@/lib
 	tar -C $@/lib -xjvf $(appsdir)/tuxbox/enigma/po/locale.image.tar.bz2
 if !ENABLE_UCLIBC
+if !DBOX2_GCC47
 	cp -rd $(targetprefix)/share/zoneinfo $@/share
+endif
 	cp -rd $(targetprefix)/share/locale/de/LC_MESSAGES/libc.mo $@/share/locale/de/LC_MESSAGES
 	cp -rd $(targetprefix)/share/locale/fr/LC_MESSAGES/libc.mo $@/share/locale/fr/LC_MESSAGES
 endif

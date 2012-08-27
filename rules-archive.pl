@@ -23,7 +23,7 @@ while ( <RULES> )
       {
         $output .= "wget -c --passive-ftp -P \$(archivedir) " . $_ . "/" . $file . " || \\\n\t";
       }
-      elsif ( $_ =~ m#^http://# )
+      elsif ( $_ =~ m#^(http|https)://# )
       {
         $output .= "wget -t 2 -T 10 -c -P \$(archivedir) " . $_ . "/" . $file . " || \\\n\t";
       }

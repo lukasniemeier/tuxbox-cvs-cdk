@@ -246,9 +246,16 @@ $(DEPDIR)/binutils: @DEPENDS_binutils@ directories libmpfr_host
 else
 BINUTILS_OPTS= \
 --without-fp
-$(DEPDIR)/binutils: @DEPENDS_binutils@ directories 
+BINUTILS_PATCHES= \
+$(archivedir)/300-001_ld_makefile_patch.patch \
+$(archivedir)/300-012_check_ldrunpath_length.patch
+$(DEPDIR)/binutils: @DEPENDS_binutils@ $(BINUTILS_PATCHES) directories
 endif
 	@PREPARE_binutils@
+	for i in ld gas intl binutils; do \
+		mkdir -p @DIR_binutils@/$$i; \
+		echo "ac_cv_func_setlocale=no" > @DIR_binutils@/$$i/config.cache; \
+	done
 	cd @DIR_binutils@ && \
 		unset CONFIG_SITE && \
 		CC=$(CC) \
@@ -496,7 +503,7 @@ endif
 		bunzip2 -cd $(archivedir)/gcc-4.1.2-patches-1.3.tar.bz2 | TAPE=- tar -x && \
 		for i in patch/*.patch; do ( patch -p0 -f -i $$i || patch -p1 -f -i $$i ); done
 if ENABLE_UCLIBC
-	cd @SOURCEDIR_gcc41@ && patch -p1 -f -E -i $(archivedir)/100-uclibc-conf.patch || true
+	-cd @SOURCEDIR_gcc41@ && patch -p1 -f -E -i $(archivedir)/100-uclibc-conf.patch
 	cd @SOURCEDIR_gcc41@ && patch -p1 -f -E -i $(archivedir)/200-uclibc-locale.patch
 endif
 	cd @DIR_gcc41@ && \
@@ -561,7 +568,7 @@ $(DEPDIR)/bootstrap_gcc_static_cool: @DEPENDS_bootstrap_gcc_static_cool@ binutil
 	@CLEANUP_bootstrap_gcc_static_cool@
 	touch $@
 
-$(DEPDIR)/bootstrap_gcc_shared_cool: @DEPENDS_bootstrap_gcc_shared_cool@ bootstrap_eglibc
+$(DEPDIR)/bootstrap_gcc_shared_cool: @DEPENDS_bootstrap_gcc_shared_cool@ bootstrap_eglibc_cool
 	@PREPARE_bootstrap_gcc_shared_cool@
 	$(INSTALL) -d $(hostprefix)/$(target)/sys-include
 	ln -sf $(buildprefix)/linux/include/{asm,linux} $(hostprefix)/$(target)/sys-include/
@@ -593,10 +600,10 @@ $(DEPDIR)/bootstrap_gcc_shared_cool: @DEPENDS_bootstrap_gcc_shared_cool@ bootstr
 	@CLEANUP_bootstrap_gcc_shared_cool@
 	touch $@
 
-$(DEPDIR)/bootstrap_eglibc: $(archivedir)/eglibc-2_8.tar.bz2 bootstrap_gcc_static_cool
-	@PREPARE_bootstrap_eglibc@
-	cd @DIR_bootstrap_eglibc@ && \
-		@CONFIGURE_bootstrap_eglibc@ \
+$(DEPDIR)/bootstrap_eglibc_cool: $(archivedir)/eglibc-2_8.tar.bz2 bootstrap_gcc_static_cool
+	@PREPARE_bootstrap_eglibc_cool@
+	cd @DIR_bootstrap_eglibc_cool@ && \
+		@CONFIGURE_bootstrap_eglibc_cool@ \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= \
@@ -609,13 +616,13 @@ $(DEPDIR)/bootstrap_eglibc: $(archivedir)/eglibc-2_8.tar.bz2 bootstrap_gcc_stati
 		$(MAKE) csu/subdir_lib && \
 		cp csu/crt1.o csu/crti.o csu/crtn.o $(targetprefix)/lib && \
 		$(target)-gcc -nostdlib -nostartfiles -shared -x c /dev/null -o $(targetprefix)/lib/libc.so
-	@CLEANUP_bootstrap_eglibc@
+	@CLEANUP_bootstrap_eglibc_cool@
 	touch $@
 
-$(DEPDIR)/eglibc: $(archivedir)/eglibc-2_8.tar.bz2 bootstrap_gcc_shared_cool
-	@PREPARE_eglibc@
-	cd @DIR_eglibc@ && \
-		@CONFIGURE_eglibc@ \
+$(DEPDIR)/eglibc_cool: $(archivedir)/eglibc-2_8.tar.bz2 bootstrap_gcc_shared_cool
+	@PREPARE_eglibc_cool@
+	cd @DIR_eglibc_cool@ && \
+		@CONFIGURE_eglibc_cool@ \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= \
@@ -636,10 +643,10 @@ $(DEPDIR)/eglibc: $(archivedir)/eglibc-2_8.tar.bz2 bootstrap_gcc_shared_cool
 	mv $(targetprefix)/lib/libc.so.new $(targetprefix)/lib/libc.so
 	sed -e's, /lib/, $(targetprefix)/lib/,g' < $(targetprefix)/lib/libpthread.so > $(targetprefix)/lib/libpthread.so.new
 	mv $(targetprefix)/lib/libpthread.so.new $(targetprefix)/lib/libpthread.so
-	@CLEANUP_eglibc@
+	@CLEANUP_eglibc_cool@
 	touch $@
 
-$(DEPDIR)/gcc: @DEPENDS_gcc_cool@ eglibc
+$(DEPDIR)/gcc: @DEPENDS_gcc_cool@ eglibc_cool
 	@PREPARE_gcc_cool@
 	cd @DIR_gcc_cool@ && \
 		CC=$(CC) CFLAGS="$(CFLAGS)" \

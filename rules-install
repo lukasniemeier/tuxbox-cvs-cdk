@@ -26,6 +26,19 @@ fusekernel;make:install:DESTDIR=TARGET
 djmount;make:install:DESTDIR=TARGET
 
 #
+# dbox2 gcc 4.7
+#
+libgmp_host;make:install
+libmpfr_host;make:install
+libmpc_host;make:install
+libppl_host;make:install
+libcloog_host;make:install
+bootstrap_gcc47_static;make:install-gcc
+bootstrap_gcc47_shared;make:install-gcc:install-target-libgcc
+eglibc
+gcc47;make:install;install:-m644:TARGETNAME/libstdc++-v3/src/libstdc++-symbols.ver:TARGET/lib/libstdc++_pic.map
+
+#
 # root
 #
 busybox;make:install:PREFIX=TARGET
@@ -73,8 +86,6 @@ libFLAC;make:install: -C src/libFLAC DESTDIR=TARGET;rewrite-libtool:TARGET/lib/l
 libgettext;make:install: -C intl DESTDIR=TARGET
 liblzma465
 libfaad2;make:install:DESTDIR=TARGET
-libgmp_host;make:install
-libmpfr_host;make:install
 
 #
 # contrib apps

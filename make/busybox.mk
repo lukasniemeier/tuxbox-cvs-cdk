@@ -58,12 +58,13 @@ if BOXTYPE_DREAMBOX
 endif
 	m4 $(BUSYBOX_M4) -Dyadd -DPREFIX=\`\"$(targetprefix)\"\' $(busybox_conf) > @DIR_busybox@/.config
 	cd @DIR_busybox@ && \
+		LDFLAGS="$(TARGET_LDFLAGS) -fwhole-program" \
 		$(MAKE) all \
 			CROSS_COMPILE=$(target)- \
-			CFLAGS_EXTRA="$(TARGET_CFLAGS)" && \
+			CONFIG_EXTRA_CFLAGS="$(TARGET_CFLAGS)" && \
 		$(MAKE) install \
 			CROSS_COMPILE=$(target)- \
-			CFLAGS_EXTRA="$(TARGET_CFLAGS)"
+			CONFIG_EXTRA_CFLAGS="$(TARGET_CFLAGS)"
 	@CLEANUP_busybox@
 	touch $@
 
@@ -74,12 +75,13 @@ if BOXTYPE_DREAMBOX
 endif
 	m4 $(BUSYBOX_M4) -Dflash -DPREFIX=\`\"$(flashprefix)/root\"\' $(busybox_conf) > @DIR_busybox@/.config
 	cd @DIR_busybox@ && \
+		LDFLAGS="$(TARGET_LDFLAGS) -fwhole-program" \
 		$(MAKE) all \
 			CROSS_COMPILE=$(target)- \
-			CFLAGS_EXTRA="$(TARGET_CFLAGS)" && \
+			CONFIG_EXTRA_CFLAGS="$(TARGET_CFLAGS)" && \
 		$(MAKE) install \
 			CROSS_COMPILE=$(target)- \
-			CFLAGS_EXTRA="$(TARGET_CFLAGS)"
+			CONFIG_EXTRA_CFLAGS="$(TARGET_CFLAGS)"
 	@CLEANUP_busybox@
 	@FLASHROOTDIR_MODIFIED@
 

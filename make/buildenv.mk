@@ -21,6 +21,24 @@ BUILDENV := \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	PKG_CONFIG_PATH=$(targetprefix)/lib/pkgconfig
 
+if DBOX2_GCC47
+BUILDENV_BIN := \
+	unset CONFIG_SITE && \
+	AR=$(target)-ar \
+	AS=$(target)-as \
+	CC=$(target)-gcc \
+	CXX=$(target)-g++ \
+	NM=$(target)-nm \
+	RANLIB=$(target)-ranlib \
+	STRIP=$(target)-strip \
+	CFLAGS="$(TARGET_CFLAGS)" \
+	CXXFLAGS="$(TARGET_CFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS) -fwhole-program" \
+	PKG_CONFIG_PATH=$(targetprefix)/lib/pkgconfig
+else
+BUILDENV_BIN := $(BUILDENV)
+endif
+
 DEPDIR = .deps
 
 VPATH = $(DEPDIR)
@@ -204,6 +222,19 @@ CONFIGURE = \
 	CXXFLAGS="-Wall $(TARGET_CXXFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	./configure $(CONFIGURE_OPTS)
+
+if DBOX2_GCC47
+CONFIGURE_BIN = \
+	./autogen.sh && \
+	CC=$(target)-gcc \
+	CXX=$(target)-g++ \
+	CFLAGS="-Wall $(TARGET_CFLAGS)" \
+	CXXFLAGS="-Wall $(TARGET_CXXFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS) -fwhole-program" \
+	./configure $(CONFIGURE_OPTS)
+else
+CONFIGURE_BIN = $(CONFIGURE)
+endif
 
 ACLOCAL_AMFLAGS = -I .
 

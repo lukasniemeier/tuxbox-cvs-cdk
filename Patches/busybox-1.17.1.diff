@@ -663,3 +663,47 @@ diff -uNr busybox-1.17.1.org//util-linux/swaponoff.c busybox-1.17.1/util-linux/s
  
  	err = 0;
  	while ((m = getmntent(f)) != NULL) {
+diff -uNr busybox-1.19.4.org/loginutils/passwd.c busybox-1.19.4/loginutils/passwd.c
+--- busybox-1.19.4.org/loginutils/passwd.c	2012-02-04 20:34:24.000000000 +0100
++++ busybox-1.19.4/loginutils/passwd.c	2012-04-08 15:03:50.000000000 +0200
+@@ -15,6 +15,7 @@
+ 
+ #include "libbb.h"
+ #include <syslog.h>
++#include <sys/resource.h>
+ 
+ static void nuke_str(char *str)
+ {
+diff -uNr busybox-1.19.4.org/miscutils/time.c busybox-1.19.4/miscutils/time.c
+--- busybox-1.19.4.org/miscutils/time.c	2012-02-04 20:24:55.000000000 +0100
++++ busybox-1.19.4/miscutils/time.c	2012-04-08 15:04:49.000000000 +0200
+@@ -16,6 +16,7 @@
+ //usage:     "\n	-v	Verbose"
+ 
+ #include "libbb.h"
++#include <sys/resource.h>
+ 
+ /* Information on the resources used by a child process.  */
+ typedef struct {
+diff -uNr busybox-1.19.4.org/networking/inetd.c busybox-1.19.4/networking/inetd.c
+--- busybox-1.19.4.org/networking/inetd.c	2012-02-04 20:34:24.000000000 +0100
++++ busybox-1.19.4/networking/inetd.c	2012-04-08 15:05:32.000000000 +0200
+@@ -166,6 +166,7 @@
+ 
+ #include <syslog.h>
+ #include <sys/un.h>
++#include <sys/resource.h>
+ 
+ #include "libbb.h"
+ 
+diff -uNr busybox-1.19.4.org/shell/shell_common.c busybox-1.19.4/shell/shell_common.c
+--- busybox-1.19.4.org/shell/shell_common.c	2012-02-04 20:34:24.000000000 +0100
++++ busybox-1.19.4/shell/shell_common.c	2012-04-08 15:06:29.000000000 +0200
+@@ -18,6 +18,7 @@
+  */
+ #include "libbb.h"
+ #include "shell_common.h"
++#include <sys/resource.h>
+ 
+ const char defifsvar[] ALIGN1 = "IFS= \t\n";
+ 

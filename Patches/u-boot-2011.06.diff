@@ -3457,3 +3457,23 @@ diff -uNr u-boot-2011.06.org//tools/Makefile u-boot-2011.06/tools/Makefile
  $(obj)mpc86x_clk$(SFX):	$(obj)mpc86x_clk.o
  	$(HOSTCC) $(HOSTCFLAGS) $(HOSTLDFLAGS) -o $@ $^
  	$(HOSTSTRIP) $@
+diff -uNr u-boot-2011.12.org/board/dbox2/u-boot.lds u-boot-2011.12/board/dbox2/u-boot.lds
+--- u-boot-2011.12.org/board/dbox2/u-boot.lds	2012-04-18 20:50:30.000000000 +0200
++++ u-boot-2011.12/board/dbox2/u-boot.lds	2012-04-18 20:52:21.000000000 +0200
+@@ -53,13 +53,14 @@
+   PROVIDE (erotext = .);
+   .reloc   :
+   {
+-    KEEP(*(.got))
+     _GOT2_TABLE_ = .;
+     KEEP(*(.got2))
++    KEEP(*(.got))
++    PROVIDE(_GLOBAL_OFFSET_TABLE_ = . + 4);
+     _FIXUP_TABLE_ = .;
+     KEEP(*(.fixup))
+   }
+-  __got2_entries = (_FIXUP_TABLE_ - _GOT2_TABLE_) >>2;
++  __got2_entries = ((_GLOBAL_OFFSET_TABLE_ - _GOT2_TABLE_) >> 2) - 1;
+   __fixup_entries = (. - _FIXUP_TABLE_)>>2;
+ 
+   .data    :

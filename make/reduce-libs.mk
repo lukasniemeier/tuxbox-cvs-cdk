@@ -26,8 +26,8 @@ $(flashprefix)/root-null-jffs2_lzma_klzma/lib/ld.so.1 \
 $(flashprefix)/root-null-jffs2/lib/ld.so.1: \
 %/lib/ld.so.1: %
 	find $</lib -maxdepth 1 -type f -o -type l | xargs rm -f
-	cp -d $(targetprefix)/lib/libnss_dns-?.*.so $</lib || true
-	cp -d $(targetprefix)/lib/libnss_files-?.*.so $</lib || true
+	-cp -d $(targetprefix)/lib/libnss_dns-?.*.so $</lib
+	-cp -d $(targetprefix)/lib/libnss_files-?.*.so $</lib
 if ENABLE_PROCPS
 	if [ -e $(targetprefix)/lib/libproc-*.so ]; then \
 		cp -d $(targetprefix)/lib/libproc-*.so $</lib; \

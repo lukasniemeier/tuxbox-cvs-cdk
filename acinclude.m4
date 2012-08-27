@@ -40,6 +40,7 @@ AC_DEFUN([TUXBOX_BOXTYPE],[
 KERNELVERSION=check
 CPU_ARCH="ppc"
 CPU_MODEL="823"
+force_kernel26=no
 
 AC_ARG_WITH(boxtype,
 	[  --with-boxtype          valid values: dbox2,tripledragon,dreambox,ipbox,coolstream,spark,generic],
@@ -51,15 +52,13 @@ dnl		To-Do: extend CPU types and kernel versions when needed
 		dreambox)
 			BOXTYPE="$withval"
 			CPU_MODEL="405"
-			AM_CONDITIONAL(KERNEL26, true)
-			enable_kernel26=yes
+			force_kernel26=yes
 			KERNELVERSION="\$(VERSION_linux_dream)"
 			;;
 		ipbox)
 			BOXTYPE="$withval"
 			CPU_MODEL="405"
-			AM_CONDITIONAL(KERNEL26, true)
-			enable_kernel26=yes
+			force_kernel26=yes
 			KERNELVERSION="\$(VERSION_linux_ipbox)"
 			;;
 		tripledragon|generic)
@@ -68,7 +67,7 @@ dnl		To-Do: extend CPU types and kernel versions when needed
 		spark)
 			BOXTYPE="$withval"
 			CPU_ARCH="sh4"
-			enable_kernel26=yes
+			force_kernel26=yes
 			target_alias="sh4-linux"
 			with_curlversion=current
 			;;
@@ -77,26 +76,13 @@ dnl		To-Do: extend CPU types and kernel versions when needed
 			CPU_ARCH="arm"
 			CPU_MODEL="1176"
 			target_alias="arm-cx2450x-linux-gnueabi"
-			AM_CONDITIONAL(KERNEL26, true)
-			enable_kernel26=yes
+			force_kernel26=yes
 			enable_uclibc=no
 			with_curlversion=current
 			;;
 		*)
 			AC_MSG_ERROR([bad value $withval for --with-boxtype]) ;;
 	esac], [BOXTYPE="dbox2"])
-
-if test "$KERNELVERSION" = "check"; then
-	AC_ARG_ENABLE(kernel26,
-		AS_HELP_STRING(--enable-kernel26,set up the CDK to use the 2.6 kernel (experimental)),
-		,[enable_kernel26=no])
-	AM_CONDITIONAL(KERNEL26,test "$enable_kernel26" = "yes")
-	if test "$enable_kernel26" = "yes"; then
-		KERNELVERSION="\$(VERSION_linux)"
-	else
-		KERNELVERSION="\$(VERSION_linux24)"
-	fi
-fi
 
 AC_ARG_WITH(boxmodel,
 	[  --with-boxmodel         valid for dreambox: dm500, dm500plus, dm56x0, dm7000, dm7020)

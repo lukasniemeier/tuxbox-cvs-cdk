@@ -15,7 +15,11 @@ include make/bootstrap_generic.mk
 if BOXTYPE_SPARK
 include make/bootstrap_spark.mk
 else
+if DBOX2_GCC47
+include make/bootstrap_dbox2.mk
+else
 include make/bootstrap.mk
+endif
 endif
 
 # Target for building and install own independ ccache for tuxbox-cdk

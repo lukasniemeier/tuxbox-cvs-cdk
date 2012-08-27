@@ -165,7 +165,7 @@ $(DEPDIR)/dropbear: bootstrap libz @DEPENDS_dropbear@
 	@PREPARE_dropbear@
 	cd @DIR_dropbear@ && \
 		autoconf && \
-		$(BUILDENV) \
+		$(BUILDENV_BIN) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -489,7 +489,7 @@ $(flashprefix)/root/bin/links: $(DEPDIR)/links | $(flashprefix)/root
 $(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd links-plugin @DEPENDS_links_g@
 	@PREPARE_links_g@
 	cd @DIR_links_g@ && \
-		$(BUILDENV) \
+		$(BUILDENV_BIN) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -573,7 +573,7 @@ $(flashprefix)/root/sbin/ntpd: openntpd | $(flashprefix)/root
 $(DEPDIR)/esound: bootstrap @DEPENDS_esound@
 	@PREPARE_esound@
 	cd @DIR_esound@ && \
-		$(BUILDENV) \
+		$(BUILDENV_BIN) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \

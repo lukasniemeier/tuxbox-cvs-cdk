@@ -15,7 +15,7 @@ libs_optional: \
 	libexpat libcrypto sqlite
 
 libs_host : \
-	libgmp_host libmpfr_host
+	libgmp_host libmpfr_host libppl_host libcloog_host
 
 libs_all: libs libs_optional libs_host
 
@@ -647,11 +647,12 @@ $(DEPDIR)/libgmp_host: @DEPENDS_libgmp_host@
 	@PREPARE_libgmp_host@
 	cd @DIR_libgmp_host@ && \
 		CC=$(CC) \
-		CFLAGS="$(CFLAGS)" \
+		CFLAGS="-pipe -fexceptions" \
 		./configure \
 			--prefix=$(hostprefix) \
 			--disable-shared \
 			--enable-static \
+			--enable-cxx \
 			--enable-fft \
 			--enable-mpbsd && \
 		$(MAKE) && \
@@ -663,14 +664,72 @@ $(DEPDIR)/libmpfr_host: @DEPENDS_libmpfr_host@ libgmp_host
 	@PREPARE_libmpfr_host@
 	cd @DIR_libmpfr_host@ && \
 		CC=$(CC) \
-		CFLAGS="$(CFLAGS)" \
+		CFLAGS="-pipe" \
 		./configure \
 			--prefix=$(hostprefix) \
-			--enable-thread-safe \
 			--disable-shared \
 			--enable-static \
 			--with-gmp=$(hostprefix) && \
 		$(MAKE) && \
 		@INSTALL_libmpfr_host@
 	@CLEANUP_libmpfr_host@
+	touch $@
+
+$(DEPDIR)/libmpc_host: @DEPENDS_libmpc_host@ libmpfr_host
+	@PREPARE_libmpc_host@
+	cd @DIR_libmpc_host@ && \
+		CC=$(CC) \
+		CFLAGS="-pipe" \
+		./configure \
+			--prefix=$(hostprefix) \
+			--disable-shared \
+			--enable-static \
+			--with-gmp=$(hostprefix) \
+			--with-mpfr=$(hostprefix) && \
+		$(MAKE) && \
+		@INSTALL_libmpc_host@
+	@CLEANUP_libmpc_host@
+	touch $@
+
+$(DEPDIR)/libppl_host: @DEPENDS_libppl_host@ libmpc_host
+	@PREPARE_libppl_host@
+	cd @DIR_libppl_host@ && \
+		CC=$(CC) \
+		CFLAGS="-pipe" \
+		CXXFLAGS="-pipe" \
+		CPPFLAGS="-I$(hostprefix)/include" \
+		LDFLAGS="-Wl,-rpath,$(hostprefix)/lib" \
+		./configure \
+			--prefix=$(hostprefix) \
+			--disable-debugging \
+			--disable-assertions \
+			--disable-ppl_lcdd \
+			--disable-ppl_lpsol \
+			--disable-shared \
+			--enable-interfaces="c c++" \
+			--enable-static \
+			--with-gmp=$(hostprefix) && \
+		$(MAKE) && \
+		@INSTALL_libppl_host@
+	@CLEANUP_libppl_host@
+	touch $@
+
+$(DEPDIR)/libcloog_host: @DEPENDS_libcloog_host@ libppl_host
+	@PREPARE_libcloog_host@
+	cd @DIR_libcloog_host@ && \
+		cp -v configure{,.orig} && \
+		sed -e "/LD_LIBRARY_PATH=/d" configure.orig > configure && \
+		CC=$(CC) \
+		CFLAGS="-pipe" \
+		LIBS="-lm" \
+		./configure \
+			--prefix=$(hostprefix) \
+			--with-bits=gmp \
+			--with-host-libstdcxx=-lstdc++ \
+			--disable-shared \
+			--enable-static \
+			--with-gmp-prefix=$(hostprefix) && \
+		$(MAKE) && \
+		@INSTALL_libcloog_host@
+	@CLEANUP_libcloog_host@
 	touch $@

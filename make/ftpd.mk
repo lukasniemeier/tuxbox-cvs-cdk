@@ -7,6 +7,11 @@ endif
 if CPUMODEL_405
 	cd @DIR_ftpd@ && sed -i "s/823/405/" Makefile
 endif
+if DBOX2_GCC47
+	cd @DIR_ftpd@ && \
+		cp -v sysdeputil.c{,.orig} && \
+		sed "s/#define VSF_SYSDEP_HAVE_UTMPX/#undef VSF_SYSDEP_HAVE_UTMPX/g" sysdeputil.c.orig > sysdeputil.c
+endif
 	cd @DIR_ftpd@ && \
 		CC=$(target)-gcc \
 		CFLAGS="$(TARGET_CFLAGS)" \
@@ -26,6 +31,11 @@ if KERNEL26
 endif
 if CPUMODEL_405
 	cd @DIR_ftpd@ && sed -i "s/823/405/" Makefile
+endif
+if DBOX2_GCC47
+	cd @DIR_ftpd@ && \
+		cp -v sysdeputil.c{,.orig} && \
+		sed "s/#define VSF_SYSDEP_HAVE_UTMPX/#undef VSF_SYSDEP_HAVE_UTMPX/g" sysdeputil.c.orig > sysdeputil.c
 endif
 	cd @DIR_ftpd@ && \
 		CC=$(target)-gcc \

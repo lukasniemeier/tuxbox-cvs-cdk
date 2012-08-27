@@ -38,7 +38,7 @@ AM_MAINTAINER_MODE
 AC_PROG_CC
 
 AC_ARG_WITH(gcc4,
-	[  --with-gcc4             Dbox2-only compile image using gcc 4.1.2],
+	[  --with-gcc4             dBox2-only compile image using gcc 4.1.2],
 	[
 		if test "$BOXTYPE" = "dbox2"; then
 			dbox2_gcc4="yes"
@@ -48,6 +48,38 @@ AC_ARG_WITH(gcc4,
 	],
 	[dbox2_gcc4="no"])
 AM_CONDITIONAL(DBOX2_GCC4,test "$dbox2_gcc4" = "yes")
+
+AC_ARG_WITH(gcc47,
+	[  --with-gcc47            dBox2-only compile image using gcc 4.7/kernel 2.6],
+	[
+		if test "$BOXTYPE" = "dbox2"; then
+			dbox2_gcc47="yes"
+			enable_kernel26="yes"
+		else
+			dbox2_gcc47="no"
+		fi
+	],
+	[dbox2_gcc47="no"])
+AM_CONDITIONAL(DBOX2_GCC47,test "$dbox2_gcc47" = "yes")
+
+AC_MSG_CHECKING(kernel26)
+AC_ARG_ENABLE(kernel26,
+	AS_HELP_STRING(--enable-kernel26,set up the CDK to use the 2.6 kernel),
+        [enable_kernel26=$enableval],
+        [enable_kernel26="no"])
+
+if test "$force_kernel26" = "yes"; then
+	enable_kernel26="yes"
+fi
+
+AC_MSG_RESULT($enable_kernel26)
+
+AM_CONDITIONAL(KERNEL26,test "$enable_kernel26" = "yes")
+if test "$enable_kernel26" = "yes"; then
+	KERNELVERSION="\$(VERSION_linux)"
+else
+	KERNELVERSION="\$(VERSION_linux24)"
+fi
 
 AC_ARG_ENABLE(nptl,
 	AS_HELP_STRING(--disable-nptl,do not use native posix threads for glibc (only meaningful for kernel 2.6.x, default for 2.4.x)),
@@ -114,6 +146,12 @@ if test "$enable_uclibc" = "yes"; then
 	LIBGETTEXT=libgettext
 fi
 AC_SUBST(LIBGETTEXT)
+
+if test "$dbox2_gcc47" = "yes"; then
+	TARGET_CFLAGS="$TARGET_CFLAGS -flto -fuse-linker-plugin"
+	TARGET_CXXFLAGS="$TARGET_CXXFLAGS -flto -fuse-linker-plugin"
+	TARGET_LDFLAGS="$TARGET_LDFLAGS -flto -fuse-linker-plugin"
+fi
 
 AC_ARG_ENABLE(german_keymaps,
 	AS_HELP_STRING(--enable-german-keymaps,	include loadkey and German keymaps in yadds and images),
@@ -1370,13 +1408,14 @@ case "${BOXTYPE}" in
 		TUXBOX_RULES_MAKE(dgstationdriver_relook400s)
 		TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc)
 		TUXBOX_RULES_MAKE_EXDIR(gcc)
+		TUXBOX_RULES_MAKE_EXDIR(glibc)
 		;;
 	coolstream)
 		TUXBOX_RULES_MAKE(linux_cool)
 		TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc_static_cool)
 		TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc_shared_cool)
-		TUXBOX_RULES_MAKE_EXDIR(bootstrap_eglibc)
-		TUXBOX_RULES_MAKE_EXDIR(eglibc)
+		TUXBOX_RULES_MAKE_EXDIR(bootstrap_eglibc_cool)
+		TUXBOX_RULES_MAKE_EXDIR(eglibc_cool)
 		TUXBOX_RULES_MAKE_EXDIR(gcc_cool)
 		;;
 	spark)
@@ -1391,21 +1430,30 @@ case "${BOXTYPE}" in
 		;;
 	*)
 		TUXBOX_RULES_MAKE(linux)
-		TUXBOX_RULES_MAKE(linux24)
-		if test "$dbox2_gcc4" = "yes"; then
-			TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc41)
-			TUXBOX_RULES_MAKE_EXDIR(gcc41)
-		else
+		if test "$dbox2_gcc47" = "yes"; then
 			TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc)
-			TUXBOX_RULES_MAKE_EXDIR(gcc)
+			TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc47_static)
+			TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc47_shared)
+			TUXBOX_RULES_MAKE_EXDIR(eglibc)
+			TUXBOX_RULES_MAKE_EXDIR(gcc47)
+			TUXBOX_RULES_MAKE(libppl_host)
+		else
+			if test "$dbox2_gcc4" = "yes"; then
+				TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc41)
+				TUXBOX_RULES_MAKE_EXDIR(gcc41)
+			else
+				TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc)
+				TUXBOX_RULES_MAKE_EXDIR(gcc)
+			fi
+			TUXBOX_RULES_MAKE(linux24)
+			TUXBOX_RULES_MAKE_EXDIR(glibc)
+			TUXBOX_RULES_MAKE(uclibc)
 		fi
 		;;
 esac
 
 TUXBOX_RULES_MAKE(uboot)
 TUXBOX_RULES_MAKE_EXDIR(binutils)
-TUXBOX_RULES_MAKE_EXDIR(glibc)
-TUXBOX_RULES_MAKE(uclibc)
 
 #
 # root
@@ -1469,6 +1517,8 @@ TUXBOX_RULES_MAKE(liblzma465)
 TUXBOX_RULES_MAKE(libfaad2)
 TUXBOX_RULES_MAKE(libgmp_host)
 TUXBOX_RULES_MAKE(libmpfr_host)
+TUXBOX_RULES_MAKE(libcloog_host)
+TUXBOX_RULES_MAKE(libmpc_host)
 
 #
 # contrib apps
@@ -1636,12 +1686,17 @@ fi
 if test "$enable_uclibc" == "yes"; then
 	used_libc="uclibc"
 else
-	if test "$dbox2_gcc4" = "yes"; then
-		used_gcc="/gcc 4.1.2"
+	if test "$dbox2_gcc47" = "yes"; then
+		used_gcc="/gcc 4.7"
+		used_libc="eglibc"
 	else
-		used_gcc="/gcc 3.4.6"
+		if test "$dbox2_gcc4" = "yes"; then
+    			used_gcc="/gcc 4.1.2"
+		else
+			used_gcc="/gcc 3.4.6"
+		fi
+		used_libc="glibc"
 	fi
-	used_libc="glibc"
 fi
 
 if test "$BOXTYPE" = "coolstream"; then
