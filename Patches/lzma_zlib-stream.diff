@@ -312,9 +312,9 @@ diff -Nur lzma-4.42.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma-4.42.patched/C/7
 +	UInt64 m_offset;
 +};
 +
-+ZEXTERN int ZEXPORT compress2 OF((Bytef *dest,   uLongf *destLen,
++ZEXTERN int ZEXPORT compress2 (Bytef *dest,   uLongf *destLen,
 +                                  const Bytef *source, uLong sourceLen,
-+                                  int level))
++                                  int level)
 +{
 +	CInMemoryStream *inStreamSpec = new CInMemoryStream(source, sourceLen);
 +	CMyComPtr<ISequentialInStream> inStream = inStreamSpec;
@@ -375,8 +375,8 @@ diff -Nur lzma-4.42.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma-4.42.patched/C/7
 +	return Z_OK;
 +}
 +
-+ZEXTERN int ZEXPORT uncompress OF((Bytef *dest,   uLongf *destLen,
-+                                   const Bytef *source, uLong sourceLen))
++ZEXTERN int ZEXPORT uncompress (Bytef *dest,   uLongf *destLen,
++                                   const Bytef *source, uLong sourceLen)
 +{
 +	CInMemoryStream *inStreamSpec = new CInMemoryStream(source, sourceLen);
 +	CMyComPtr<ISequentialInStream> inStream = inStreamSpec;
