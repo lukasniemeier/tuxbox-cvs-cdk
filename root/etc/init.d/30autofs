@@ -62,9 +62,11 @@ case $1 in
 		automount $DEBUG $GHOSTING $VERBOSE -t $TIMEOUT -p $PIDFILE $AUTOFSMOUNTDIR file $MAPFILE
 		;;
 	stop)
-		echo "Stopping the automounter"
-		read PID < $PIDFILE
-		kill -TERM $PID
+		if [ -f $PIDFILE ] ; then
+			echo "Stopping the automounter"
+			read PID < $PIDFILE
+			kill -TERM $PID
+		fi
 		;;
 esac
 
