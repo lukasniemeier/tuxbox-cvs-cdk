@@ -944,10 +944,10 @@ AC_ARG_ENABLE(aviafbtool,
 	,[enable_aviafbtool=no])
 AM_CONDITIONAL(ENABLE_AVIAFBTOOL,test "$enable_aviafbtool" = "yes")
 
-AC_ARG_ENABLE(avswitchpp,
-	AS_HELP_STRING(--enable-avswitchpp,enable tool avswitchpp),
-	,[enable_avswitchpp=no])
-AM_CONDITIONAL(ENABLE_AVSWITCHPP,test "$enable_avswitchpp" = "yes")
+AC_ARG_ENABLE(avswitch,
+	AS_HELP_STRING(--enable-avswitch,enable tool avswitch),
+	,[enable_avswitch=no])
+AM_CONDITIONAL(ENABLE_AVSWITCH,test "$enable_avswitch" = "yes")
 
 AC_ARG_ENABLE(fbclear,
 	AS_HELP_STRING(--enable-fbclear,enable tool fbclear),
@@ -1851,7 +1851,7 @@ FX2: Yahtzee			$enable_fx2_yahtzee
 Tools: audioplay		$enable_audioplay
 Tools: aviaext			$enable_aviaext
 Tools: aviafbtool		$enable_aviafbtool
-Tools: avswitchpp		$enable_avswitchpp
+Tools: avswitch			$enable_avswitch
 Tools: fbclear			$enable_fbclear
 Tools: lcddump			$enable_lcddump
 Tools: pluginx			$enable_pluginx

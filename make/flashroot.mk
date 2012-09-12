@@ -276,8 +276,8 @@ endif
 if ENABLE_AVIAFBTOOL
 	$(MAKE) flash-tool-aviafbtool
 endif
-if ENABLE_AVSWITCHPP
-	$(MAKE) flash-tool-avswitchpp
+if ENABLE_AVSWITCH
+	$(MAKE) flash-tool-avswitch
 endif
 if ENABLE_FBCLEAR
 	$(MAKE) flash-tool-fbclear

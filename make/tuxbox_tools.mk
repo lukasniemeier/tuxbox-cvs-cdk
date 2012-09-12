@@ -85,7 +85,7 @@ flash-input: $(appsdir)/tuxbox/tools/config.status
 ################################################################
 # tools_misc is not misc_tools misspelled ... 
 
-tuxboxmisctools = audioplay aviaext aviafbtool avswitchpp fbclear lcddump pluginx rcinfo rcsim saa showptsdiff switch
+tuxboxmisctools = audioplay aviaext aviafbtool avswitch fbclear lcddump pluginx rcinfo rcsim saa showptsdiff switch
 
 switch \
 tools_misc: $(appsdir)/tuxbox/tools/config.status
