@@ -761,3 +761,26 @@ $(DEPDIR)/netio_host: @DEPENDS_netio_host@
 		@INSTALL_netio_host@
 	@CLEANUP_netio_host@
 	touch $@
+
+flash-inadyn-mt: $(flashprefix)/root/bin/inadyn-mt
+
+$(flashprefix)/root/bin/inadyn-mt: $(DEPDIR)/inadyn-mt | $(flashprefix)/root
+	$(INSTALL) $(targetprefix)/bin/inadyn-mt $(flashprefix)/root/bin
+	@FLASHROOTDIR_MODIFIED@
+
+$(DEPDIR)/inadyn-mt: bootstrap @DEPENDS_inadyn_mt@
+	@PREPARE_inadyn_mt@
+	cd @DIR_inadyn_mt@ && \
+		$(BUILDENV_BIN) \
+		ac_cv_func_realloc_0_nonnull=yes \
+		ac_cv_func_malloc_0_nonnull=yes \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix= \
+			--disable-sound && \
+		$(MAKE) all && \
+	@INSTALL_inadyn_mt@
+	@CLEANUP_inadyn_mt@
+	touch $@
+

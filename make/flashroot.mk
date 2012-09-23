@@ -134,6 +134,9 @@ endif
 if ENABLE_HTOP
 	$(MAKE) flash-htop
 endif
+if ENABLE_INADYN_MT
+	$(MAKE) flash-inadyn-mt
+endif
 if ENABLE_INPUT
 	$(MAKE) flash-input
 endif

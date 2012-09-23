@@ -606,6 +606,11 @@ AC_ARG_ENABLE(htop,
 	,[enable_htop=no])
 AM_CONDITIONAL(ENABLE_HTOP,test "$enable_htop" = "yes")
 
+AC_ARG_ENABLE(inadyn-mt,
+	AS_HELP_STRING(--enable-inadyn-mt,enable inadyn-mt),
+	,[enable_inadyn_mt=no])
+AM_CONDITIONAL(ENABLE_INADYN_MT,test "$enable_inadyn_mt" = "yes")
+
 AC_ARG_ENABLE(input,
 	AS_HELP_STRING(--enable-input,enable the tool named input),
 	,[enable_input=no])
@@ -1558,6 +1563,7 @@ TUXBOX_RULES_MAKE(ipkg)
 TUXBOX_RULES_MAKE(htop)
 TUXBOX_RULES_MAKE(netio)
 TUXBOX_RULES_MAKE(netio_host)
+TUXBOX_RULES_MAKE(inadyn_mt)
 
 #
 # ide apps
@@ -1796,6 +1802,7 @@ gdbserver			$enable_gdbserver
 getrc				$enable_getrc
 hddtemp				$enable_hddtemp
 htop				$enable_htop
+inadyn-mt			$enable_inadyn_mt
 input				$enable_input
 ipkg				$enable_ipkg
 kb2rcd				$enable_kb2rcd

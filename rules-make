@@ -137,6 +137,7 @@ ipkg;0.99.163;ipkg-0.99.163;ipkg-0.99.163.tar.gz;extract:ipkg-0.99.163.tar.gz;pa
 htop;0.9;htop-0.9;htop-0.9.tar.gz;extract:htop-0.9.tar.gz
 netio;1.3.1;netio-1.3.1;netio131.zip;extract:netio131.zip:netio-1.3.1
 netio_host;1.3.1;netio-1.3.1;netio131.zip;extract:netio131.zip:netio-1.3.1
+inadyn_mt;02.24.36;inadyn-mt.v.02.24.36;inadyn-mt.v.02.24.36.tar.gz;extract:inadyn-mt.v.02.24.36.tar.gz
 
 #
 # ide/hdd apps

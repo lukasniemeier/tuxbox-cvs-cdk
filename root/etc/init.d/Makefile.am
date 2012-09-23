@@ -24,6 +24,7 @@ FILES_FLASH_RO_EXEC_START = \
 	20inetd \
 	25cdkVcInfo \
 	30dropbear \
+	30inadyn-mt \
 	30ser2net \
 	40tuxcald \
 	40tuxmaild \

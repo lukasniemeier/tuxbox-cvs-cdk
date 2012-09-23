@@ -51,6 +51,9 @@ endif
 if ENABLE_HTOP
 ADDITIONAL_DEBS += htop
 endif
+if ENABLE_INADYN_MT
+ADDITIONAL_DEBS += inadyn-mt
+endif
 if ENABLE_LINKS
 ADDITIONAL_DEBS += links
 endif
