@@ -29,6 +29,10 @@ if ENABLE_OPENVPN
 BUSYBOX_M4 += -Dopenvpn
 endif
 
+if ENABLE_CRON
+BUSYBOX_M4 += -Dcron
+endif
+
 # if standalone procps is not enabled, use the busybox applets instead
 if !ENABLE_PROCPS
 BUSYBOX_M4 += -Dprocps

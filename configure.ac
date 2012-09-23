@@ -544,6 +544,11 @@ AC_ARG_ENABLE(clock,
 	,[enable_clock=no])
 AM_CONDITIONAL(ENABLE_CLOCK,test "$enable_clock" = "yes")
 
+AC_ARG_ENABLE(cron,
+	AS_HELP_STRING(--enable-cron,enable cron),
+	,[enable_cron=no])
+AM_CONDITIONAL(ENABLE_CRON,test "$enable_cron" = "yes")
+
 AC_ARG_ENABLE(dboxshot,
 	AS_HELP_STRING(--enable-dboxshot,enable dboxshot),
 	,[enable_dboxshot=no])
@@ -1791,6 +1796,7 @@ aformat				$enable_aformat
 cdkVcInfo			$enable_cdkVcInfo
 blockads			$enable_blockads
 clock				$enable_clock
+cron				$enable_cron
 dboxshot			$enable_dboxshot
 dropbear			$enable_dropbear
 dvbsnoop			$enable_dvbsnoop

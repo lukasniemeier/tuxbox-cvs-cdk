@@ -650,7 +650,10 @@ CONFIG_FEATURE_BEEP_LENGTH_MS=0
 # CONFIG_FEATURE_CHAT_VAR_ABORT_LEN is not set
 # CONFIG_FEATURE_CHAT_CLR_ABORT is not set
 option(`CONFIG_CHRT', `n', `n')
-option(`CONFIG_CROND', `n', `n')
+ifdef(`cron',
+`option(`CONFIG_CROND', `y', `y')',
+`option(`CONFIG_CROND', `n', `n')'
+)
 # CONFIG_FEATURE_CROND_D is not set
 option(`CONFIG_FEATURE_CROND_CALL_SENDMAIL', `n', `n')
 CONFIG_FEATURE_CROND_DIR=""
