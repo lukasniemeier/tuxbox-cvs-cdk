@@ -58,9 +58,11 @@ $(flashprefix)/root/sbin/portmap: bootstrap @DEPENDS_portmap@ | $(flashprefix)/r
 
 $(DEPDIR)/procps: bootstrap libncurses @DEPENDS_procps@
 	@PREPARE_procps@
-	cd @DIR_procps@ && \
+	set -e; cd @DIR_procps@; \
 		$(BUILDENV) \
-		$(MAKE) CPPFLAGS="$(CXXFLAGS) -I$(targetprefix)/include/ncurses -D__GNU_LIBRARY__" top ps/ps && \
+		$(MAKE) CPPFLAGS="$(CXXFLAGS) -I$(targetprefix)/include/ncurses -D__GNU_LIBRARY__" proc/libproc-3.2.8.so; \
+		$(BUILDENV) \
+		$(MAKE) CPPFLAGS="$(CXXFLAGS) -I$(targetprefix)/include/ncurses -D__GNU_LIBRARY__" LDFLAGS="proc/libproc-3.2.8.so" top ps/ps; \
 		@INSTALL_procps@
 	@CLEANUP_procps@
 	touch $@
