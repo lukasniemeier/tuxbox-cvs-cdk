@@ -51,7 +51,10 @@ option(`CONFIG_BUILD_LIBBUSYBOX', `n', `n')
 option(`CONFIG_FEATURE_SHARED_BUSYBOX', `n', `n')
 option(`CONFIG_LFS', `y', `y')
 CONFIG_CROSS_COMPILER_PREFIX=""
+CONFIG_SYSROOT=""
 CONFIG_EXTRA_CFLAGS=""
+CONFIG_EXTRA_LDFLAGS=""
+CONFIG_EXTRA_LDLIBS=""
 
 #
 # Debugging Options
@@ -83,8 +86,10 @@ CONFIG_PREFIX=PREFIX
 #
 # Busybox Library Tuning
 #
+# CONFIG_FEATURE_SYSTEMD is not set
+# CONFIG_FEATURE_RTMINMAX is not set
 CONFIG_PASSWORD_MINLEN=5
-CONFIG_MD5_SIZE_VS_SPEED=2
+CONFIG_MD5_SMALL=1
 option(`CONFIG_FEATURE_FAST_TOP', `n', `n')
 option(`CONFIG_FEATURE_ETC_NETWORKS', `n', `n')
 option(`CONFIG_FEATURE_EDITING', `y', `y')
@@ -99,6 +104,7 @@ option(`CONFIG_FEATURE_EDITING_FANCY_PROMPT', `y', `y')
 # CONFIG_FEATURE_NON_POSIX_CP is not set
 # CONFIG_FEATURE_VERBOSE_CP_MESSAGE is not set
 CONFIG_FEATURE_COPYBUF_KB=4
+option(`CONFIG_FEATURE_SKIP_ROOTFS', `y', `y')
 option(`CONFIG_MONOTONIC_SYSCALL', `n', `n')
 option(`CONFIG_IOCTL_HEX2STR_ERROR', `y', `y')
 # CONFIG_FEATURE_HWIB is not set
@@ -129,6 +135,7 @@ option(`CONFIG_FEATURE_DPKG_DEB_EXTRACT_ONLY', `n', `n')
 option(`CONFIG_GUNZIP', `y', `y')
 option(`CONFIG_GZIP', `y', `y')
 # CONFIG_FEATURE_GZIP_LONG_OPTIONS is not set
+CONFIG_GZIP_FAST=0
 option(`CONFIG_LZOP', `n', `n')
 # CONFIG_LZOP_COMPR_HIGH is not set
 option(`CONFIG_RPM2CPIO', `n', `n')
@@ -203,9 +210,9 @@ option(`CONFIG_HEAD', `y', `n')
 option(`CONFIG_FEATURE_FANCY_HEAD', `n', `n')
 option(`CONFIG_HOSTID', `n', `n')
 option(`CONFIG_ID', `y', `n')
+option(`CONFIG_GROUPS', `n', `n')
 option(`CONFIG_INSTALL', `n', `n')
 option(`CONFIG_FEATURE_INSTALL_LONG_OPTIONS', `n', `n')
-option(`CONFIG_LENGTH', `n', `n')
 option(`CONFIG_LN', `y', `y')
 option(`CONFIG_LOGNAME', `n', `n')
 option(`CONFIG_LS', `y', `y')
@@ -260,6 +267,7 @@ option(`CONFIG_FEATURE_TEE_USE_BLOCK_IO', `n', `n')
 option(`CONFIG_TEST', `y', `y')
 option(`CONFIG_FEATURE_TEST_64', `n', `n')
 option(`CONFIG_TOUCH', `y', `y')
+option(`CONFIG_FEATURE_TOUCH_SUSV3', `n', `n')
 option(`CONFIG_TR', `n', `n')
 option(`CONFIG_FEATURE_TR_CLASSES', `n', `n')
 option(`CONFIG_FEATURE_TR_EQUIV', `n', `n')
@@ -349,6 +357,7 @@ option(`CONFIG_FEATURE_VI_8BIT', `y', `y')
 option(`CONFIG_FEATURE_VI_COLON', `y', `y')
 option(`CONFIG_FEATURE_VI_YANKMARK', `y', `y')
 option(`CONFIG_FEATURE_VI_SEARCH', `y', `y')
+# CONFIG_FEATURE_VI_REGEX_SEARCH is not set
 option(`CONFIG_FEATURE_VI_USE_SIGNALS', `y', `y')
 option(`CONFIG_FEATURE_VI_DOT_CMD', `y', `y')
 option(`CONFIG_FEATURE_VI_READONLY', `y', `y')
@@ -439,6 +448,7 @@ option(`CONFIG_GETTY', `n', `n')
 option(`CONFIG_FEATURE_UTMP', `n', `n')
 option(`CONFIG_FEATURE_WTMP', `n', `n')
 option(`CONFIG_LOGIN', `y', `y')
+# CONFIG_LOGIN_SESSION_AS_CHILD is not set
 option(`CONFIG_PAM', `n', `n')
 option(`CONFIG_LOGIN_SCRIPTS', `y', `n')
 option(`CONFIG_FEATURE_NOLOGIN', `n', `n')
@@ -447,6 +457,7 @@ option(`CONFIG_PASSWD', `y', `y')
 option(`CONFIG_FEATURE_PASSWD_WEAK_CHECK', `n', `n')
 option(`CONFIG_CRYPTPW', `n', `n')
 option(`CONFIG_CHPASSWD', `n', `n')
+CONFIG_FEATURE_DEFAULT_PASSWD_ALGO="des"
 option(`CONFIG_SU', `n', `n')
 option(`CONFIG_FEATURE_SU_SYSLOG', `n', `n')
 option(`CONFIG_FEATURE_SU_CHECKS_SHELLS', `n', `n')
@@ -634,8 +645,13 @@ option(`CONFIG_FEATURE_MTAB_SUPPORT', `n', `n')
 # CONFIG_CONSPY is not set
 # CONFIG_NANDWRITE is not set
 # CONFIG_NANDDUMP is not set
+# CONFIG_SETSERIAL is not set
 # CONFIG_UBIATTACH is not set
 # CONFIG_UBIDETACH is not set
+# CONFIG_UBIMKVOL is not set
+# CONFIG_UBIRMVOL is not set
+# CONFIG_UBIRSVOL is not set
+# CONFIG_UBIUPDATEVOL is not set
 option(`CONFIG_ADJTIMEX', `n', `n')
 option(`CONFIG_BBCONFIG', `n', `n')
 option(`CONFIG_BEEP', `n', `n')
@@ -814,6 +830,7 @@ option(`CONFIG_FEATURE_NTPD_SERVER', `n', `n')
 option(`CONFIG_PING', `y', `y')
 option(`CONFIG_PING6', `n', `n')
 option(`CONFIG_FEATURE_FANCY_PING', `y', `y')
+option(`CONFIG_WHOIS', `n', `n')
 option(`CONFIG_PSCAN', `n', `n')
 option(`CONFIG_ROUTE', `y', `y')
 option(`CONFIG_SLATTACH', `n', `n')
@@ -845,6 +862,7 @@ option(`CONFIG_UDHCPC', `y', `y')
 # CONFIG_FEATURE_UDHCP_PORT is not set
 CONFIG_UDHCP_DEBUG=0
 # CONFIG_FEATURE_UDHCP_RFC3397 is not set
+# CONFIG_FEATURE_UDHCP_8021Q is not set
 CONFIG_UDHCPC_DEFAULT_SCRIPT="/share/udhcpc/default.script"
 CONFIG_UDHCPC_SLACK_FOR_BUGGY_SERVERS=80
 CONFIG_IFUPDOWN_UDHCPC_CMD_OPTIONS="-b -R"
@@ -863,6 +881,7 @@ ifdef(`openvpn',
 `# CONFIG_TUNCTL is not set'
 )
 # CONFIG_FEATURE_TUNCTL_UG is not set
+# CONFIG_UDHCPC6 is not set
 # CONFIG_UDPSVD is not set
 
 #
@@ -887,9 +906,12 @@ CONFIG_FEATURE_MIME_CHARSET=""
 # Process Utilities
 #
 # CONFIG_IOSTAT is not set
+# CONFIG_LSOF is not set
 # CONFIG_MPSTAT is not set
 # CONFIG_PMAP is not set
 # CONFIG_POWERTOP is not set
+# CONFIG_PSTREE is not set
+# CONFIG_PWDX is not set
 # CONFIG_SMEMCAP is not set
 option(`CONFIG_FREE', `y', `y')
 option(`CONFIG_FUSER', `n', `n')
@@ -970,6 +992,7 @@ option(`CONFIG_ASH', `y', `y')
 # Ash Shell Options
 #
 # CONFIG_ASH_BASH_COMPAT is not set
+# CONFIG_ASH_IDLE_TIMEOUT is not set
 option(`CONFIG_ASH_JOB_CONTROL', `y', `n')
 option(`CONFIG_ASH_ALIAS', `y', `y')
 option(`CONFIG_ASH_GETOPTS', `n', `n')
@@ -1004,6 +1027,7 @@ option(`CONFIG_MSH', `n', `n')
 option(`CONFIG_FEATURE_SH_EXTRA_QUIET', `n', `n')
 # CONFIG_FEATURE_SH_STANDALONE is not set
 # CONFIG_FEATURE_SH_NOFORK is not set
+# CONFIG_FEATURE_SH_HISTFILESIZE is not set
 option(`CONFIG_CTTYHACK', `n', `n')
 
 #
@@ -1013,6 +1037,7 @@ option(`CONFIG_SYSLOGD', `y', `y')
 option(`CONFIG_FEATURE_ROTATE_LOGFILE', `y', `y')
 option(`CONFIG_FEATURE_REMOTE_LOG', `y', `y')
 option(`CONFIG_FEATURE_SYSLOGD_DUP', `n', `n')
+option(`CONFIG_FEATURE_SYSLOGD_CFG', `n', `n')
 option(`CONFIG_FEATURE_IPC_SYSLOG', `n', `n')
 CONFIG_FEATURE_SYSLOGD_READ_BUFFER_SIZE=256
 CONFIG_FEATURE_IPC_SYSLOG_BUFFER_SIZE=0

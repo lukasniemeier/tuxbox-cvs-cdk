@@ -1,7 +1,7 @@
-diff -uNr busybox-1.17.1.org//init/init.c busybox-1.17.1/init/init.c
---- busybox-1.17.1.org//init/init.c	2010-07-25 00:12:43.000000000 +0200
-+++ busybox-1.17.1/init/init.c	2010-08-01 11:42:45.000000000 +0200
-@@ -194,8 +194,10 @@
+diff -u -pr busybox-1.17.1.org/init/init.c busybox-1.17.1/init/init.c
+--- busybox-1.17.1.org/init/init.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/init/init.c	2013-04-16 20:19:23.000000000 +0200
+@@ -306,8 +306,10 @@ static void console_init(void)
  		/* Not a linux terminal, probably serial console.
  		 * Force the TERM setting to vt102
  		 * if TERM is set to linux (the default) */
@@ -11,11 +11,11 @@ diff -uNr busybox-1.17.1.org//init/init.c busybox-1.17.1/init/init.c
 +*/
  		if (!ENABLE_FEATURE_INIT_SYSLOG)
  			log_console = NULL;
- 	} else if (!s)
-diff -uNr busybox-1.17.1.org//libbb/procps.c busybox-1.17.1/libbb/procps.c
---- busybox-1.17.1.org//libbb/procps.c	2010-07-06 04:25:54.000000000 +0200
-+++ busybox-1.17.1/libbb/procps.c	2010-08-01 11:42:45.000000000 +0200
-@@ -364,6 +364,20 @@
+	} else
+diff -u -pr busybox-1.17.1.org/libbb/procps.c busybox-1.17.1/libbb/procps.c
+--- busybox-1.17.1.org/libbb/procps.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/libbb/procps.c	2013-04-16 20:19:23.000000000 +0200
+@@ -483,6 +483,20 @@ procps_status_t* FAST_FUNC procps_scan(p
  				sp->state[2] = ' ';
  		}
  
@@ -34,12 +34,23 @@ diff -uNr busybox-1.17.1.org//libbb/procps.c busybox-1.17.1/libbb/procps.c
 +		}
 +
  #if ENABLE_FEATURE_TOPMEM
- 		if (flags & (PSSCAN_SMAPS)) {
- 			FILE *file;
-diff -uNr busybox-1.17.1.org//miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm.c
---- busybox-1.17.1.org//miscutils/hdparm.c	2010-07-06 04:25:54.000000000 +0200
-+++ busybox-1.17.1/miscutils/hdparm.c	2010-08-01 11:42:45.000000000 +0200
-@@ -288,6 +288,7 @@
+		if (flags & PSSCAN_SMAPS)
+			procps_read_smaps(pid, &sp->smaps, NULL, NULL);
+diff -u -pr busybox-1.17.1.org/loginutils/passwd.c busybox-1.17.1/loginutils/passwd.c
+--- busybox-1.17.1.org/loginutils/passwd.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/loginutils/passwd.c	2013-04-16 20:19:23.000000000 +0200
+@@ -15,6 +15,7 @@
+
+ #include "libbb.h"
+ #include <syslog.h>
++#include <sys/resource.h>
+
+ static void nuke_str(char *str)
+ {
+diff -u -pr busybox-1.17.1.org/miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm.c
+--- busybox-1.17.1.org/miscutils/hdparm.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/miscutils/hdparm.c	2013-04-16 20:19:23.000000000 +0200
+@@ -339,6 +339,7 @@ struct globals {
  	smallint set_sleepnow;
  	smallint get_powermode;
  	smallint getset_apmmode;
@@ -47,7 +58,7 @@ diff -uNr busybox-1.17.1.org//miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm
  	int xfermode_requested;
  	unsigned long dkeep;
  	unsigned long standby_requested; /* 0..255 */
-@@ -297,6 +298,7 @@
+@@ -348,6 +349,7 @@ struct globals {
  	unsigned long wcache;
  	unsigned long doorlock;
  	unsigned long apmmode;
@@ -55,7 +66,7 @@ diff -uNr busybox-1.17.1.org//miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm
  #endif
  	IF_FEATURE_HDPARM_GET_IDENTITY(        smallint get_IDentity;)
  	IF_FEATURE_HDPARM_HDIO_TRISTATE_HWIF(  smallint getset_busstate;)
-@@ -361,6 +363,8 @@
+@@ -412,6 +414,8 @@ struct BUG_G_too_big {
  #define set_sleepnow       (G.set_sleepnow           )
  #define get_powermode      (G.get_powermode          )
  #define getset_apmmode     (G.getset_apmmode         )
@@ -64,7 +75,7 @@ diff -uNr busybox-1.17.1.org//miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm
  #define xfermode_requested (G.xfermode_requested     )
  #define dkeep              (G.dkeep                  )
  #define standby_requested  (G.standby_requested      )
-@@ -1680,6 +1684,10 @@
+@@ -1732,6 +1736,10 @@ static void process_dev(char *devname)
  		ioctl_or_warn(fd, HDIO_DRIVE_CMD, &args);
  		args[1] = 0;
  	}
@@ -75,7 +86,7 @@ diff -uNr busybox-1.17.1.org//miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm
  	if (getset_wcache == IS_SET) {
  #ifdef DO_FLUSHCACHE
  #ifndef WIN_FLUSHCACHE
-@@ -1986,7 +1994,7 @@
+@@ -2038,7 +2046,7 @@ static const char hdparm_options[] ALIGN
  	IF_FEATURE_HDPARM_GET_IDENTITY("iI")
  	IF_FEATURE_HDPARM_HDIO_GETSET_DMA("d::")
  #ifdef HDIO_DRIVE_CMD
@@ -84,7 +95,7 @@ diff -uNr busybox-1.17.1.org//miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm
  #endif
  	IF_FEATURE_HDPARM_HDIO_UNREGISTER_HWIF("U:")
  #ifdef HDIO_GET_QDMA
-@@ -2026,6 +2034,7 @@
+@@ -2080,6 +2088,7 @@ int hdparm_main(int argc, char **argv)
  		if (c == 'k') getset_keep      = parse_opts_0_1(&keep);
  		if (c == 'a') getset_readahead = parse_opts_0_INTMAX(&Xreadahead);
  		if (c == 'B') getset_apmmode   = parse_opts(&apmmode, 1, 255);
@@ -92,10 +103,21 @@ diff -uNr busybox-1.17.1.org//miscutils/hdparm.c busybox-1.17.1/miscutils/hdparm
  		do_flush |= do_timings |= (c == 't');
  		do_flush |= do_ctimings |= (c == 'T');
  #ifdef HDIO_DRIVE_CMD
-diff -uNr busybox-1.17.1.org//modutils/Config.src busybox-1.17.1/modutils/Config.src
---- busybox-1.17.1.org//modutils/Config.src	2010-07-25 00:12:43.000000000 +0200
-+++ busybox-1.17.1/modutils/Config.src	2010-08-01 11:42:45.000000000 +0200
-@@ -139,6 +139,13 @@
+diff -u -pr busybox-1.17.1.org/miscutils/time.c busybox-1.17.1/miscutils/time.c
+--- busybox-1.17.1.org/miscutils/time.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/miscutils/time.c	2013-04-16 20:19:23.000000000 +0200
+@@ -16,6 +16,7 @@
+ //usage:     "\n	-v	Verbose"
+
+ #include "libbb.h"
++#include <sys/resource.h>
+
+ /* Information on the resources used by a child process.  */
+ typedef struct {
+diff -u -pr busybox-1.17.1.org/modutils/Config.src busybox-1.17.1/modutils/Config.src
+--- busybox-1.17.1.org/modutils/Config.src	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/modutils/Config.src	2013-04-16 20:19:23.000000000 +0200
+@@ -150,6 +150,13 @@ config FEATURE_INSMOD_TRY_MMAP
  
  	  Choosing N saves about 250 bytes of code (on 32-bit x86).
  
@@ -109,7 +131,7 @@ diff -uNr busybox-1.17.1.org//modutils/Config.src busybox-1.17.1/modutils/Config
  config FEATURE_INSMOD_VERSION_CHECKING
  	bool "Enable module version checking"
  	default n
-@@ -228,7 +235,7 @@
+@@ -247,7 +254,7 @@ config FEATURE_MODUTILS_SYMBOLS
  config DEFAULT_MODULES_DIR
  	string "Default directory containing modules"
  	default "/lib/modules"
@@ -118,12 +140,12 @@ diff -uNr busybox-1.17.1.org//modutils/Config.src busybox-1.17.1/modutils/Config
  	help
  	  Directory that contains kernel modules.
  	  Defaults to "/lib/modules"
-diff -uNr busybox-1.17.1.org//modutils/insmod.c busybox-1.17.1/modutils/insmod.c
---- busybox-1.17.1.org//modutils/insmod.c	2010-07-06 04:25:54.000000000 +0200
-+++ busybox-1.17.1/modutils/insmod.c	2010-08-01 11:42:45.000000000 +0200
-@@ -32,11 +32,42 @@
- //usage:     "\n	-x	Don't export externs"
+diff -u -pr busybox-1.17.1.org/modutils/insmod.c busybox-1.17.1/modutils/insmod.c
+--- busybox-1.17.1.org/modutils/insmod.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/modutils/insmod.c	2013-04-16 21:58:24.000000000 +0200
+@@ -35,11 +35,42 @@
  //usage:	)
+ //usage:#endif
  
 +#include <sys/utsname.h>
 +static char *m_filename;
@@ -164,11 +186,11 @@ diff -uNr busybox-1.17.1.org//modutils/insmod.c busybox-1.17.1/modutils/insmod.c
  
  	/* Compat note:
  	 * 2.6 style insmod has no options and required filename
-@@ -55,9 +86,107 @@
+@@ -58,9 +89,107 @@ int insmod_main(int argc UNUSED_PARAM, c
  	if (!filename)
  		bb_show_usage();
  
--	rc = bb_init_module(filename, parse_cmdline_module_options(argv));
+-	rc = bb_init_module(filename, parse_cmdline_module_options(argv, /*quote_spaces:*/ 0));
 +	/* Grab the module name */
 +	tmp = xstrdup(filename);
 +	len = strlen(filename);
@@ -267,17 +289,17 @@ diff -uNr busybox-1.17.1.org//modutils/insmod.c busybox-1.17.1/modutils/insmod.c
 +
 +
 +
-+	rc = bb_init_module(m_filename, parse_cmdline_module_options(argv));
++	rc = bb_init_module(m_filename, parse_cmdline_module_options(argv, /*quote_spaces:*/ 0));
  	if (rc)
 -		bb_error_msg("can't insert '%s': %s", filename, moderror(rc));
 +		bb_error_msg("can't insert '%s': %s", m_filename, moderror(rc));
  
  	return rc;
  }
-diff -uNr busybox-1.17.1.org//networking/ifupdown.c busybox-1.17.1/networking/ifupdown.c
---- busybox-1.17.1.org//networking/ifupdown.c	2010-07-06 04:25:54.000000000 +0200
-+++ busybox-1.17.1/networking/ifupdown.c	2010-08-01 11:42:45.000000000 +0200
-@@ -990,7 +990,7 @@
+diff -u -pr busybox-1.17.1.org/networking/ifupdown.c busybox-1.17.1/networking/ifupdown.c
+--- busybox-1.17.1.org/networking/ifupdown.c	2012-07-02 16:19:22.000000000 +0200
++++ busybox-1.17.1/networking/ifupdown.c	2013-04-16 20:19:23.000000000 +0200
+@@ -1025,7 +1025,7 @@ static int doit(char *str)
  
  static int execute_all(struct interface_defn_t *ifd, const char *opt)
  {
@@ -286,7 +308,7 @@ diff -uNr busybox-1.17.1.org//networking/ifupdown.c busybox-1.17.1/networking/if
  	char *buf;
  	for (i = 0; i < ifd->n_options; i++) {
  		if (strcmp(ifd->option[i].name, opt) == 0) {
-@@ -1000,9 +1000,15 @@
+@@ -1035,9 +1035,15 @@ static int execute_all(struct interface_
  		}
  	}
  
@@ -305,29 +327,40 @@ diff -uNr busybox-1.17.1.org//networking/ifupdown.c busybox-1.17.1/networking/if
  }
  
  static int check(char *str)
-diff -uNr busybox-1.17.1.org//networking/libiproute/ipaddress.c busybox-1.17.1/networking/libiproute/ipaddress.c
---- busybox-1.17.1.org//networking/libiproute/ipaddress.c	2010-07-25 00:12:43.000000000 +0200
-+++ busybox-1.17.1/networking/libiproute/ipaddress.c	2010-08-01 11:43:20.000000000 +0200
-@@ -164,6 +164,7 @@
+diff -u -pr busybox-1.17.1.org/networking/inetd.c busybox-1.17.1/networking/inetd.c
+--- busybox-1.17.1.org/networking/inetd.c	2012-07-02 16:08:25.000000000 +0200
++++ busybox-1.17.1/networking/inetd.c	2013-04-16 20:19:23.000000000 +0200
+@@ -166,6 +166,7 @@
+
+ #include <syslog.h>
+ #include <sys/un.h>
++#include <sys/resource.h>
+
+ #include "libbb.h"
+
+diff -u -pr busybox-1.17.1.org/networking/libiproute/ipaddress.c busybox-1.17.1/networking/libiproute/ipaddress.c
+--- busybox-1.17.1.org/networking/libiproute/ipaddress.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/networking/libiproute/ipaddress.c	2013-04-16 20:19:23.000000000 +0200
+@@ -162,6 +162,7 @@ static NOINLINE int print_linkinfo(const
  		printf("master %s ", ll_idx_n2a(*(int*)RTA_DATA(tb[IFLA_MASTER]), b1));
  	}
  #endif
 +#if 0
+ /* IFLA_OPERSTATE was added to kernel with the same commit as IFF_DORMANT */
+ #ifdef IFF_DORMANT
  	if (tb[IFLA_OPERSTATE]) {
- 		static const char operstate_labels[] ALIGN1 =
- 			"UNKNOWN\0""NOTPRESENT\0""DOWN\0""LOWERLAYERDOWN\0"
-@@ -171,6 +172,7 @@
- 		printf("state %s ", nth_string(operstate_labels,
+@@ -172,6 +173,7 @@ static NOINLINE int print_linkinfo(const
  					*(uint8_t *)RTA_DATA(tb[IFLA_OPERSTATE])));
  	}
+ #endif
 +#endif
  	if (G_filter.showqueue)
  		print_queuelen((char*)RTA_DATA(tb[IFLA_IFNAME]));
  
-diff -uNr busybox-1.17.1.org//networking/libiproute/iplink.c busybox-1.17.1/networking/libiproute/iplink.c
---- busybox-1.17.1.org//networking/libiproute/iplink.c	2010-07-25 00:12:43.000000000 +0200
-+++ busybox-1.17.1/networking/libiproute/iplink.c	2010-08-01 11:55:39.000000000 +0200
-@@ -274,6 +274,7 @@
+diff -u -pr busybox-1.17.1.org/networking/libiproute/iplink.c busybox-1.17.1/networking/libiproute/iplink.c
+--- busybox-1.17.1.org/networking/libiproute/iplink.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/networking/libiproute/iplink.c	2013-04-16 20:19:23.000000000 +0200
+@@ -277,6 +277,7 @@ static int ipaddr_list_link(char **argv)
  	return ipaddr_list_or_flush(argv, 0);
  }
  
@@ -335,7 +368,7 @@ diff -uNr busybox-1.17.1.org//networking/libiproute/iplink.c busybox-1.17.1/netw
  #ifndef NLMSG_TAIL
  #define NLMSG_TAIL(nmsg) \
  	((struct rtattr *) (((void *) (nmsg)) + NLMSG_ALIGN((nmsg)->nlmsg_len)))
-@@ -360,20 +361,22 @@
+@@ -363,20 +364,22 @@ static int do_change(char **argv, const
  		return 2;
  	return 0;
  }
@@ -362,10 +395,32 @@ diff -uNr busybox-1.17.1.org//networking/libiproute/iplink.c busybox-1.17.1/netw
  			return do_set(argv);
  	}
  	/* show, lst, list */
-diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount.c
---- busybox-1.17.1.org//util-linux/mount.c	2010-07-06 04:25:54.000000000 +0200
-+++ busybox-1.17.1/util-linux/mount.c	2010-08-01 11:42:45.000000000 +0200
-@@ -418,6 +418,24 @@
+diff -u -pr busybox-1.17.1.org/networking/udhcp/dhcpc.c busybox-1.17.1/networking/udhcp/dhcpc.c
+--- busybox-1.17.1.org/networking/udhcp/dhcpc.c	2012-07-02 16:08:25.000000000 +0200
++++ busybox-1.17.1/networking/udhcp/dhcpc.c	2013-04-16 20:26:27.000000000 +0200
+@@ -25,6 +25,7 @@
+ #include "dhcpd.h"
+ #include "dhcpc.h"
+
++#include <asm/types.h>
+ #include <netinet/if_ether.h>
+ #include <netpacket/packet.h>
+ #include <linux/filter.h>
+diff -u -pr busybox-1.17.1.org/shell/shell_common.c busybox-1.17.1/shell/shell_common.c
+--- busybox-1.17.1.org/shell/shell_common.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/shell/shell_common.c	2013-04-16 20:19:23.000000000 +0200
+@@ -18,6 +18,7 @@
+  */
+ #include "libbb.h"
+ #include "shell_common.h"
++#include <sys/resource.h>
+
+ const char defifsvar[] ALIGN1 = "IFS= \t\n";
+
+diff -u -pr busybox-1.17.1.org/util-linux/mount.c busybox-1.17.1/util-linux/mount.c
+--- busybox-1.17.1.org/util-linux/mount.c	2012-07-02 16:08:25.000000000 +0200
++++ busybox-1.17.1/util-linux/mount.c	2013-04-16 22:05:02.000000000 +0200
+@@ -546,6 +546,24 @@ static void delete_block_backed_filesyst
  void delete_block_backed_filesystems(void);
  #endif
  
@@ -390,7 +445,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  // Perform actual mount of specific filesystem at specific location.
  // NB: mp->xxx fields may be trashed on exit
  static int mount_it_now(struct mntent *mp, long vfsflags, char *filteropts)
-@@ -875,7 +893,11 @@
+@@ -981,7 +999,11 @@ find_kernel_nfs_mount_version(void)
  
  	kernel_version = get_linux_version_code();
  	if (kernel_version) {
@@ -403,7 +458,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  			nfs_mount_version = 3;
  		/* else v4 since 2.3.99pre4 */
  	}
-@@ -1608,8 +1630,6 @@
+@@ -1758,8 +1780,6 @@ static int singlemount(struct mntent *mp
  	llist_t *fl = NULL;
  	struct stat st;
  
@@ -412,7 +467,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  	vfsflags = parse_mount_options(mp->mnt_opts, &filteropts);
  
  	// Treat fstype "auto" as unspecified
-@@ -1651,41 +1671,52 @@
+@@ -1801,40 +1821,51 @@ static int singlemount(struct mntent *mp
  	 && (mp->mnt_fsname[0] == '/' || mp->mnt_fsname[0] == '\\')
  	 && mp->mnt_fsname[0] == mp->mnt_fsname[1]
  	) {
@@ -476,22 +531,21 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  	}
  
  	// Might this be an NFS filesystem?
- 	if (ENABLE_FEATURE_MOUNT_NFS
--	 && (!mp->mnt_type || strcmp(mp->mnt_type, "nfs") == 0)
-+	 && (!mp->mnt_type || !strcmp(mp->mnt_type, "nfs"))
+-	if ((!mp->mnt_type || strncmp(mp->mnt_type, "nfs", 3) == 0)
++	if ((!mp->mnt_type || !strcmp(mp->mnt_type, "nfs"))
  	 && strchr(mp->mnt_fsname, ':') != NULL
  	) {
- 		rc = nfsmount(mp, vfsflags, filteropts);
-@@ -1703,7 +1734,7 @@
+		if (!mp->mnt_type)
+@@ -1854,7 +1885,7 @@ static int singlemount(struct mntent *mp
  		if (ENABLE_FEATURE_MOUNT_LOOP && S_ISREG(st.st_mode)) {
  			loopFile = bb_simplify_path(mp->mnt_fsname);
  			mp->mnt_fsname = NULL; // will receive malloced loop dev name
--			if (set_loop(&mp->mnt_fsname, loopFile, 0) < 0) {
-+			if (set_loop(&(mp->mnt_fsname), loopFile, 0) < 0) {
+-			if (set_loop(&mp->mnt_fsname, loopFile, 0, /*ro:*/ 0) < 0) {
++			if (set_loop(&(mp->mnt_fsname), loopFile, 0, /*ro:*/ 0) < 0) {
  				if (errno == EPERM || errno == EACCES)
  					bb_error_msg(bb_msg_perm_denied_are_you_root);
  				else
-@@ -1830,8 +1861,7 @@
+@@ -1990,8 +2021,7 @@ int mount_main(int argc UNUSED_PARAM, ch
  	llist_t *lst_o = NULL;
  	const char *fstabname;
  	FILE *fstab;
@@ -501,7 +555,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  	unsigned opt;
  	struct mntent mtpair[2], *mtcur = mtpair;
  	IF_NOT_DESKTOP(const int nonroot = 0;)
-@@ -1871,9 +1901,9 @@
+@@ -2033,9 +2063,9 @@ int mount_main(int argc UNUSED_PARAM, ch
  			{
  				// Don't show rootfs. FIXME: why??
  				// util-linux 2.12a happily shows rootfs...
@@ -513,7 +567,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  					printf("%s on %s type %s (%s)\n", mtpair->mnt_fsname,
  							mtpair->mnt_dir, mtpair->mnt_type,
  							mtpair->mnt_opts);
-@@ -1919,14 +1949,14 @@
+@@ -2081,14 +2111,14 @@ int mount_main(int argc UNUSED_PARAM, ch
  		return rc;
  	}
  
@@ -533,7 +587,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  	fstab = setmntent(fstabname, "r");
  	if (!fstab)
  		bb_perror_msg_and_die("can't read '%s'", fstabname);
-@@ -1951,13 +1981,10 @@
+@@ -2113,13 +2143,10 @@ int mount_main(int argc UNUSED_PARAM, ch
  		if (argv[0]) {
  
  			// Is this what we're looking for?
@@ -551,7 +605,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  
  			// Remember this entry.  Something later may have
  			// overmounted it, and we want the _last_ match.
-@@ -1965,7 +1992,6 @@
+@@ -2127,7 +2154,6 @@ int mount_main(int argc UNUSED_PARAM, ch
  
  		// If we're mounting all
  		} else {
@@ -559,7 +613,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  			// No, mount -a won't mount anything,
  			// even user mounts, for mere humans
  			if (nonroot)
-@@ -1993,25 +2019,10 @@
+@@ -2155,25 +2181,10 @@ int mount_main(int argc UNUSED_PARAM, ch
  			// NFS mounts want this to be xrealloc-able
  			mtcur->mnt_opts = xstrdup(mtcur->mnt_opts);
  
@@ -589,7 +643,7 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  			}
  			free(mtcur->mnt_opts);
  		}
-@@ -2052,24 +2063,13 @@
+@@ -2214,24 +2225,13 @@ int mount_main(int argc UNUSED_PARAM, ch
  				bb_error_msg_and_die(bb_msg_you_must_be_root);
  		}
  
@@ -621,10 +675,10 @@ diff -uNr busybox-1.17.1.org//util-linux/mount.c busybox-1.17.1/util-linux/mount
  	}
  
   //ret:
-diff -uNr busybox-1.17.1.org//util-linux/swaponoff.c busybox-1.17.1/util-linux/swaponoff.c
---- busybox-1.17.1.org//util-linux/swaponoff.c	2010-07-06 04:25:54.000000000 +0200
-+++ busybox-1.17.1/util-linux/swaponoff.c	2010-08-01 11:42:45.000000000 +0200
-@@ -55,15 +55,36 @@
+diff -u -pr busybox-1.17.1.org/util-linux/swaponoff.c busybox-1.17.1/util-linux/swaponoff.c
+--- busybox-1.17.1.org/util-linux/swaponoff.c	2012-06-26 15:35:45.000000000 +0200
++++ busybox-1.17.1/util-linux/swaponoff.c	2013-04-16 20:19:23.000000000 +0200
+@@ -77,15 +77,36 @@ static int swap_enable_disable(char *dev
  	return 0;
  }
  
@@ -663,47 +717,3 @@ diff -uNr busybox-1.17.1.org//util-linux/swaponoff.c busybox-1.17.1/util-linux/s
  
  	err = 0;
  	while ((m = getmntent(f)) != NULL) {
-diff -uNr busybox-1.19.4.org/loginutils/passwd.c busybox-1.19.4/loginutils/passwd.c
---- busybox-1.19.4.org/loginutils/passwd.c	2012-02-04 20:34:24.000000000 +0100
-+++ busybox-1.19.4/loginutils/passwd.c	2012-04-08 15:03:50.000000000 +0200
-@@ -15,6 +15,7 @@
- 
- #include "libbb.h"
- #include <syslog.h>
-+#include <sys/resource.h>
- 
- static void nuke_str(char *str)
- {
-diff -uNr busybox-1.19.4.org/miscutils/time.c busybox-1.19.4/miscutils/time.c
---- busybox-1.19.4.org/miscutils/time.c	2012-02-04 20:24:55.000000000 +0100
-+++ busybox-1.19.4/miscutils/time.c	2012-04-08 15:04:49.000000000 +0200
-@@ -16,6 +16,7 @@
- //usage:     "\n	-v	Verbose"
- 
- #include "libbb.h"
-+#include <sys/resource.h>
- 
- /* Information on the resources used by a child process.  */
- typedef struct {
-diff -uNr busybox-1.19.4.org/networking/inetd.c busybox-1.19.4/networking/inetd.c
---- busybox-1.19.4.org/networking/inetd.c	2012-02-04 20:34:24.000000000 +0100
-+++ busybox-1.19.4/networking/inetd.c	2012-04-08 15:05:32.000000000 +0200
-@@ -166,6 +166,7 @@
- 
- #include <syslog.h>
- #include <sys/un.h>
-+#include <sys/resource.h>
- 
- #include "libbb.h"
- 
-diff -uNr busybox-1.19.4.org/shell/shell_common.c busybox-1.19.4/shell/shell_common.c
---- busybox-1.19.4.org/shell/shell_common.c	2012-02-04 20:34:24.000000000 +0100
-+++ busybox-1.19.4/shell/shell_common.c	2012-04-08 15:06:29.000000000 +0200
-@@ -18,6 +18,7 @@
-  */
- #include "libbb.h"
- #include "shell_common.h"
-+#include <sys/resource.h>
- 
- const char defifsvar[] ALIGN1 = "IFS= \t\n";
- 
