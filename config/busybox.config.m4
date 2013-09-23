@@ -928,7 +928,9 @@ ifdef(`procps',
 `option(`CONFIG_PS', `y', `y')
 option(`CONFIG_FEATURE_PS_WIDE', `n', `n')',
 `# CONFIG_PS is not set
-# CONFIG_FEATURE_PS_WIDE is not set')
+# CONFIG_FEATURE_PS_WIDE is not set
+')
+# CONFIG_FEATURE_PS_LONG is not set
 # CONFIG_FEATURE_PS_TIME is not set
 # CONFIG_FEATURE_PS_ADDITIONAL_COLUMNS is not set
 # CONFIG_FEATURE_PS_UNUSUAL_SYSTEMS is not set
