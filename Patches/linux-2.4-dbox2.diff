@@ -6074,22 +6074,45 @@ Index: b/kernel/timer.c
 ===================================================================
 --- a/kernel/timer.c
 +++ b/kernel/timer.c
-@@ -33,11 +33,14 @@ long tick = (1000000 + HZ/2) / HZ;	/* ti
- 
- /* The current time */
+@@ -35,7 +35,12 @@ long tick = (1000000 + HZ/2) / HZ;	/* ti
  struct timeval xtime __attribute__ ((aligned (16)));
  
  /* Don't completely fail for HZ > 500.  */
 -int tickadj = 500/HZ ? : 1;		/* microsecs */
 +/* due to the dbox inexact timer, we allow more than
 +   500 microsecs per tick Orignal would correct up to
-+   0.5%, change it to 2%... */
++   0.5%, change it to 2%...
++   for really bad timer, we allow factor 10 */
 +int tickadj = 2000/HZ ? : 1;		/* microsecs */
++long bigadj = 1000000; 				/* large adjustment */
  
  DECLARE_TASK_QUEUE(tq_timer);
  DECLARE_TASK_QUEUE(tq_immediate);
- 
- /*
+@@ -487,11 +492,19 @@ static void update_wall_time_one_tick(vo
+	     * Limit the amount of the step to be in the range
+	     * -tickadj .. +tickadj
+	     */
+-	     if (time_adjust > tickadj)
+-		time_adjust_step = tickadj;
+-	     else if (time_adjust < -tickadj)
+-		time_adjust_step = -tickadj;
+-
++	    if (time_adjust > tickadj) {
++			if (time_adjust > bigadj)
++				time_adjust_step = 5 * tickadj / 2;
++			else
++				time_adjust_step = tickadj;
++		}
++	    else if (time_adjust < -tickadj) {
++			if (time_adjust < -bigadj)
++				time_adjust_step = 5 * -tickadj / 2;
++			else
++				time_adjust_step = -tickadj;
++		}
++
+	    /* Reduce by this step the amount of time left  */
+	    time_adjust -= time_adjust_step;
+	}
 diff -uNr linux-2.4.37.11.org//arch/ppc/8xx_io/uart.c linux-2.4.37.11/arch/ppc/8xx_io/uart.c
 --- linux-2.4.37.11.org//arch/ppc/8xx_io/uart.c	2010-12-18 16:29:59.000000000 +0100
 +++ linux-2.4.37.11/arch/ppc/8xx_io/uart.c	2011-04-27 12:47:55.000000000 +0200
