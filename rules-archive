@@ -129,7 +129,7 @@ ncftp-3.2.2-src.tar.bz2;ftp://ftp.ncftp.com/ncftp
 screen-4.0.3.tar.gz;ftp://ftp.gnu.org/pub/gnu/screen
 links-1.00.tar.gz;http://www.jikos.cz/~mikulas/links//download
 links-2.7.tar.bz2;http://links.twibright.com/download
-ntp-4.2.4p5.tar.gz;http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2
+ntp-4.2.6p5.tar.gz;http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2
 ntpclient_2000_339.tar.gz;http://doolittle.icarus.com/ntpclient
 openntpd-3.9p1.tar.gz;http://ftp-stud.fht-esslingen.de/pub/OpenBSD/OpenNTPD
 esound-0.2.41.tar.bz2;ftp://ftp.gnome.org/pub/GNOME/sources/esound/0.2
