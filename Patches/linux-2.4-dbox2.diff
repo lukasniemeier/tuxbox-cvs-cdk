@@ -6072,8 +6072,8 @@ diff -Naur linux-2.4.36.2/include/asm-ppc/commproc.h linux-2.4.36.2_new/include/
  #define PC_ENET_TENA	((ushort)0x0002)
 Index: b/kernel/timer.c
 ===================================================================
---- a/kernel/timer.c
-+++ b/kernel/timer.c
+--- timer.c.orig	2010-12-18 16:29:59.000000000 +0100
++++ timer.c	2013-11-10 15:07:38.000000000 +0100
 @@ -35,7 +35,12 @@ long tick = (1000000 + HZ/2) / HZ;	/* ti
  struct timeval xtime __attribute__ ((aligned (16)));
  
@@ -6089,14 +6089,14 @@ Index: b/kernel/timer.c
  DECLARE_TASK_QUEUE(tq_timer);
  DECLARE_TASK_QUEUE(tq_immediate);
 @@ -487,11 +492,19 @@ static void update_wall_time_one_tick(vo
-	     * Limit the amount of the step to be in the range
-	     * -tickadj .. +tickadj
-	     */
+ 	     * Limit the amount of the step to be in the range
+ 	     * -tickadj .. +tickadj
+ 	     */
 -	     if (time_adjust > tickadj)
 -		time_adjust_step = tickadj;
 -	     else if (time_adjust < -tickadj)
 -		time_adjust_step = -tickadj;
--
+-	     
 +	    if (time_adjust > tickadj) {
 +			if (time_adjust > bigadj)
 +				time_adjust_step = 5 * tickadj / 2;
@@ -6110,9 +6110,9 @@ Index: b/kernel/timer.c
 +				time_adjust_step = -tickadj;
 +		}
 +
-	    /* Reduce by this step the amount of time left  */
-	    time_adjust -= time_adjust_step;
-	}
+ 	    /* Reduce by this step the amount of time left  */
+ 	    time_adjust -= time_adjust_step;
+ 	}
 diff -uNr linux-2.4.37.11.org//arch/ppc/8xx_io/uart.c linux-2.4.37.11/arch/ppc/8xx_io/uart.c
 --- linux-2.4.37.11.org//arch/ppc/8xx_io/uart.c	2010-12-18 16:29:59.000000000 +0100
 +++ linux-2.4.37.11/arch/ppc/8xx_io/uart.c	2011-04-27 12:47:55.000000000 +0200
