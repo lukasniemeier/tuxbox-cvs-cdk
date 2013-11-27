@@ -1890,6 +1890,19 @@ AC_MSG_RESULT([
 ])
 fi
 
+## just error out now instead of mysteriously failing later.
+if test -n "$CONFIG_SITE"; then
+AC_MSG_ERROR([
+***************************************************************
+*                        !!!ERROR!!!                          *
+* The environment variable CONFIG_SITE is set on your system. *
+* This will likely break your build. Please rerun with unset  *
+* CONFIG_SITE.                                                *
+*                        !!!ERROR!!!                          *
+***************************************************************
+])
+fi
+
 TUXBOX_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNEL='$used_kernelversion' KERNELVERSION=$(KERNELVERSION) LIBC='$used_libc' BOXTYPE=$(BOXTYPE) BOXMODEL=$(BOXMODEL) $(customizationsdir)/$(notdir $@)-local.sh $(flashprefix) $(buildprefix) || true]'
 AC_SUBST(TUXBOX_CUSTOMIZE)
 TUXBOX_YADD_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNEL='$used_kernelversion' KERNELVERSION=$(KERNELVERSION) LIBC='$used_libc' BOXTYPE=$(BOXTYPE) BOXMODEL=$(BOXMODEL) $(customizationsdir)/$(notdir $@)-local.sh $(targetprefix) $(buildprefix) || true]'
