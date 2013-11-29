@@ -81,6 +81,8 @@ $(flashprefix)/root/bin/mount: utillinux | $(flashprefix)/root
 if ENABLE_UCLIBC
 E2FSPROGSOPT=--disable-tls
 XFSPROGSOPT=ac_cv_header_aio_h=yes ac_cv_lib_rt_lio_listio=yes
+else
+XFSPROGSOPT=LDFLAGS="-luuid -lrt"
 endif
 
 #e2fs2progs
