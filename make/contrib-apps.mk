@@ -554,10 +554,14 @@ $(DEPDIR)/openntpd: bootstrap @DEPENDS_openntpd@
 	cd @DIR_openntpd@ && \
 		ln -s `which $(target)-strip` strip; \
 		echo "ac_cv_path_AR=$(target)-ar" > config.cache; \
+		echo "ac_cv_func_setproctitle=no" >> config.cache; \
+		echo "ac_cv_func_arc4random=no" >> config.cache; \
+		echo "ac_cv_func_strlcpy=no" >> config.cache; \
 		$(BUILDENV) ./configure --cache-file=config.cache \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= \
+			--with-builtin-arc4random \
 			--sysconfdir=/var/etc --with-privsep-user=nobody --with-privsep-path=/share/empty && \
 		$(MAKE) all &&\
 		PATH=.:$(PATH) @INSTALL_openntpd@
