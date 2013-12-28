@@ -83,7 +83,7 @@ libpcap;0.9.4;libpcap-0.9.4;libpcap-0.9.4.tar.gz:libpcap.diff;extract:libpcap-0.
 libpng;1.2.50;libpng-1.2.50;libpng-1.2.50.tar.bz2;extract:libpng-1.2.50.tar.bz2
 libreadline;4.3;readline-4.3;readline-4.3.tar.gz:readline.diff;extract:readline-4.3.tar.gz;patch:readline.diff
 libsdl;1.2.6;SDL-1.2.6;SDL-1.2.6.tar.gz:sdl.diff;extract:SDL-1.2.6.tar.gz;patch:sdl.diff
-libsigc;1.2.7;libsigc++-1.2.7;libsigc++-1.2.7.tar.gz;extract:libsigc++-1.2.7.tar.gz
+libsigc;2.3.1;libsigc++-2.3.1;libsigc++-2.3.1.tar.gz;extract:libsigc++-2.3.1.tar.gz
 libvorbisidec;1.0.2+svn15687;libvorbisidec-1.0.2+svn15687;libvorbisidec_1.0.2+svn15687.orig.tar.gz:tremor.diff;extract:libvorbisidec_1.0.2+svn15687.orig.tar.gz;patch:tremor.diff
 libxml2;2.4.30;libxml2-2.4.30;libxml2-2.4.30.tar.gz:libxml2.diff;extract:libxml2-2.4.30.tar.gz;patch:libxml2.diff
 libz;1.2.8;zlib-1.2.8;zlib-1.2.8.tar.gz;extract:zlib-1.2.8.tar.gz
