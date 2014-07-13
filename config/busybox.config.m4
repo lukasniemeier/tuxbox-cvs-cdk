@@ -237,8 +237,8 @@ option(`CONFIG_OD', `n', `n')
 option(`CONFIG_PRINTENV', `n', `n')
 option(`CONFIG_PRINTF', `n', `n')
 option(`CONFIG_PWD', `y', `n')
-# CONFIG_READLINK is not set
-# CONFIG_FEATURE_READLINK_FOLLOW is not set
+option(`CONFIG_READLINK', `y', `y')
+option(`CONFIG_FEATURE_READLINK_FOLLOW', `y', `y')
 option(`CONFIG_REALPATH', `n', `n')
 option(`CONFIG_RM', `y', `y')
 option(`CONFIG_RMDIR', `y', `y')
