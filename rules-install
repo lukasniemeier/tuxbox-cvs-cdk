@@ -80,7 +80,7 @@ libvorbisidec;rewrite-pkgconfig:vorbisidec.pc;make:install:DESTDIR=TARGET;instal
 libxml2;rewrite-pkgconfig:libxml-2.0.pc;make:install:DESTDIR=TARGET;rewrite-libtool:TARGET/lib/libxml2.la
 libz;make:install:prefix=TARGET;archive:TARGET/lib/libz_pic.a:*.o
 libglib;make:install
-libungif;make:install:DESTDIR=TARGET;rewrite-libtool:TARGET/lib/libungif.la
+giflib;make:install:DESTDIR=TARGET;rewrite-libtool:TARGET/lib/giflib.la
 libiconv;make:install:DESTDIR=TARGET
 libFLAC;make:install: -C src/libFLAC DESTDIR=TARGET;rewrite-libtool:TARGET/lib/libFLAC.la
 libgettext;make:install: -C intl DESTDIR=TARGET

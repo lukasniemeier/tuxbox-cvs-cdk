@@ -138,11 +138,11 @@ if ENABLE_TUXWETTER
 endif
 	@FLASHROOTDIR_MODIFIED@
 
-tuxwetter: libungif input $(appsdir)/tuxbox/plugins/config.status
+tuxwetter: giflib input $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter install
 
-flash-tuxwetter: libungif flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+flash-tuxwetter: giflib flash-input $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter all prefix=$(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxwetter install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@

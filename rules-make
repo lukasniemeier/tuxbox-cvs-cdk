@@ -88,7 +88,7 @@ libvorbisidec;1.0.2+svn15687;libvorbisidec-1.0.2+svn15687;libvorbisidec_1.0.2+sv
 libxml2;2.4.30;libxml2-2.4.30;libxml2-2.4.30.tar.gz:libxml2.diff;extract:libxml2-2.4.30.tar.gz;patch:libxml2.diff
 libz;1.2.8;zlib-1.2.8;zlib-1.2.8.tar.gz;extract:zlib-1.2.8.tar.gz
 libglib;2.8.3;glib-2.8.3;glib-2.8.3.tar.gz;extract:glib-2.8.3.tar.gz
-libungif;4.1.4;libungif-4.1.4;libungif-4.1.4.tar.bz2;extract:libungif-4.1.4.tar.bz2
+giflib;5.1.0;giflib-5.1.0;giflib-5.1.0.tar.bz2;extract:giflib-5.1.0.tar.bz2
 libiconv;1.9.1;libiconv-1.9.1;libiconv-1.9.1.tar.gz;extract:libiconv-1.9.1.tar.gz
 libFLAC;1.2.0;flac-1.2.0;flac-1.2.0.tar.gz;extract:flac-1.2.0.tar.gz;patch:flac.diff
 libgettext;0.17;gettext-0.17;gettext-0.17.tar.gz:gettext.diff;extract:gettext-0.17.tar.gz;patch:gettext.diff

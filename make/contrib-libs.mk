@@ -11,7 +11,7 @@ libs: \
 libs_optional: \
 	libffi \
 	libboost libgmp \
-	libpcap libxml2 libungif \
+	libpcap libxml2 giflib \
 	libexpat libcrypto sqlite
 
 libs_host : \
@@ -517,19 +517,19 @@ $(DEPDIR)/libglib: bootstrap @LIBGETTEXT@ @DEPENDS_libglib@
 	@CLEANUP_libglib@
 	touch $@
 
-$(DEPDIR)/libungif: bootstrap @DEPENDS_libungif@
-	@PREPARE_libungif@
-	cd @DIR_libungif@ && \
+$(DEPDIR)/giflib: bootstrap @DEPENDS_giflib@
+	@PREPARE_giflib@
+	cd @DIR_giflib@ && \
 		sed -i -e 's,^SUBDIRS = lib.*,SUBDIRS = lib,g' Makefile.in && \
+		export ac_cv_prog_have_xmlto=no && \
 		$(BUILDENV) \
 		./configure \
 			--host=$(target) \
 			--build=$(build) \
 			--prefix= \
-			--without-x && \
 		$(MAKE) && \
-		@INSTALL_libungif@
-	@CLEANUP_libungif@
+		@INSTALL_giflib@
+	@CLEANUP_giflib@
 	touch $@
 
 $(DEPDIR)/libiconv: bootstrap @DEPENDS_libiconv@
