@@ -69,7 +69,7 @@ squashfs2.2r2.tar.gz;http://prdownloads.sourceforge.net/sourceforge/squashfs
 #
 # contrib libs
 #
-openssl-0.9.7e.tar.gz;http://www.openssl.org/source
+openssl-0.9.8zb.tar.gz;http://www.openssl.org/source
 curl-7.10.1.tar.gz;http://curl.haxx.se/download/archeology
 curl-7.20.0.tar.bz2;http://curl.haxx.se/download
 freetype-2.3.12.tar.bz2;http://prdownloads.sourceforge.net/sourceforge/freetype
@@ -124,7 +124,7 @@ dropbear-0.52.tar.bz2;http://www.ucc.asn.au/~matt/dropbear/releases
 cku211.tar.gz;ftp://kermit.columbia.edu/kermit/archives
 libtool-1.5.22.tar.gz;ftp://ftp.gnu.org/gnu/libtool
 samba-2.0.10.tar.gz;http://samba.org/samba/ftp/old-versions
-wget-1.11.4.tar.bz2;http://ftp.gnu.org/pub/gnu/wget
+wget-1.13.4.tar.bz2;http://ftp.gnu.org/pub/gnu/wget
 ncftp-3.2.2-src.tar.bz2;ftp://ftp.ncftp.com/ncftp
 screen-4.0.3.tar.gz;ftp://ftp.gnu.org/pub/gnu/screen
 links-1.00.tar.gz;http://www.jikos.cz/~mikulas/links//download

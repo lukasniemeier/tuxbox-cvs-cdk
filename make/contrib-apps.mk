@@ -7,6 +7,16 @@ contrib_apps: bzip2 console_data kbd fbset lirc lsof dropbear ssh tcpdump bonnie
 
 CONTRIB_DEPSCLEANUP = rm -f .deps/bzip2 .deps/console_data .deps/kbd .deps/directfb_examples .deps/fbset .deps/lirc .deps/lsof .deps/ssh .deps/tcpdump .deps/bonnie .deps/vdr .deps/lufs .deps/dropbear .deps/kermit .deps/wget .deps/ncftp .deps/screen .deps/lzma .deps/lzma_host .deps/ntpd .deps/ntpclient .deps/links .deps/links_g .deps/esound .deps/openntpd .deps/python .deps/ser2net .deps/ipkg .deps/openvpn .deps/htop .deps/netio .deps/netio_host
 
+if ENABLE_SSL
+SSL_DEPS=libcrypto
+SSL_WGET_OPTS=--with-ssl=openssl
+SSL_LINKS_OPTS=--with-ssl=$(targetprefix)
+else
+SSL_DEPS=
+SSL_WGET_OPTS=--without-ssl
+SSL_LINKS_OPTS=--without-ssl
+endif
+
 #bzip2
 $(DEPDIR)/bzip2: bootstrap @DEPENDS_bzip2@
 	@PREPARE_bzip2@
@@ -364,7 +374,7 @@ $(DEPDIR)/kermit: bootstrap @DEPENDS_kermit@ libcrypto Patches/kermit.diff
 	touch $@
 
 #wget
-$(DEPDIR)/wget: bootstrap @DEPENDS_wget@
+$(DEPDIR)/wget: bootstrap libz $(SSL_DEPS) @DEPENDS_wget@
 	@PREPARE_wget@
 	cd @DIR_wget@ && \
 		$(BUILDENV) \
@@ -375,6 +385,7 @@ $(DEPDIR)/wget: bootstrap @DEPENDS_wget@
 			--disable-nls \
 			--disable-opie \
 			--disable-digest \
+			$(SSL_WGET_OPTS) \
 			--prefix=&& \
 		$(MAKE) all && \
 		@INSTALL_wget@
@@ -486,7 +497,7 @@ $(flashprefix)/root/bin/links: $(DEPDIR)/links | $(flashprefix)/root
 	$(INSTALL) $(targetprefix)/bin/links $(flashprefix)/root/bin
 	@FLASHROOTDIR_MODIFIED@
 
-$(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd links-plugin @DEPENDS_links_g@
+$(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd links-plugin $(SSL_DEPS) @DEPENDS_links_g@
 	@PREPARE_links_g@
 	cd @DIR_links_g@ && \
 		$(BUILDENV_BIN) \
@@ -496,6 +507,7 @@ $(DEPDIR)/links_g: bootstrap libdirectfb kb2rcd links-plugin @DEPENDS_links_g@
 			--prefix= \
 			--enable-graphics \
 			--without-x \
+			$(SSL_LINKS_OPTS) \
 			--oldincludedir=$(targetprefix)/include:$(targetprefix)/include/directfb && \
 		$(MAKE) all && \
 		@INSTALL_links_g@

@@ -62,7 +62,7 @@ squashfs;3.0;mksquashfs;squashfs3.0.tar.gz:mksquashfs_lzma.diff:lzma442.tar.bz2:
 #
 libboost;boost-1.53.0;boost_1_53_0;boost_1_53_0.tar.bz2;extract:boost_1_53_0.tar.bz2
 libcommoncplusplus;1.0.13;commoncpp2-1.0.13;commoncpp2-1.0.13.tar.gz:libcommoncplusplus.diff;extract:commoncpp2-1.0.13.tar.gz;patch:libcommoncplusplus.diff
-libcrypto;0.9.7e;openssl-0.9.7e;openssl-0.9.7e.tar.gz:libcrypto.diff;extract:openssl-0.9.7e.tar.gz;patch:libcrypto.diff
+libcrypto;0.9.8zb;openssl-0.9.8zb;openssl-0.9.8zb.tar.gz:libcrypto.diff;extract:openssl-0.9.8zb.tar.gz;patch:libcrypto.diff
 libcurl;7.10.1;curl-7.10.1;curl-7.10.1.tar.gz:libcurl.diff;extract:curl-7.10.1.tar.gz;patch:libcurl.diff
 libcurl_current;7.20.0;curl-7.20.0;curl-7.20.0.tar.bz2;extract:curl-7.20.0.tar.bz2
 libdirectfb;1.0.0;DirectFB-1.0.0;DirectFB-1.0.0.tar.gz:libdirectfb.diff;extract:DirectFB-1.0.0.tar.gz;patch:libdirectfb.diff
@@ -116,7 +116,7 @@ dropbear;0.52;dropbear-0.52;dropbear-0.52.tar.bz2:dropbear-nopass.diff:dropbear-
 kermit;8.0;c-kermit-8.0;cku211.tar.gz;dirextract:cku211.tar.gz;patch:kermit.diff
 libtool;1.5.22;libtool-1.5.22;libtool-1.5.22.tar.gz;extract:libtool-1.5.22.tar.gz
 samba;2.0.10;samba-2.0.10;samba-2.0.10.tar.gz:samba_ppc.diff;extract:samba-2.0.10.tar.gz;patch:samba_ppc.diff
-wget;1.11.4;wget-1.11.4;wget-1.11.4.tar.bz2;extract:wget-1.11.4.tar.bz2
+wget;1.13.4;wget-1.13.4;wget-1.13.4.tar.bz2;extract:wget-1.13.4.tar.bz2
 ncftp;3.2.2;ncftp-3.2.2;ncftp-3.2.2-src.tar.bz2;extract:ncftp-3.2.2-src.tar.bz2
 screen;4.0.3;screen-4.0.3;screen-4.0.3.tar.gz:screen.diff;extract:screen-4.0.3.tar.gz;patch:screen.diff
 links;1.0;links-1.00;links-1.00.tar.gz;extract:links-1.00.tar.gz

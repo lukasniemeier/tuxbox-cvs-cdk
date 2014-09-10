@@ -53,7 +53,7 @@ udev;make:install:DESTDIR=TARGET
 # contrib libs
 #
 libboost;remove:TARGET/include/boost;move:boost:TARGET/include/boost
-libcrypto;install:libcrypto.a:TARGET/lib/libcrypto_pic.a;install:libssl.a:TARGET/lib/libssl_pic.a;make:install_cdk:INSTALL_PREFIX=TARGET:INSTALLTOP=
+libcrypto;install:libcrypto.a:TARGET/lib/libcrypto_pic.a;install:libssl.a:TARGET/lib/libssl_pic.a;make:install_cdk:INSTALL_PREFIX=TARGET:INSTALLTOP=/
 libcurl;make:install:DESTDIR=TARGET;archive:TARGET/lib/libcurl_pic.a:lib/*.lo;rewrite-libtool:TARGET/lib/libcurl.la
 libcurl_current;make:install:DESTDIR=TARGET;archive:TARGET/lib/libcurl_pic.a:lib/*.o;rewrite-libtool:TARGET/lib/libcurl.la
 libcommoncplusplus;make:install:DESTDIR=TARGET;rewrite-libtool:TARGET/lib/libccext2.la;rewrite-libtool:TARGET/lib/libccgnu2.la

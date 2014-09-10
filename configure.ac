@@ -781,6 +781,11 @@ AC_ARG_WITH(wget,
 	[enable_wget="$withval"],[enable_wget=no])
 AM_CONDITIONAL(ENABLE_WGET,test "$enable_wget" = "yes")
 
+AC_ARG_WITH(ssl,
+	AS_HELP_STRING(--with-ssl,build image with OpenSSL - use it for standalone wget & links),
+	[enable_ssl="$withval"],[enable_ssl=no])
+AM_CONDITIONAL(ENABLE_SSL,test "$enable_ssl" = "yes")
+
 AC_ARG_ENABLE(enigma-dbswitch,
 	AS_HELP_STRING(--disable-enigma-dbswitch,disable Enigma dbswitch),
 	,[enable_enigma_dbswitch=yes])
@@ -1790,6 +1795,7 @@ Neutrino EPG plus		$enable_epgplus
 Radiotext support:		$enable_radiotext
 FLAC support:			$enable_flac
 CURL version:			$with_curlversion
+OpenSSL:			$enable_ssl
 German keymaps:			$enable_german_keymaps
 
 aformat				$enable_aformat
