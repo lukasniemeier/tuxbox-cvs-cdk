@@ -784,6 +784,12 @@ AM_CONDITIONAL(ENABLE_WGET,test "$enable_wget" = "yes")
 AC_ARG_WITH(ssl,
 	AS_HELP_STRING(--with-ssl,build image with OpenSSL - use it for standalone wget & links),
 	[enable_ssl="$withval"],[enable_ssl=no])
+if test "$enable_tuxmail" = "yes"; then
+	if test "$enable_ssl" = "no"; then
+		summary_plugins="/ tuxmail"
+	fi
+	enable_ssl=yes
+fi
 AM_CONDITIONAL(ENABLE_SSL,test "$enable_ssl" = "yes")
 
 AC_ARG_ENABLE(enigma-dbswitch,
@@ -1795,7 +1801,7 @@ Neutrino EPG plus		$enable_epgplus
 Radiotext support:		$enable_radiotext
 FLAC support:			$enable_flac
 CURL version:			$with_curlversion
-OpenSSL:			$enable_ssl
+OpenSSL:			$enable_ssl $summary_plugins
 German keymaps:			$enable_german_keymaps
 
 aformat				$enable_aformat

@@ -17,11 +17,11 @@ $(targetprefix)/lib/pkgconfig/tuxbox-plugins.pc: $(appsdir)/tuxbox/plugins/confi
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/include install
 	cp $(appsdir)/tuxbox/plugins/tuxbox-plugins.pc $(targetprefix)/lib/pkgconfig/tuxbox-plugins.pc
 
-tuxmail: $(appsdir)/tuxbox/plugins/config.status
+tuxmail: libcrypto $(appsdir)/tuxbox/plugins/config.status
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxmail all
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxmail install
 
-flash-tuxmail: $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
+flash-tuxmail: libcrypto $(appsdir)/tuxbox/plugins/config.status | $(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxmail all prefix=$(flashprefix)/root
 	$(MAKE) -C $(appsdir)/tuxbox/plugins/tuxmail install prefix=$(flashprefix)/root
 	@FLASHROOTDIR_MODIFIED@
