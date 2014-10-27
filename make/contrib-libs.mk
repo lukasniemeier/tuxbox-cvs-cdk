@@ -52,7 +52,7 @@ $(DEPDIR)/libcrypto: bootstrap libz @DEPENDS_libcrypto@
 			shared no-ec no-err no-engine no-hw zlib-dynamic \
 			no-idea no-md2 no-mdc2 no-rc5 no-sha0 no-smime \
 			no-rmd160 no-aes192 no-ripemd no-camellia no-ans1 no-krb5 \
-			tuxbox --prefix=/ --openssldir=/ && \
+			linux-ppc --prefix=/ --openssldir=/ && \
 		$(MAKE) depend MAKEDEPPROG=$(target)-gcc ZLIB_INCLUDE="-I$(targetprefix)/include" && \
 		$(MAKE) -j1 all && \
 		@INSTALL_libcrypto@
@@ -60,6 +60,7 @@ $(DEPDIR)/libcrypto: bootstrap libz @DEPENDS_libcrypto@
 	sed -e "s,^prefix=,prefix=$(targetprefix)," < @DIR_libcrypto@/libcrypto.pc > $(targetprefix)/lib/pkgconfig/libcrypto.pc && \
 	sed -e "s,^prefix=,prefix=$(targetprefix)," < @DIR_libcrypto@/libssl.pc > $(targetprefix)/lib/pkgconfig/libssl.pc && \
 	@CLEANUP_libcrypto@
+	chmod 0755 $(targetprefix)/lib/libcrypto.so.* $(targetprefix)/lib/libssl.so.*
 	touch $@
 
 if ENABLE_UCLIBC
